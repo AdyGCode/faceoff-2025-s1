@@ -130,7 +130,7 @@ The project does NOT need a timetabling capability. It acts as a cheat sheet for
 - Create and connect all database tables
   - php artisan migrations -m "models"
 
-  "Packages have one or more Courses."
+  "Packages have one or more Courses, Courses have one Package"
 
   "Courses have one or more units, units can be in one or more Courses."
 

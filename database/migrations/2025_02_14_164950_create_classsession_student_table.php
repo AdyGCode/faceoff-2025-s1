@@ -14,10 +14,10 @@ return new class extends Migration {
          * Pivot table for Users (students) in a ClassSession
          */
         Schema::create('classsession_student', function (Blueprint $table) {
-            $table->foreignId('class_sessions')->constrained()->cascadeOnDelete();
+            $table->foreignId('class_sessions_id')->constrained()->cascadeOnDelete();
             // Student IDs
             $table->foreignId('users_id')->constrained()->cascadeOnDelete();
-            $table->primary(['class_sessions', 'users_id']);
+            $table->primary(['class_sessions_id', 'users_id']);
         });
     }
 
