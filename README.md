@@ -233,11 +233,32 @@ The project does NOT need a timetabling capability. It acts as a cheat sheet for
   - User guides
   - Setup instructions
 
- ## Data Structure
+## Data Structure
+- Package:
+  - Course IDs
+  - Title
+  - TGA Status
+
+<br>
+
+- Course:
+  - Cluster IDs
+  - Unit IDs
+  - National Code
+  - AQF Level
+  - Title
+  - TGA Status
+  - State Code
+  - Nominal Hours
+  - Type
+  - QA
+  
+<br>
+
 - Cluster:
   - Short Code
   - Title
-  - Unit(s) 1-8 IDs
+  - Unit IDs
 
 <br>
 
@@ -250,38 +271,24 @@ The project does NOT need a timetabling capability. It acts as a cheat sheet for
 
 <br>
 
-- Course:
-  - National Code
-  - AQF Level
-  - Title
-  - TGA Status
-  - State Code
-  - Nominal Hours
-  - Type
-  - QA
-  
-<br>
-
-- Package: ???
-  - National Code
-  - Title
-  - TGA Status
-
-<br>
-
 - ClassSession:
-  - Course ID
   - Cluster ID
+  - Staff ID 
+  - Student IDs
   - Start Date
+  - End Date
   - Start Time
   - End Time
   - Duration (mins)
-  - End Date
-  - Staff ID
 
 <br>
 
-- User(Super Admin, Admin, Staff, Students)
+### Users -v1
+
+*(Super Admin, Admin, Staff, Students)*
+
+- Users:
+  - Role
   - Given Name
   - Family Name
   - Preferred Name
@@ -289,3 +296,29 @@ The project does NOT need a timetabling capability. It acts as a cheat sheet for
   - Email
   - Address
   - Password
+
+<br>
+
+### ~~Users -v2~~
+
+*(Super Admin, Admin, Staff, Students)*
+
+- Users:
+  - username
+  - email
+  - password
+
+<br>
+
+- Staff & Students:
+  - Given Name
+  - Family Name
+  - Preferred Name
+  - Pronouns
+  - Email
+  - Address
+  - Password
+
+<br>
+
+**Check the given excel doc in teams for the data*
