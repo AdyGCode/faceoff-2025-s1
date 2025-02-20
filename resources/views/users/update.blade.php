@@ -31,7 +31,7 @@
                 autofocus
                 autocomplete="given_name"
               />
-              <x-input-error class="mt-2" :messages="$errors->get('name')" />
+              <x-input-error class="mt-2" :messages="$errors->get('given_name')" />
             </div>
 
             <!-- Family Name -->

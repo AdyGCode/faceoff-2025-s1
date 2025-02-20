@@ -30,7 +30,7 @@
                 autofocus
                 autocomplete="given_name"
               />
-              <x-input-error class="mt-2" :messages="$errors->get('name')" />
+              <x-input-error class="mt-2" :messages="$errors->get('given_name')" />
             </div>
 
             <!-- Family Name -->
@@ -50,17 +50,17 @@
 
             <!-- Preferred Name -->
             <div class="mt-4">
-              <x-input-label for="preferred_name" :value="__('Preferred Name (Optional)')" />
+              <x-input-label for="name" :value="__('Preferred Name (Optional)')" />
               <x-text-input
                 class="mt-1 block w-full"
-                id="preferred_name"
-                name="preferred_name"
+                id="name"
+                name="name"
                 type="text"
-                :value="old('preferred_name')"
+                :value="old('name')"
                 autofocus
-                autocomplete="preferred_name"
+                autocomplete="name"
               />
-              <x-input-error class="mt-2" :messages="$errors->get('preferred_name')" />
+              <x-input-error class="mt-2" :messages="$errors->get('name')" />
             </div>
 
             <!-- Preferred Pronouns -->

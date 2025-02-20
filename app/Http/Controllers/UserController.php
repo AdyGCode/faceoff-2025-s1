@@ -39,7 +39,7 @@ class UserController extends Controller
   public function store(Request $request)
   {
     $validated = $request->validate([
-      'given_name' => ['required', 'nullable', 'min:2', 'max:255', 'string', 'sometimes'],
+      'given_name' => ['required_without:family_name', 'nullable', 'min:2', 'max:255', 'string', 'sometimes'],
       'family_name' => ['nullable', 'min:2', 'max:255', 'string', 'sometimes'],
       'name' => ['nullable', 'min:2', 'max:255', 'string'],
       'preferred_pronouns' => ['required', 'min:2', 'max:10', 'string'],
@@ -60,14 +60,12 @@ class UserController extends Controller
       }
     }
 
-    if (empty($request->profile_photo)) {
-      $validated['profile_photo'] = "avatar.png";
-    }
-
     if ($request->hasFile('profile_photo')) {
       $path = $request->file('profile_photo')->store('profile_photos', 'public');
       $validated['profile_photo'] = $path;
-  }
+    } else {
+      $validated['profile_photo'] = "avatar.png";
+    }
 
     // TODO: Assign the user's role
 
