@@ -13,14 +13,16 @@
           height="50"
         >
       </div>
-      <x-primary-button
-        class="bg-zinc-200 text-zinc-800 hover:bg-zinc-900 hover:text-white"
-        type="a"
-        href="{{ route('users.create') }}"
-      >
-        <i class="fa-solid fa-user-plus"></i>
-        <span class="pl-4">Add User</span>
-      </x-primary-button>
+      <form action="{{ route('users.create') }}">
+        <x-primary-button
+          class="bg-zinc-200 text-zinc-800 hover:bg-zinc-900 hover:text-white"
+          type="a"
+          href="{{ route('users.create') }}"
+        >
+          <i class="fa-solid fa-user-plus"></i>
+          <span class="pl-4">Add User</span>
+        </x-primary-button>
+      </form>
     </div>
   </x-slot>
 

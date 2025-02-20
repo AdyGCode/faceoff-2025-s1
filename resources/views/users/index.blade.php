@@ -4,14 +4,16 @@
       <h2 class="text-xl font-semibold leading-tight text-gray-800">
         {{ __('Face Off\'s User DB') }}
       </h2>
-      <x-primary-button
-        class="bg-zinc-200 text-zinc-800 hover:bg-zinc-900 hover:text-white"
-        type="a"
-        href="{{ route('users.create') }}"
-      >
-        <i class="fa-solid fa-user-plus"></i>
-        <span class="pl-4">Add User</span>
-      </x-primary-button>
+      <form action="{{ route('users.create') }}">
+        <x-primary-button
+          class="bg-zinc-200 text-zinc-800 hover:bg-zinc-900 hover:text-white"
+          type="a"
+          href="{{ route('users.create') }}"
+        >
+          <i class="fa-solid fa-user-plus"></i>
+          <span class="pl-4">Add User</span>
+        </x-primary-button>
+      </form>
     </div>
   </x-slot>
 

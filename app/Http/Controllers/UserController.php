@@ -58,6 +58,10 @@ class UserController extends Controller
         $validated['name'] = $validated['family_name'];
       }
     }
+
+    if (empty($request->profile_photo)) {
+        $validated['profile_photo'] = "avatar.png";
+    }
     
     // TODO: Assign the user's role
 
