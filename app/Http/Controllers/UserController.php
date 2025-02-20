@@ -45,7 +45,7 @@ class UserController extends Controller
       'preferred_pronouns' => ['required', 'min:2', 'max:10', 'string'],
       'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class,],
       'password' => ['required', 'confirmed', 'min:4', 'max:255', Password::defaults(),],
-      'profile_photo' => ['nullable', 'min:4', 'max:255'],
+      'profile_photo' => ['nullable', 'file', 'mimes:jpg,png,jpeg', 'max:51200'],
     ]);
 
 
@@ -63,6 +63,11 @@ class UserController extends Controller
     if (empty($request->profile_photo)) {
       $validated['profile_photo'] = "avatar.png";
     }
+
+    if ($request->hasFile('profile_photo')) {
+      $path = $request->file('profile_photo')->store('profile_photos', 'public');
+      $validated['profile_photo'] = $path;
+  }
 
     // TODO: Assign the user's role
 
@@ -134,7 +139,7 @@ class UserController extends Controller
       'preferred_pronouns' => ['required', 'min:2', 'max:10', 'string'],
       'email' => ['required', 'min:5', 'max:255', 'email', Rule::unique(User::class)->ignore($id),],
       'password' => $request->password ? ['required', 'confirmed', 'min:4', 'max:255', Password::defaults()] : [],
-      'profile_photo' => ['nullable', 'min:4', 'max:255'],
+      'profile_photo' => ['nullable', 'file', 'mimes:jpg,png,jpeg', 'max:51200'],
     ]);
 
     $user = User::where('id', '=', $id)->get()->first();
@@ -155,6 +160,12 @@ class UserController extends Controller
     if ($request->user()->isDirty('email')) {
       $request->user()->email_verified_at = null;
     }
+
+    if ($request->hasFile('profile_photo')) {
+      $path = $request->file('profile_photo')->store('profile_photos', 'public');
+      $user->profile_photo = $path;
+      $user->save();
+  }
 
 
     $user->update([

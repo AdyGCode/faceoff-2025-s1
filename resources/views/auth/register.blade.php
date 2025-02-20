@@ -1,5 +1,9 @@
 <x-guest-layout>
-  <form method="POST" action="{{ route('register') }}">
+  <form
+    method="POST"
+    action="{{ route('register') }}"
+    enctype="multipart/form-data"
+  >
     @csrf
 
     <!-- Given Name -->
@@ -122,9 +126,10 @@
         class="mt-1 block w-full"
         id="profile_photo"
         name="profile_photo"
+        accept=".jpg, .jpeg, .png"
         autofocus
       />
-
+      <p class="mt-1 text-sm text-gray-500">Acceptable formats: JPG, JPEG, PNG. Max size: 50KB</p>
       <x-input-error class="mt-2" :messages="$errors->get('profile_photo')" />
     </div>
 

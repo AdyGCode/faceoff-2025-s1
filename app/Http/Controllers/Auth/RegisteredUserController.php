@@ -33,11 +33,11 @@ class RegisteredUserController extends Controller
         $validated = $request->validate([
             'given_name' => ['nullable', 'min:2', 'max:255', 'string', 'required_without:family_name'],
             'family_name' => ['nullable', 'min:2', 'max:255', 'string', 'required_without:given_name'],
-            'sname' => ['nullable', 'min:2', 'max:255', 'string'],
+            'name' => ['nullable', 'min:2', 'max:255', 'string'],
             'preferred_pronouns' => ['required', 'min:2', 'max:10', 'string'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class,],
             'password' => ['required', 'confirmed', 'min:4', 'max:255', Password::defaults(),],
-            'profile_photo' => ['nullable', 'min:4', 'max:255'],
+            'profile_photo' => ['nullable', 'file', 'mimes:jpg,png,jpeg', 'max:51200'],
         ]);
 
         /**
@@ -51,6 +51,10 @@ class RegisteredUserController extends Controller
             }
         }
 
+        if ($request->hasFile('profile_photo')) {
+            $path = $request->file('profile_photo')->store('profile_photos', 'public');
+            $validated['profile_photo'] = $path;
+        }
 
         $user = User::create($validated);
         event(new Registered($user));
