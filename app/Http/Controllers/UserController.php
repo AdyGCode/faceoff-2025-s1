@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
@@ -47,7 +48,7 @@ class UserController extends Controller
       'profile_photo' => ['nullable', 'min:4', 'max:255'],
     ]);
 
-    
+
     /**
      * Check if name is not provided use given / family name as default
      */
@@ -60,9 +61,9 @@ class UserController extends Controller
     }
 
     if (empty($request->profile_photo)) {
-        $validated['profile_photo'] = "avatar.png";
+      $validated['profile_photo'] = "avatar.png";
     }
-    
+
     // TODO: Assign the user's role
 
     /**
@@ -131,8 +132,8 @@ class UserController extends Controller
       'family_name' => ['nullable', 'min:2', 'max:255', 'string', 'required_without:given_name'],
       'name' => ['nullable', 'min:2', 'max:255', 'string'],
       'preferred_pronouns' => ['required', 'min:2', 'max:10', 'string'],
-      'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class,],
-      'password' => ['required', 'confirmed', 'min:4', 'max:255', Password::defaults(),],
+      'email' => ['required', 'min:5', 'max:255', 'email', Rule::unique(User::class)->ignore($id),],
+      'password' => $request->password ? ['required', 'confirmed', 'min:4', 'max:255', Password::defaults()] : [],
       'profile_photo' => ['nullable', 'min:4', 'max:255'],
     ]);
 
@@ -151,11 +152,33 @@ class UserController extends Controller
 
     // TODO: Sync the user's role
 
-    if ($user->isDirty('email')) {
-      $user->email_verified_at = null;
+    if ($request->user()->isDirty('email')) {
+      $request->user()->email_verified_at = null;
     }
 
-    $user->save();
+
+    $user->update([
+      'given_name' => $validated['given_name'],
+      'family_name' => $validated['family_name'],
+      'name' => $validated['name'] ?? ($validated['given_name'] ?? $validated['family_name']),
+      'preferred_pronouns' => $validated['preferred_pronouns'],
+      'email' => $validated['email'],
+      'profile_photo' => $validated['profile_photo'] ?? $user->profile_photo,
+    ]);
+
+    if ($request->filled('password')) {
+      $user->password = bcrypt($validated['password']);
+      $user->save();
+    }
+
+    if ($request->hasFile('profile_photo')) {
+      $path = $request->file('profile_photo')->store('profile_photos', 'public');
+      $user->profile_photo = $path;
+      $user->save();
+    }
+
+
+
 
     return redirect(route('users.show', compact(['user'])))->with('success', 'User updated');
   }
