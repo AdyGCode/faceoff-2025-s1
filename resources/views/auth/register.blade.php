@@ -91,7 +91,6 @@
         id="password"
         name="password"
         type="password"
-        value="Password1"
         required
         autocomplete="new-password"
       />
@@ -108,7 +107,6 @@
         id="password_confirmation"
         name="password_confirmation"
         type="password"
-        value="Password1"
         required
         autocomplete="new-password"
       />
