@@ -26,6 +26,10 @@
     </div>
   </x-slot>
 
+  @auth
+    <x-flash-message :data="session()" />
+  @endauth
+
   <div class="py-2">
     <div class="mx-auto max-w-7xl sm:px-2 lg:px-4">
       <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">

@@ -45,7 +45,7 @@ class UserController extends Controller
       'preferred_pronouns' => ['required', 'min:2', 'max:10', 'string'],
       'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class,],
       'password' => ['required', 'confirmed', 'min:4', 'max:255', Password::defaults(),],
-      'profile_photo' => ['nullable', 'file', 'mimes:jpg,png,jpeg', 'max:51200'],
+      'profile_photo' => ['nullable', 'min:4', 'max:255'],
     ]);
 
 
