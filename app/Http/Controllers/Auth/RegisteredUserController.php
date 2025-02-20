@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
@@ -29,18 +30,29 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        $validated = $request->validate([
+            'given_name' => ['nullable', 'min:2', 'max:255', 'string', 'required_without:family_name'],
+            'family_name' => ['nullable', 'min:2', 'max:255', 'string', 'required_without:given_name'],
+            'sname' => ['nullable', 'min:2', 'max:255', 'string'],
+            'preferred_pronouns' => ['required', 'min:2', 'max:10', 'string'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class,],
+            'password' => ['required', 'confirmed', 'min:4', 'max:255', Password::defaults(),],
+            'profile_photo' => ['nullable', 'min:4', 'max:255'],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        /**
+         * Check if name is not provided use given / family name as default
+         */
+        if (empty($request->name)) {
+            if ($validated['given_name'] != null) {
+                $validated['name'] = $validated['given_name'];
+            } else {
+                $validated['name'] = $validated['family_name'];
+            }
+        }
 
+
+        $user = User::create($validated);
         event(new Registered($user));
 
         Auth::login($user);

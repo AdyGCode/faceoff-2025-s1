@@ -11,7 +11,6 @@
         name="given_name"
         type="text"
         :value="old('given_name')"
-        required
         autofocus
         autocomplete="given_name"
       />
@@ -27,7 +26,6 @@
         name="family_name"
         type="text"
         :value="old('family_name')"
-        required
         autofocus
         autocomplete="family_name"
       />
@@ -43,7 +41,6 @@
         name="preferred_name"
         type="text"
         :value="old('preferred_name')"
-        required
         autofocus
         autocomplete="preferred_name"
       />
@@ -80,7 +77,6 @@
         name="email"
         type="email"
         :value="old('email')"
-        required
         autocomplete="username"
       />
       <x-input-error class="mt-2" :messages="$errors->get('email')" />
@@ -95,6 +91,7 @@
         id="password"
         name="password"
         type="password"
+        value="Password1"
         required
         autocomplete="new-password"
       />
@@ -111,6 +108,7 @@
         id="password_confirmation"
         name="password_confirmation"
         type="password"
+        value="Password1"
         required
         autocomplete="new-password"
       />
@@ -119,7 +117,6 @@
     </div>
 
     <!-- Profile Photo -->
-    <!-- Profile Photo -->
     <div class="mt-4">
       <x-input-label for="profile_photo" :value="__('Profile Photo')" />
 
@@ -127,7 +124,6 @@
         class="mt-1 block w-full"
         id="profile_photo"
         name="profile_photo"
-        required
         autofocus
       />
 
