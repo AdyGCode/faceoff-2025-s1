@@ -1,15 +1,24 @@
 <nav class="border-b border-gray-100 bg-white" x-data="{ open: false }">
   <!-- Primary Navigation Menu -->
-  <div class="mx-auto max-w-7xl bg-[#F1D7D8] rounded-full mt-4 mr-4 px-4 sm:px-6 lg:px-8">
-    <div class="flex h-16 justify-between">
+  <div class="mx-auto bg-[#F1D7D8] rounded-full mt-4 mr-4 px-4 sm:px-6 lg:px-8">
+    <div class="flex h-12 justify-between -ml-12">
       <div class="flex">
         <!-- Navigation Links -->
-        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-          <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+        <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
+          <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard')">
             {{ __('Dashboard') }}
           </x-nav-link>
           <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
             {{ __('Users') }}
+          </x-nav-link>
+          <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard')">
+            {{ __('Links') }}
+          </x-nav-link>
+          <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard')">
+            {{ __('Links') }}
+          </x-nav-link>
+          <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard')">
+            {{ __('Links') }}
           </x-nav-link>
         </div>
       </div>
@@ -98,7 +107,7 @@
   <!-- Responsive Navigation Menu -->
   <div class="hidden sm:hidden" :class="{ 'block': open, 'hidden': !open }">
     <div class="space-y-1 pb-3 pt-2">
-      <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+      <x-responsive-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard')">
         {{ __('Dashboard') }}
       </x-responsive-nav-link>
     </div>

@@ -4,9 +4,9 @@
   <section {{ $attributes }}>
     <div class="{{ $bgColor }} {{ $textColor }} w-[300px] rounded-b-xl rounded-t-3xl px-8">
       <!-- Logo -->
-      <a href="{{ route('dashboard') }}">
+      <a href="{{ route('dashboard.index') }}">
         <div class="flex justify-center">
-          <div class="flex gap-4 p-4">
+          <div class="flex gap-4 py-4">
             <img
               src="https://www.northmetrotafe.wa.edu.au/themes/custom/tafewa_sites/images/logos/dtwd-logo-white.svg"
               alt=""

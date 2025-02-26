@@ -1,4 +1,4 @@
-<footer class="h-[50px] bg-[#424242]">
+<footer class="mt-4 h-[50px] rounded-t-xl bg-[#424242]">
   <div class="h-full flex justify-center items-center">
     <div>
       <div {{ $attributes }}>

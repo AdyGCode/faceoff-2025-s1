@@ -31,13 +31,13 @@
       userName="{{ $userName }}"
     ></x-aside-menu.index>
     <div class="flex-grow">
-      <div class="min-h-screen bg-gray-100">
+      <div class="min-h-screen">
         @include('layouts.navigation')
-
+        <div class="my-4"></div>
         <!-- Page Heading -->
         @isset($header)
-          <header class="bg-white shadow">
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <header class="bg-[#424242] border rounded-3xl mr-4 shadow-2xl">
+            <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
               {{ $header }}
             </div>
           </header>
@@ -45,7 +45,6 @@
 
         <!-- Page Content -->
         <main>
-          aaa
           {{ $slot }}
         </main>
 
