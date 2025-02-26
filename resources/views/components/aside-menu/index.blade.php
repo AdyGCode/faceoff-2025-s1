@@ -51,6 +51,7 @@
         />
         <x-aside-menu.menu-list title="Reports & Analytics" />
       </ul>
+      <x-aside-menu.social-links/>
     </div>
 
   </section>
