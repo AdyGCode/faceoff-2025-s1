@@ -2,7 +2,7 @@
   <x-slot name="header">
     <h2 class="text-xl font-extrabold leading-tight text-white">
       "Welcome back, {{ Str::upper(Auth::user()->name) }}!
-      Here's a quick overview of your students and classes today."
+     {{ $welcomeMessage }}
     </h2>
   </x-slot>
 

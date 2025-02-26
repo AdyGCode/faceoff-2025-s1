@@ -36,7 +36,7 @@
         <div class="my-4"></div>
         <!-- Page Heading -->
         @isset($header)
-          <header class="bg-[#424242] border rounded-3xl mr-4 shadow-2xl">
+          <header class="bg-[#424242] border rounded-3xl mr-4 shadow-lg">
             <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
               {{ $header }}
             </div>
