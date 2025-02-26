@@ -7,5 +7,4 @@
       </h2>
     </x-slot>
   </main>
-  </div>
 </x-app-layout>
