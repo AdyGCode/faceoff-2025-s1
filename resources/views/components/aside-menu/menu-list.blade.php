@@ -15,7 +15,7 @@
           @else
             <div class="flex w-8 items-center justify-center">
               <i class="fa-solid fa-check pr-2"></i>
-            </div>ß
+            </div>
           @endif
           <a href="{{ $submenu['url'] ?? '#' }}">{{ $submenu['name'] }}</a>
         </div>
