@@ -1,22 +1,24 @@
 <nav class="border-b border-gray-100 bg-white" x-data="{ open: false }">
   <!-- Primary Navigation Menu -->
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex h-16 justify-between">
+  <div class="mx-auto bg-[#F1D7D8] rounded-full mt-4 mr-4 px-4 sm:px-6 lg:px-8">
+    <div class="flex h-12 justify-between -ml-12">
       <div class="flex">
-        <!-- Logo -->
-        <div class="flex shrink-0 items-center">
-          <a href="{{ route('dashboard') }}">
-            <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-          </a>
-        </div>
-
         <!-- Navigation Links -->
-        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-          <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+        <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
+          <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
             {{ __('Dashboard') }}
           </x-nav-link>
           <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
             {{ __('Users') }}
+          </x-nav-link>
+          <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('#')">
+            {{ __('Links') }}
+          </x-nav-link>
+          <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('#')">
+            {{ __('Links') }}
+          </x-nav-link>
+          <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('#')">
+            {{ __('Links') }}
           </x-nav-link>
         </div>
       </div>
@@ -26,10 +28,12 @@
         <x-dropdown align="right" width="48">
           <x-slot name="trigger">
             <button
-              class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
+            class="inline-flex items-center rounded-md border border-transparent bg-[#D42329] px-3 py-2 text-sm font-medium leading-4 text-white transition duration-150 ease-in-out hover:text-white/70 focus:outline-none"
             >
-              <div>{{ Auth::user()->name }}</div>
-
+            <div class="mr-4">
+              <i class="fa-regular fa-bell"></i>
+            </div>
+              <i class="fa-solid fa-gear"></i>
               <div class="ms-1">
                 <svg
                   class="h-4 w-4 fill-current"
@@ -103,7 +107,7 @@
   <!-- Responsive Navigation Menu -->
   <div class="hidden sm:hidden" :class="{ 'block': open, 'hidden': !open }">
     <div class="space-y-1 pb-3 pt-2">
-      <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+      <x-responsive-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard')">
         {{ __('Dashboard') }}
       </x-responsive-nav-link>
     </div>

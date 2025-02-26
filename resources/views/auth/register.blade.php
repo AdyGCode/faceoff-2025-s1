@@ -123,7 +123,7 @@
       <x-input-label for="profile_photo" :value="__('Profile Photo')" />
 
       <x-file-input
-        class="mt-1 block w-full"
+        class="mt-1 block w-full p-1"
         id="profile_photo"
         name="profile_photo"
         accept=".jpg, .jpeg, .png"

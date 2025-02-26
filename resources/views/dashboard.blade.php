@@ -1,17 +1,25 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+<x-app-layout profilePhoto="{{ Auth::user()->profile_photo }}" userName="{{ Auth::user()->name }}">
+  <x-slot name="header">
+    <h2 class="text-xl font-extrabold leading-tight text-white">
+      "Welcome back, {{ Str::upper(Auth::user()->name) }}!
+     {{ $welcomeMessage }}
+    </h2>
+  </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div>
+  {{-- Display widgets, each on a separate row --}}
+  <div class="mt-4 flex flex-wrap gap-4 mr-4">
+    @foreach (array_chunk($widgets, 2) as $row)
+      <div class="flex w-full gap-4">
+        @foreach ($row as $widget)
+          <div class="w-1/2">
+            <x-widgets.dashboard-widget :title="$widget['title']" :count="$widget['count']">
+              <div class="w-[90%]">
+                {{ $widget['content'] }}
+              </div>
+            </x-widgets.dashboard-widget>
+          </div>
+        @endforeach
+      </div>
+    @endforeach
+  </div>
 </x-app-layout>

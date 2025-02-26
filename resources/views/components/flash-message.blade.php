@@ -7,9 +7,9 @@
   x-transition:fade.duration.1000ms
   :class="{
       '{{ $bgText }}': true,
-      '-mx-2': true,
+      '-mx-2': false,
       'flex': true,
-      'items-center': true,
+      'items-center': false,
       'overflow-hidden': true
   }"
 >
@@ -17,7 +17,7 @@
     <i class="{{ $icon }} {{ $fgColour }} min-w-24 text-5xl"></i>
   </section>
 
-  <div class="{{ $fgText }} px-6">
+  <div class="{{ $fgText }}">
     <h3 class="tracking-wider">{{ $type }}</h3>
     <p class="text-xl">{{ $message }}</p>
   </div>

@@ -1,7 +1,7 @@
-<x-app-layout>
+<x-app-layout profilePhoto="{{ Auth::user()->profile_photo }}" userName="{{ Auth::user()->name }}">
   <x-slot name="header">
     <div class="flex justify-between">
-      <h2 class="text-xl font-semibold leading-tight text-gray-800">
+      <h2 class="text-xl font-semibold leading-tight text-white">
         {{ __('Face Off\'s User Update') }}
       </h2>
     </div>
@@ -14,7 +14,7 @@
   <div class="py-2">
     <div class="mx-auto max-w-7xl sm:px-2 lg:px-4">
       <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-        <div class="p-4 text-gray-900">
+        <div class="pr-4 text-gray-900">
           <form method="POST" action="{{ route('users.update', $user->id) }}">
             @csrf
             @method('PUT')
@@ -134,7 +134,7 @@
               <x-input-label for="profile_photo" :value="__('Profile Photo')" />
 
               <x-file-input
-                class="mt-1 block w-full"
+                class="mt-1 block w-full p-1"
                 id="profile_photo"
                 name="profile_photo"
                 accept=".jpg, .jpeg, .png"
