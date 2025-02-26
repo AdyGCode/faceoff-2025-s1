@@ -52,7 +52,7 @@
       </div>
     </div>
     {{-- Footer section --}}
-    <x-footer class="font-[800] text-white" height="30" bgColor="black">All contents © Government of Western Australia 2025 . All rights reserved. </x-footer>
+    <x-footer class="font-[800] h-full text-white">All contents © Government of Western Australia 2025 . All rights reserved. </x-footer>
 </body>
 
 </html>
