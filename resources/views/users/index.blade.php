@@ -1,4 +1,5 @@
-<x-app-layout>
+
+<x-app-layout profilePhoto="{{ Auth::user()->profile_photo }}" userName="{{ Auth::user()->name }}">
   <x-slot name="header">
     <div class="flex justify-between">
       <h2 class="text-xl font-semibold leading-tight text-gray-800">

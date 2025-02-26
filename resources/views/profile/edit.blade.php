@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout profilePhoto="{{ Auth::user()->profile_photo }}" userName="{{ Auth::user()->name }}">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Profile') }}
@@ -25,5 +25,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </x-app-layout>

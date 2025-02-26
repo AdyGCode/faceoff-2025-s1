@@ -1,6 +1,6 @@
 <nav class="border-b border-gray-100 bg-white" x-data="{ open: false }">
   <!-- Primary Navigation Menu -->
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-7xl bg-[#F1D7D8] rounded-full mt-4 mr-4 px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 justify-between">
       <div class="flex">
         <!-- Navigation Links -->
@@ -19,10 +19,12 @@
         <x-dropdown align="right" width="48">
           <x-slot name="trigger">
             <button
-              class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
+            class="inline-flex items-center rounded-md border border-transparent bg-[#D42329] px-3 py-2 text-sm font-medium leading-4 text-white transition duration-150 ease-in-out hover:text-white/70 focus:outline-none"
             >
-              <div>{{ Auth::user()->name }}</div>
-
+            <div class="mr-4">
+              <i class="fa-regular fa-bell"></i>
+            </div>
+              <i class="fa-solid fa-gear"></i>
               <div class="ms-1">
                 <svg
                   class="h-4 w-4 fill-current"
