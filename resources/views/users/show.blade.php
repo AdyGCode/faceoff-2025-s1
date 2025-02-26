@@ -1,19 +1,19 @@
-<x-app-layout>
+<x-app-layout profilePhoto="{{ Auth::user()->profile_photo }}" userName="{{ Auth::user()->name }}">
   <x-slot name="header">
     <div class="flex justify-between">
       <div class="flex items-center">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800">
-          {{ __('Face Off\'s User Show') }}
-        </h2>
         <img
-          class="ml-4 rounded-full"
+          class="mr-4 rounded-full"
           src="../{{ $user->profile_photo }}"
           alt=""
           width="50"
           height="50"
         >
+        <h2 class="text-xl font-semibold leading-tight text-white">
+          {{ __('Face Off\'s User Show') }}
+        </h2>
       </div>
-      <a class="inline-flex items-center rounded bg-zinc-200 px-4 py-2 text-zinc-800 hover:bg-zinc-900 hover:text-white"
+      <a class="inline-flex items-center rounded  bg-[#939598] px-4 py-2 text-white hover:bg-zinc-900 hover:text-white"
         href="{{ route('users.create') }}"
       >
         <i class="fa-solid fa-user-plus"></i>
@@ -27,11 +27,11 @@
   @endauth
 
   <div class="py-2">
-    <div class="mx-auto max-w-7xl sm:px-2 lg:px-4">
+    <div class="mx-auto sm:px-2 lg:px-4">
       <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
         <div class="text-gray-900">
-          <article class="-mx-4">
-            <section class="mt-4 grid grid-cols-1 gap-4 px-4 sm:px-8">
+          <article class="-mx-7 pr-2">
+            <section class="mt-4 grid grid-cols-1 sm:px-8">
 
               <section class="min-w-full items-center overflow-hidden rounded border border-zinc-600 bg-zinc-50">
                 <div class="text-surface min-w-full text-left text-sm font-light dark:text-white">

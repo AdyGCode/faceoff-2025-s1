@@ -22,11 +22,10 @@
           </div>
         </div>
       </a>
-
       {{-- User Profile --}}
       <div class="flex">
         <x-aside-menu.user-profile-simple
-          profilePhoto="{{ $profilePhoto }}"
+          profilePhoto="{{ asset($profilePhoto) }}"
           userName="{{ $userName }}"
         />
       </div>

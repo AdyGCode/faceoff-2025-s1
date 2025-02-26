@@ -12,11 +12,11 @@
       <div class="flex w-full gap-4">
         @foreach ($row as $widget)
           <div class="w-1/2">
-            <x-dashboard-widget :title="$widget['title']" :count="$widget['count']">
+            <x-widgets.dashboard-widget :title="$widget['title']" :count="$widget['count']">
               <div class="w-[90%]">
                 {{ $widget['content'] }}
               </div>
-            </x-dashboard-widget>
+            </x-widgets.dashboard-widget>
           </div>
         @endforeach
       </div>
