@@ -12,7 +12,14 @@ return new class extends Migration {
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('package_id')->constrained()->OnDelete('cascade');
+            // A Course has one Package
+            $table->foreignId('package_id')->constrained()->onDelete('cascade');
+            $table->string('national_code');
+            $table->string('aqf_level');
+            $table->string('title');
+            $table->string('tga_status');
+            $table->string('status_code');
+            $table->string('nominal_hours');
             $table->timestamps();
         });
     }

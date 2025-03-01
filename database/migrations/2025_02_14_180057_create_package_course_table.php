@@ -12,7 +12,6 @@ return new class extends Migration {
     {
         Schema::create('package_course', function (Blueprint $table) {
             $table->foreignId('packages_id')->constrained()->cascadeOnDelete();
-            // Student IDs
             $table->foreignId('course_id')->constrained()->cascadeOnDelete();
             $table->primary(['packages_id', 'course_id']);
         });

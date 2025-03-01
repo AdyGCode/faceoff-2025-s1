@@ -12,6 +12,18 @@ class Cluster extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'code',
+        'title',
+        'qualification',
+        'qs_code',
+    ];
+
+    /**
      * A Cluster belongs to one or more Courses
      */
     public function course(): BelongsTo

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Package;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +27,14 @@ class DatabaseSeeder extends Seeder
             'profile_photo' => "avatar.png",
             'email_verified_at' => now(),
             'password' => Hash::make('Password1'),
+        ]);
+
+        Package::factory(9)->create();
+
+        Package::factory()->create([
+            'national_code' => 'ICT',
+            'title' => 'Information and Communications Technology',
+            'tga_status' => 'Current',
         ]);
     }
 }

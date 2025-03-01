@@ -28,4 +28,4 @@ Route::controller(UserController::class)->middleware(['auth', 'verified'])->grou
     Route::delete('/users/{user}', 'destroy')->name('users.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

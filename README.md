@@ -67,7 +67,9 @@ The project does NOT need a timetabling capability. It acts as a cheat sheet for
 ## Phase 1
 
 ### Authentication & Authorization, 5 - Gabriela
-- Role-based access control:
+- Role Setup (using Spatie)
+
+- Role-based access control: (Gabriela)
   - Super Admin: Full system access
   - Admin: System management
   - Staff: Class management
@@ -79,7 +81,7 @@ The project does NOT need a timetabling capability. It acts as a cheat sheet for
 - Domain whitelist management
 - Password security requirements
 
-### User Management - Daniel 
+### User Management - Cedric
 - Profile Requirements:
   - Given and/or Family name (at least one required)
   - Preferred name (optional)
@@ -93,7 +95,7 @@ The project does NOT need a timetabling capability. It acts as a cheat sheet for
 - Change request system for updates
 - Email verification and bounce checking
 
-### Course Management - Cedric
+### Course Management - Thomas
 - Data Structure:
   - Packages (contains multiple courses)
   - Courses (core, specialist, elective units)
@@ -130,7 +132,7 @@ The project does NOT need a timetabling capability. It acts as a cheat sheet for
 - Create and connect all database tables
   - php artisan migrations -m "models"
 
-  "Packages have one or more Courses, Courses have one Package"
+  "Packages has one or more Course, Courses have one Packages"
 
   "Courses have one or more units, units can be in one or more Courses."
 
@@ -141,6 +143,17 @@ The project does NOT need a timetabling capability. It acts as a cheat sheet for
   "ClassSessions have one Cluster, one Staff and one or more Students"
 
   "Students are enrolled into zero or more ClassSessions" 
+
+## Displays & Views
+- Dashboard View:
+  - Course section
+    - displays all course info 
+  - Class Session section
+    - displays the class session info that the student belongs to
+
+- Other Views:
+  - 
+
 
 <br>
 
@@ -236,12 +249,14 @@ The project does NOT need a timetabling capability. It acts as a cheat sheet for
 ## Data Structure
 - Package:
   - Course IDs
+  - National Code
   - Title
   - TGA Status
 
 <br>
 
 - Course:
+  - Package IDs
   - Cluster IDs
   - Unit IDs
   - National Code
@@ -250,14 +265,13 @@ The project does NOT need a timetabling capability. It acts as a cheat sheet for
   - TGA Status
   - State Code
   - Nominal Hours
-  - Type
-  - QA
   
 <br>
 
 - Cluster:
   - Short Code
   - Title
+  - Qualification
   - Unit IDs
 
 <br>

@@ -11,6 +11,19 @@ class Unit extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'national_code',
+        'title',
+        'tga_status',
+        'status_code',
+        'nominal_hours',
+    ];
+
+    /**
      * Units have one or more Courses
      */
     public function course(): BelongsTo
