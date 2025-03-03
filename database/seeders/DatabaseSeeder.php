@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             CoursesSeeder::class,
             UnitsSeeder::class,
             ClustersSeeder::class,
+            PivotSeeder::class,
         ]);
     }
 }

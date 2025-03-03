@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Unit extends Model
 {
@@ -26,16 +26,16 @@ class Unit extends Model
     /**
      * Units have one or more Courses
      */
-    public function course(): BelongsTo
+    public function course(): BelongsToMany
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsToMany(Course::class, 'course_unit');
     }
 
     /**
      * Units belongs to one or more Cluster
      */
-    public function cluster(): BelongsTo
+    public function cluster(): BelongsToMany
     {
-        return $this->belongsTo(Cluster::class);
+        return $this->belongsToMany(Cluster::class, 'cluster_unit');
     }
 }
