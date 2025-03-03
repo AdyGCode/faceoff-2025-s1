@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             PackagesSeeder::class,
             CoursesSeeder::class,
             UnitsSeeder::class,
+            ClustersSeeder::class,
         ]);
     }
 }
