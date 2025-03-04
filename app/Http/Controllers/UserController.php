@@ -185,9 +185,6 @@ class UserController extends Controller
       $user->save();
     }
 
-
-
-
     return redirect(route('users.show', compact(['user'])))->with('success', 'User updated');
   }
 
