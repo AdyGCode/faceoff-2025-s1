@@ -79,7 +79,6 @@ class UserController extends Controller
      */
     return redirect(route('users.index'))->with('success', 'User created');
 
-    // 
   }
 
 
@@ -163,7 +162,7 @@ class UserController extends Controller
       $path = $request->file('profile_photo')->store('profile_photos', 'public');
       $user->profile_photo = $path;
       $user->save();
-  }
+    }
 
 
     $user->update([
@@ -185,9 +184,6 @@ class UserController extends Controller
       $user->profile_photo = $path;
       $user->save();
     }
-
-
-
 
     return redirect(route('users.show', compact(['user'])))->with('success', 'User updated');
   }

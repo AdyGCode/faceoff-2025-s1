@@ -2,13 +2,13 @@
   <x-slot name="header">
     <div class="flex justify-between">
       <h2 class="text-xl font-semibold leading-tight text-gray-800">
-        {{ __('Face Off\'s User DB') }}
+        {{ __('Face Off\'s Packages ') }}
       </h2>
       <a class="inline-flex items-center rounded bg-zinc-200 px-4 py-2 text-zinc-800 hover:bg-zinc-900 hover:text-white"
-        href="{{ route('users.create') }}"
-      >
-        <i class="fa-solid fa-user-plus"></i>
-        <span class="pl-4">Add User</span>
+        href="{{ route('packages.create') }}">
+        
+        <i class="fa-solid fa-square-plus"></i>
+        <span class="pl-4">Add Package</span>
       </a>
     </div>
   </x-slot>
@@ -29,69 +29,62 @@
                 <table class="text-surface min-w-full text-left text-sm font-light dark:text-white">
                   <thead class="border-b border-neutral-200 bg-zinc-800 font-medium text-white dark:border-white/10">
                     <tr>
-                      <th
-                        class="px-6 py-4"
-                        width="10%"
-                        scope="col"
-                      >#</th>
-                      <th
-                        class="px-6 py-4"
-                        width="10%"
-                        scope="col"
-                      >Avatar</th>
-                      <th
-                        class="px-6 py-4"
-                        width="40%"
-                        scope="col"
-                      >Name (E-mail)</th>
-                      <th
-                        class="px-6 py-4"
-                        width="40%"
-                        scope="col"
-                      >Actions</th>
+                      <th class="px-6 py-4" width="10%" scope="col">#</th>
+                      <th class="px-6 py-4" width="20%" scope="col">National Code</th>
+                      <th class="px-6 py-4" width="40%" scope="col">Title</th>
+                      <th class="px-6 py-4" width="20%" scope="col">TGA Status</th>
+                      <th class="px-6 py-4" width="20%" scope="col">Actions</th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($packages as $package)
                       <tr class="border-b border-zinc-300 text-black dark:border-white/10">
+
                         <td class="whitespace-nowrap px-6 py-4 font-medium">
-                          {{ $loop->index + 1 + ($users->currentPage() - 1) * $users->perPage() }}</td>
-                        <td class="whitespace-nowrap px-6 py-4"><img
-                            class="rounded-full"
-                            src="{{ $user->profile_photo }}"
-                            alt="profile photo"
-                            width="50"
-                          >
+                          {{ $loop->index + 1 + ($packages->currentPage() - 1) * $packages->perPage() }}
                         </td>
-                        <td class="whitespace-nowrap px-6 py-4">🔖 {{ $user->name }}<br>📧: {{ $user->email }}</td>
+
+                        <td class="whitespace-nowrap px-6 py-4">
+                          {{ $package->national_code }}
+                        </td>
+
+                        <td class="whitespace-nowrap px-6 py-4">
+                          {{ $package->title }}
+                        </td>
+
+                        <td class="whitespace-nowrap px-6 py-4">
+                          {{ $package->tga_status }}
+                        </td>
+
                         <td class="whitespace-nowrap px-6 py-4">
                           <div class="flex gap-4">
-                            <form action="{{ route('users.show', $user) }}">
-                              <x-primary-button class="bg-zinc-800" href="{{ route('users.show', $user) }}">
+
+                            <form action="{{ route('packages.show', $package) }}">
+                              <x-primary-button class="bg-zinc-800" href="{{ route('packages.show', $package) }}">
                                 <span>Show </span>
                                 <i class="fa-solid fa-eye order-first pr-2"></i>
                               </x-primary-button>
                             </form>
-                            <form action="{{ route('users.edit', $user) }}" method="GET">
+
+                            <form action="{{ route('packages.edit', $package) }}" method="GET">
                               @csrf
-                              <x-primary-button class="bg-zinc-800" href="{{ route('users.edit', $user) }}">
+                              <x-primary-button class="bg-zinc-800" href="{{ route('packages.edit', $package) }}">
                                 <span>Edit </span>
                                 <i class="fa-solid fa-edit order-first pr-2"></i>
                               </x-primary-button>
                             </form>
-                            <form action="{{ route('users.destroy', $user) }}" method="POST">
+
+                            <form action="{{ route('packages.destroy', $package) }}" method="POST">
                               @csrf
                               @method('DELETE')
-                              <x-secondary-button
-                                class="bg-zinc-200"
-                                type="submit"
-                                onclick="return confirm('Are you sure you want to delete this user?')"
-                              >
+                              <x-secondary-button class="bg-zinc-200" type="submit"
+                                onclick="return confirm('Are you sure you want to delete this package?')">
                                 <span>Delete</span>
                                 <i class="fa-solid fa-times order-first pr-2"></i>
                               </x-secondary-button>
                             </form>
+
                           </div>
                         </td>
                       </tr>
@@ -101,29 +94,24 @@
                   <tfoot>
                     <tr class="bg-zinc-100">
                       <td class="px-6 py-2" colspan="5">
-                        @if ($users->hasPages())
-                          {{ $users->links() }}
-                        @elseif($users->total() === 0)
-                          <p class="py-2 text-sm text-zinc-800">No users found</p>
+                        @if ($packages->hasPages())
+                            {{ $packages->links() }}
+                        @elseif($packages->total() === 0)
+                          <p class="py-2 text-sm text-zinc-800">No packages found</p>
                         @else
-                          <p class="py-2 text-sm text-zinc-800">All users shown</p>
+                          <p class="py-2 text-sm text-zinc-800">All packages shown</p>
                         @endif
                       </td>
                     </tr>
                   </tfoot>
 
                 </table>
-
               </section>
-
             </section>
-
+          </article>
         </div>
-
-        </article>
-
       </div>
     </div>
   </div>
-  </div>
+
 </x-app-layout>

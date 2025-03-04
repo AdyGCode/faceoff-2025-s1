@@ -12,6 +12,11 @@ return new class extends Migration {
     {
         Schema::create('clusters', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
+            $table->string('title');
+            $table->string('qualification');
+            // Qualification State Code
+            $table->string('qs_code');
             $table->timestamps();
         });
     }

@@ -5,18 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Cluster extends Model
 {
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'code',
+        'title',
+        'qualification',
+        'qs_code',
+    ];
+
+    /**
      * A Cluster belongs to one or more Courses
      */
-    public function course(): BelongsTo
+    public function course(): BelongsToMany
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsToMany(Course::class, 'course_cluster');
     }
 
     /**
@@ -30,8 +42,8 @@ class Cluster extends Model
     /**
      * A Cluster has one or more Units
      */
-    public function unit(): HasMany
+    public function unit(): BelongsToMany
     {
-        return $this->hasMany(Unit::class);
+        return $this->belongsToMany(Unit::class, 'cluster_unit');
     }
 }

@@ -93,12 +93,13 @@
                         type="button"
                         onclick="window.location.href='{{ route('users.index', $user) }}'"
                       >
-                        Cancel
+                        Return
                       </x-primary-button>
                       <form action="{{ route('users.edit', $user) }}">
                         @csrf
                         <x-primary-button class="bg-zinc-800" href="">
                           Edit
+                          <i class="fa-solid fa-edit order-first pr-2"></i>
                         </x-primary-button>
                       </form>
                       <form action="{{ route('users.destroy', $user) }}" method="POST">

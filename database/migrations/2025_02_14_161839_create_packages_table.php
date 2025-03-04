@@ -12,7 +12,9 @@ return new class extends Migration {
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('courses_id')->constrained()->OnDelete('cascade');
+            $table->string('national_code');
+            $table->string('title');
+            $table->string('tga_status');
             $table->timestamps();
         });
     }
