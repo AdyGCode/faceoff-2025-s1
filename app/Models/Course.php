@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Course extends Model
 {
@@ -17,6 +18,7 @@ class Course extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'package_id',
         'national_code',
         'aqf_level',
         'title',
@@ -36,7 +38,7 @@ class Course extends Model
     /**
      * A Course has one or more Units
      */
-    public function unit(): BelongsToMany
+    public function units(): BelongsToMany
     {
         return $this->belongsToMany(Unit::class, 'course_unit');
     }
@@ -44,7 +46,7 @@ class Course extends Model
     /**
      * A Course has one or more Clusters
      */
-    public function cluster(): BelongsToMany
+    public function clusters(): BelongsToMany
     {
         return $this->belongsToMany(Cluster::class, 'course_cluster');
     }

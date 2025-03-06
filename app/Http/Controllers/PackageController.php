@@ -56,6 +56,7 @@ class PackageController extends Controller
      */
     public function show(string $id)
     {
+        // Gets the courseId
         $package = Package::with('courses')->find($id);
 
         if ($package) {

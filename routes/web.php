@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -37,6 +38,17 @@ Route::controller(PackageController::class)->middleware(['auth', 'verified'])->g
     Route::get('/packages/{package}/edit', 'edit')->name('packages.edit');
     Route::match(['put', 'patch'], '/packages/{package}', 'update')->name('packages.update');
     Route::delete('/packages/{package}', 'destroy')->name('packages.destroy');
+});
+
+Route::controller(CourseController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/courses', 'index')->name('courses.index');
+    Route::get('/courses/create', 'create')->name('courses.create');
+    Route::post('/courses', 'store')->name('courses.store');
+    Route::get('/courses/{course}', 'show')->name('courses.show');
+    Route::get('/courses/{course}/edit', 'edit')->name('courses.edit');
+    Route::match(['put', 'patch'], '/courses/{course}', 'update')->name('courses.update');
+    Route::delete('/courses/{course}', 'destroy')->name('courses.destroy');
+
 });
 
 require __DIR__ . '/auth.php';

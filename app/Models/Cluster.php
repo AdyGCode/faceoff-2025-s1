@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cluster extends Model
 {
@@ -42,8 +43,8 @@ class Cluster extends Model
     /**
      * A Cluster has one or more Units
      */
-    public function unit(): BelongsToMany
+    public function unit(): HasMany
     {
-        return $this->belongsToMany(Unit::class, 'cluster_unit');
+        return $this->hasMany(Unit::class, 'cluster_unit');
     }
 }

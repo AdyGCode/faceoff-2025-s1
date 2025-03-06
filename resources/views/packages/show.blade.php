@@ -7,7 +7,7 @@
         </h2>
       </div>
       <a class="inline-flex items-center rounded bg-zinc-200 px-4 py-2 text-zinc-800 hover:bg-zinc-900 hover:text-white"
-        href="#" {{-- {{ route('packages.create') }} --}}>
+        href="{{ route('packages.create') }}">
 
         <i class="fa-solid fa-square-plus"></i>
         <span class="pl-4">Add Package</span>
@@ -95,9 +95,12 @@
 
                       <ul class="flex flex-wrap gap-4">
                         @foreach($courses as $course)
-                        {{-- Trun these into link later --}}
                         <li class="whitespace-nowrap border-b border-zinc-200 dark:border-white/10">
-                          {{ $course->title }}
+                          <a 
+                            class="hover:underline hover:italic"
+                            href="{{ route('courses.show', $course->id) }}"> 
+                            {{ $course->title }}
+                          </a>
                         </li>
                         @endforeach
                       </ul>
