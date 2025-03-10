@@ -3,14 +3,14 @@
     <div class="flex justify-between">
       <div class="flex items-center">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-          {{ __('Face Off\'s Course Show') }}
+          {{ __('Face Off\'s Unit Show') }}
         </h2>
       </div>
       <a class="inline-flex items-center rounded bg-zinc-200 px-4 py-2 text-zinc-800 hover:bg-zinc-900 hover:text-white"
-        href="{{ route('courses.create') }}">
+        href="{{ route('units.create') }}">
 
         <i class="fa-solid fa-square-plus"></i>
-        <span class="pl-4">Add Course</span>
+        <span class="pl-4">Add Unit</span>
       </a>
     </div>
   </x-slot>
@@ -57,29 +57,45 @@
                       </p>
 
                       <p class=" border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">
+                        Status Code
+                      </p>
+
+                      <p class=" border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">
+                        Nominal Hours
+                      </p>
+
+                      <p class=" border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">
                         Last update
                       </p>
                     </div>
 
                     <div class="col-span-3">
                       <p class=" border-b border-zinc-200 px-6 py-4 dark:border-white/10">
-                        {{ $course->id }}
+                        {{ $unit->id }}
                       </p>
 
                       <p class=" border-b border-zinc-200 px-6 py-4 dark:border-white/10">
-                        {{ $course->national_code }}
+                        {{ $unit->national_code }}
                       </p>
 
                       <p class=" border-b border-zinc-200 px-6 py-4 dark:border-white/10">
-                        {{ $course->title}}
+                        {{ $unit->title}}
                       </p>
 
                       <p class=" border-b border-zinc-200 px-6 py-4 dark:border-white/10">
-                        {{ $course->tga_status }}
+                        {{ $unit->tga_status }}
                       </p>
 
                       <p class=" border-b border-zinc-200 px-6 py-4 dark:border-white/10">
-                        {{ $course->updated_at }}
+                        {{ $unit->status_code }}
+                      </p>
+
+                      <p class=" border-b border-zinc-200 px-6 py-4 dark:border-white/10">
+                        {{ $unit->nominal_hours }}
+                      </p>
+
+                      <p class=" border-b border-zinc-200 px-6 py-4 dark:border-white/10">
+                        {{ $unit->updated_at }}
                       </p>
 
                     </div>
@@ -87,39 +103,38 @@
 
                   {{-- Header --}}
                   <div class="grid grid-cols-6 border-b border-neutral-200 bg-zinc-800 font-medium text-white dark:border-white/10">
-                    <p class="col-span-2 border-b border-zinc-200 px-6 py-4 dark:border-white/10">Package</p>
-                    <p class="col-span-2 border-b border-zinc-200 px-6 py-4 dark:border-white/10">Clusters</p>
-                    <p class="col-span-2 border-b border-zinc-200 px-6 py-4 dark:border-white/10">Units</p>
+                    <p class="col-span-3 border-b border-zinc-200 px-6 py-4 dark:border-white/10">Course</p>
+                    <p class="col-span-3 border-b border-zinc-200 px-6 py-4 dark:border-white/10">Clusters</p>
                   </div>
 
                   <div class="grid grid-cols-6 gap-4 border-b border-neutral-200 bg-white px-6 py-4 font-medium text-zinc-800 dark:border-white/10">
                     
-                    {{-- Packages --}}
-                    <div class="col-span-2">
-                      @if ($course->package)
+                    {{-- Courses --}}
+                    <div class="col-span-3">
+                      @if ($unit->courses->isNotEmpty())
 
                         <ul class="flex flex-wrap gap-2">
-                          <li class=" border-b border-zinc-200 dark:border-white/10">
+                          @foreach($unit->courses as $course)
+                          <li class="border-b border-zinc-200 dark:border-white/10">
                             <a 
                               class="hover:underline hover:italic"
-                              href="{{ route('packages.show', $course->package->id) }}"> 
-
-                              {{ $course->package->title }} 
+                              href="{{ route('courses.show', $course->id) }}">
+                              {{ $course->title }} 
                             </a>
                           </li>
-                        </ul>
+                          @endforeach
 
                         @else
-                        <p class=" border-b border-zinc-200 dark:border-white/10">No Package allocated to this course.</p>
+                        <p class=" border-b border-zinc-200 dark:border-white/10">This Units is not allocated to a Course.</p>
                       @endif
                     </div>
 
                     {{-- Clusters --}}
-                    <div class="col-span-2">
-                      @if ($course->clusters->isNotEmpty())
+                    <div class="col-span-3">
+                      @if ($unit->clusters->isNotEmpty())
 
                         <ul class="flex flex-wrap gap-2">
-                          @foreach($course->clusters as $cluster)
+                          @foreach($unit->clusters as $cluster)
                           <li class="border-b border-zinc-200 dark:border-white/10">
                             <a 
                               class="hover:underline hover:italic"
@@ -131,52 +146,30 @@
                         </ul>
 
                         @else
-                        <p class=" border-b border-zinc-200 dark:border-white/10">No Cluster allocated to this course.</p>
+                        <p class=" border-b border-zinc-200 dark:border-white/10">This Units is not allocated to a Cluster.</p>
                       @endif
-                    </div>
-
-                    {{-- Units --}}
-                    <div class="col-span-2">
-                      @if ($course->units->isNotEmpty())
-
-                        <ul class="flex flex-wrap flex-col gap-2">
-                          @foreach($course->units as $unit)
-                          <li class="border-b border-zinc-200 dark:border-white/10">
-                            <a 
-                              class="hover:underline hover:italic"
-                              href="{{ route('units.show', $unit->id) }}">
-                              {{ $unit->title }} 
-                            </a>
-                          </li>
-                          @endforeach
-                        </ul>
-
-                        @else
-                        <p class=" border-b border-zinc-200 dark:border-white/10">No Units allocated to this course.</p>
-                      @endif
-                    </div>
-
+                    </div>                   
                   </div>
 
                   <footer
                     class="gid-cols-1 grid border-b border-neutral-200 px-6 py-4 font-medium text-zinc-800 dark:border-white/10">
                     <div class="flex gap-4">
                       <x-primary-button class="bg-zinc-800" type="button"
-                        onclick="window.location.href='{{ route('courses.index', $course) }}'">
+                        onclick="window.location.href='{{ route('units.index', $unit) }}'">
                         Return
                       </x-primary-button>
-                      <form action="{{ route('courses.edit', $course) }}">
+                      <form action="{{ route('units.edit', $unit) }}">
                         @csrf
                         <x-primary-button class="bg-zinc-800" href="">
                           Edit
                           <i class="fa-solid fa-edit order-first pr-2"></i>
                         </x-primary-button>
                       </form>
-                      <form action="{{ route('courses.destroy', $course) }}" method="POST">
+                      <form action="{{ route('units.destroy', $unit) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <x-secondary-button class="bg-zinc-200" type="submit"
-                          onclick="return confirm('Are you sure you want to delete this user?')">
+                          onclick="return confirm('Are you sure you want to delete this unit?')">
                           <span>Delete</span>
                           <i class="fa-solid fa-times order-first pr-2"></i>
                         </x-secondary-button>

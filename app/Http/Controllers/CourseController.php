@@ -41,6 +41,7 @@ class CourseController extends Controller
      */
     public function create()
     {
+        // Gets the package info
         $packages = Package::all();
 
         return view('courses.create', compact(['packages']));
@@ -55,7 +56,7 @@ class CourseController extends Controller
 
         Course::create($validated);
 
-        return redirect()->route('courses.index')->with('success','course Created');
+        return redirect()->route('courses.index')->with('success','Course Created');
     }
 
     /**
@@ -123,7 +124,7 @@ class CourseController extends Controller
 
         if ($course) {
             $course->delete();
-            return redirect(route('courses.index'))->with('success','course Deleted');
+            return redirect(route('courses.index'))->with('success','Course Deleted');
         } else {
             return back()->with('error','course Not Found');
         }
