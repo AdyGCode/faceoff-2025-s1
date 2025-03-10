@@ -27,7 +27,7 @@ class Cluster extends Model
     /**
      * A Cluster belongs to one or more Courses
      */
-    public function course(): BelongsToMany
+    public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class, 'course_cluster');
     }
@@ -43,8 +43,8 @@ class Cluster extends Model
     /**
      * A Cluster has one or more Units
      */
-    public function unit(): HasMany
+    public function units(): BelongsToMany
     {
-        return $this->hasMany(Unit::class, 'cluster_unit');
+        return $this->belongsToMany(Unit::class, 'cluster_unit');
     }
 }

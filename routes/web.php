@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProfileController;
@@ -49,6 +50,16 @@ Route::controller(CourseController::class)->middleware(['auth', 'verified'])->gr
     Route::get('/courses/{course}/edit', 'edit')->name('courses.edit');
     Route::match(['put', 'patch'], '/courses/{course}', 'update')->name('courses.update');
     Route::delete('/courses/{course}', 'destroy')->name('courses.destroy');
+});
+
+Route::controller(ClusterController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/clusters', 'index')->name('clusters.index');
+    Route::get('/clusters/create', 'create')->name('clusters.create');
+    Route::post('/clusters', 'store')->name('clusters.store');
+    Route::get('/clusters/{cluster}', 'show')->name('clusters.show');
+    Route::get('/clusters/{cluster}/edit', 'edit')->name('clusters.edit');
+    Route::match(['put', 'patch'], '/clusters/{cluster}', 'update')->name('clusters.update');
+    Route::delete('/clusters/{cluster}', 'destroy')->name('clusters.destroy');
 });
 
 Route::controller(UnitController::class)->middleware(['auth', 'verified'])->group(function () {

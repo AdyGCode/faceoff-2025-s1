@@ -21,9 +21,9 @@
           <x-nav-link :href="route('courses.index')" :active="request()->routeIs('courses.index')">
             {{ __('Courses') }}
           </x-nav-link>
-          {{-- <x-nav-link :href="route('clusters.index')" :active="request()->routeIs('clusters.index')">
+          <x-nav-link :href="route('clusters.index')" :active="request()->routeIs('clusters.index')">
             {{ __('Clusters') }}
-          </x-nav-link> --}}
+          </x-nav-link>
           <x-nav-link :href="route('units.index')" :active="request()->routeIs('units.index')">
             {{ __('Units') }}
           </x-nav-link>

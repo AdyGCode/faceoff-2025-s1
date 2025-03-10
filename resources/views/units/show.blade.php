@@ -138,7 +138,7 @@
                           <li class="border-b border-zinc-200 dark:border-white/10">
                             <a 
                               class="hover:underline hover:italic"
-                              href="#"> {{-- {{ route('clusters.show', $cluster->id) }} --}}
+                              href="{{ route('clusters.show', $cluster->id) }}">
                               {{ $cluster->title }} 
                             </a>
                           </li>
