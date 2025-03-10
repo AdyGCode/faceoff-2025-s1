@@ -26,7 +26,7 @@ class Unit extends Model
     /**
      * Units have one or more Courses
      */
-    public function course(): BelongsToMany
+    public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class, 'course_unit');
     }
@@ -34,7 +34,7 @@ class Unit extends Model
     /**
      * Units belongs to one or more Cluster
      */
-    public function cluster(): BelongsToMany
+    public function clusters(): BelongsToMany
     {
         return $this->belongsToMany(Cluster::class, 'cluster_unit');
     }

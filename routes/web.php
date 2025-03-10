@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\ClusterController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +40,36 @@ Route::controller(PackageController::class)->middleware(['auth', 'verified'])->g
     Route::get('/packages/{package}/edit', 'edit')->name('packages.edit');
     Route::match(['put', 'patch'], '/packages/{package}', 'update')->name('packages.update');
     Route::delete('/packages/{package}', 'destroy')->name('packages.destroy');
+});
+
+Route::controller(CourseController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/courses', 'index')->name('courses.index');
+    Route::get('/courses/create', 'create')->name('courses.create');
+    Route::post('/courses', 'store')->name('courses.store');
+    Route::get('/courses/{course}', 'show')->name('courses.show');
+    Route::get('/courses/{course}/edit', 'edit')->name('courses.edit');
+    Route::match(['put', 'patch'], '/courses/{course}', 'update')->name('courses.update');
+    Route::delete('/courses/{course}', 'destroy')->name('courses.destroy');
+});
+
+Route::controller(ClusterController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/clusters', 'index')->name('clusters.index');
+    Route::get('/clusters/create', 'create')->name('clusters.create');
+    Route::post('/clusters', 'store')->name('clusters.store');
+    Route::get('/clusters/{cluster}', 'show')->name('clusters.show');
+    Route::get('/clusters/{cluster}/edit', 'edit')->name('clusters.edit');
+    Route::match(['put', 'patch'], '/clusters/{cluster}', 'update')->name('clusters.update');
+    Route::delete('/clusters/{cluster}', 'destroy')->name('clusters.destroy');
+});
+
+Route::controller(UnitController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/units', 'index')->name('units.index');
+    Route::get('/units/create', 'create')->name('units.create');
+    Route::post('/units', 'store')->name('units.store');
+    Route::get('/units/{unit}', 'show')->name('units.show');
+    Route::get('/units/{unit}/edit', 'edit')->name('units.edit');
+    Route::match(['put', 'patch'], '/units/{unit}', 'update')->name('units.update');
+    Route::delete('/units/{unit}', 'destroy')->name('units.destroy');
 });
 
 require __DIR__ . '/auth.php';

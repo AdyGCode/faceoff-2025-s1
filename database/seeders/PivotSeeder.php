@@ -20,16 +20,16 @@ class PivotSeeder extends Seeder
          * Gets 1-5 random clusterIds and attaches them to a Course
          */
         foreach (Course::all() as $course) {
-            $course->cluster()->attach(
+            $course->clusters()->attach(
                 Cluster::inRandomOrder()->limit(rand(1, 5))->pluck('id')->toArray()
             );
         }
 
         /**
-         * Gets 5-10 random unitIds and attaches them to a Course
+         * Gets 5-20 random unitIds and attaches them to a Course
          */
         foreach (Course::all() as $course) {
-            $course->unit()->attach(
+            $course->units()->attach(
                 Unit::inRandomOrder()->limit(rand(5, 20))->pluck('id')->toArray()
             );
         }
@@ -38,7 +38,7 @@ class PivotSeeder extends Seeder
          * Gets 1-5 random unitIds and attaches them to a Cluster
          */
         foreach (Cluster::all() as $course) {
-            $course->unit()->attach(
+            $course->units()->attach(
                 Unit::inRandomOrder()->limit(rand(1, 5))->pluck('id')->toArray()
             );
         }
