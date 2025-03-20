@@ -83,8 +83,12 @@
             </div>
 
         </div>
-    </section>
 
+        <!-- Add this container next to the course section with larger and bold text -->
+        <div class="flex justify-between mt-8">
+            <h1 class="text-xl font-bold">If you want more information, please <a href="{{ route('login') }}" class="text-blue-600">log in</a> or <a href="{{ route('register') }}" class="text-blue-600">register</a>.</h1>
+        </div>
+    </section>
 
     <!-- About Section -->
     <section class="bg-gray-200 py-16 px-6">
