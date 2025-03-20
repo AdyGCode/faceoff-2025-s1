@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -27,7 +28,9 @@ class UserController extends Controller
    */
   public function create()
   {
-    return view('users.create');
+      $roles = Role::all();
+
+      return view('users.create', compact('roles'));
   }
 
   /**
@@ -46,6 +49,7 @@ class UserController extends Controller
       'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class,],
       'password' => ['required', 'confirmed', 'min:4', 'max:255', Password::defaults(),],
       'profile_photo' => ['nullable', 'min:4', 'max:255'],
+      'role' => ['required', 'exists:roles,id']
     ]);
 
 
@@ -67,14 +71,15 @@ class UserController extends Controller
       $validated['profile_photo'] = "avatar.png";
     }
 
-    // TODO: Assign the user's role
-
     /**
      * Create user after validated
      */
-    User::create($validated);
+      $user = User::create($validated);
 
-    /** 
+      // Assign the role to the user
+      $user->roles()->attach($request->role);
+
+    /**
      * Redirect with success message
      */
     return redirect(route('users.index'))->with('success', 'User created');
@@ -107,13 +112,14 @@ class UserController extends Controller
    */
   public function edit(string $id)
   {
-    $user = User::where('id', '=', $id)->get()->first();
+      $user = User::find($id);
 
-    if ($user) {
-      return view('users.update', compact(['user',]))->with('success', 'User Found');
-    } else {
-      return redirect(route('users.index'))->with('error', 'User not found');
-    }
+      if ($user) {
+          $roles = Role::all();
+          return view('users.update', compact('user', 'roles'))->with('success', 'User Found');
+      } else {
+          return redirect(route('users.index'))->with('error', 'User not found');
+      }
   }
 
   /**
@@ -137,6 +143,7 @@ class UserController extends Controller
       'email' => ['required', 'min:5', 'max:255', 'email', Rule::unique(User::class)->ignore($id),],
       'password' => $request->password ? ['required', 'confirmed', 'min:4', 'max:255', Password::defaults()] : [],
       'profile_photo' => ['nullable', 'file', 'mimes:jpg,png,jpeg', 'max:51200'],
+      'role' => ['required', 'exists:roles,id']
     ]);
 
     $user = User::where('id', '=', $id)->get()->first();
@@ -152,7 +159,8 @@ class UserController extends Controller
       }
     }
 
-    // TODO: Sync the user's role
+    // sync user role
+    $user->roles()->sync([$request->role]);
 
     if ($request->user()->isDirty('email')) {
       $request->user()->email_verified_at = null;
