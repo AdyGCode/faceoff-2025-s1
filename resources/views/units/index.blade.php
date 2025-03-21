@@ -2,7 +2,7 @@
   <x-slot name="header">
     <div class="flex justify-between">
       <h2 class="text-xl font-semibold leading-tight text-gray-800">
-        {{ __('Face Off\'s units ') }}
+        {{ __('Face Off\'s Units ') }}
       </h2>
       <a class="inline-flex items-center rounded bg-zinc-200 px-4 py-2 text-zinc-800 hover:bg-zinc-900 hover:text-white"
         href="{{ route('units.create') }}">
