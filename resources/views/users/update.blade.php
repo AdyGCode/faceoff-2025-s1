@@ -85,6 +85,20 @@
               <x-input-error class="mt-2" :messages="$errors->get('preferred_pronouns')" />
             </div>
 
+            <!-- Roles -->
+            <div class="mt-4">
+                <x-input-label for="role" :value="__('Role')" />
+                <select name="role" id="role" class="mt-1 block w-full" required>
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->id }}"
+                            {{ old('role', $user->roles->first() ? $user->roles->first()->id : null) == $role->id ? 'selected' : '' }}>
+                            {{ $role->name }}
+                        </option>
+                    @endforeach
+                </select>
+                <x-input-error class="mt-2" :messages="$errors->get('role')" />
+            </div>
+
             <!-- Email Address -->
             <div class="mt-4">
               <x-input-label for="email" :value="__('Email')" />
