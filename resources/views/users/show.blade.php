@@ -71,6 +71,10 @@
                       Preferred pronouns</p>
                     <p class="col-span-5 whitespace-nowrap border-b border-zinc-200 px-6 py-4 dark:border-white/10">
                       {{ $user->preferred_pronouns }}</p>
+                    <p class="col-span-1 whitespace-nowrap border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">
+                          Role</p>
+                    <p class="col-span-5 whitespace-nowrap border-b border-zinc-200 px-6 py-4 dark:border-white/10">
+                       {{ $user->roles->first() ? $user->roles->first()->name : 'No Role Assigned' }}</p>
                     <p
                       class="col-span-1 whitespace-nowrap border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">
                       Email</p>

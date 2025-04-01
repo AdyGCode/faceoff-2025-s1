@@ -12,26 +12,44 @@ class ClassSession extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'name',
+        'title',
+        'qualification',
+        'qs_code',
+    ];
+
+
+    /**
      * ClassSessions have one Cluster
      */
-    public function cluster(): HasOne
+    public function cluster(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasOne(Cluster::class);
+        return $this->belongsTo(Cluster::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**
      * ClassSessions have one User (Staff)
      */
-    public function staff(): HasOne
+    public function staff(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
      * ClassSessions have one or more Users (Students)
      */
-    public function students(): HasMany
+    public function students(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class);
     }
 }

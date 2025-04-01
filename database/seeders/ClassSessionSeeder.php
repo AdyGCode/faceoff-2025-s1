@@ -14,8 +14,11 @@ class ClassSessionSeeder extends Seeder
      */
     public function run()
     {
-        $clusters = Cluster::all();
-        $staff = User::where('role', 'staff')->get();
+        $clusters = Cluster::limit(10)->get();
+
+        $staff = User::whereHas('roles', function($query) {
+            $query->where('name', 'Staff');
+        })->get();
 
         foreach ($clusters as $cluster) {
             ClassSession::create([

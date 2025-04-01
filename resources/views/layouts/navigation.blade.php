@@ -24,12 +24,18 @@
           <x-nav-link :href="route('clusters.index')" :active="request()->routeIs('clusters.index')">
             {{ __('Clusters') }}
           </x-nav-link>
+            <x-nav-link :href="route('class_sessions.index')" :active="request()->routeIs('class_sessions.index')">
+                {{ __('Class Sessions') }}
+            </x-nav-link>
           <x-nav-link :href="route('units.index')" :active="request()->routeIs('units.index')">
             {{ __('Units') }}
           </x-nav-link>
           <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
             {{ __('Users') }}
           </x-nav-link>
+            <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.index')">
+                {{ __('Roles') }}
+            </x-nav-link>
         </div>
       </div>
 

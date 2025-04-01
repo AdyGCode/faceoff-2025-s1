@@ -9,12 +9,25 @@ use Illuminate\Http\Request;
 
 class ClassSessionController extends Controller
 {
+//    protected $sessionValidationRules;
+//
+//    /**
+//     * Validation Rules for class session data
+//     */
+//    public function __construct(){
+//        $this->sessionValidationRules = [
+//            'cluster_id' => ['required', 'string','min:2','max:255'],
+//            'user_id' => ['required', 'string', 'max:4'],
+//            'start_date' => ['required', 'string','max:4', 'uppercase'],
+//            'end_date' => ['required', 'string','max:4','uppercase'],
+//        ];
+//    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $classSessions = ClassSession::with(['cluster', 'staff', 'students'])->get();
+        $classSessions = ClassSession::paginate(10);
         return view('class_sessions.index', compact('classSessions'));
     }
 

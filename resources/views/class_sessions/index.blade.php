@@ -39,24 +39,24 @@
                                     </thead>
 
                                     <tbody>
-                                    @foreach ($classSessions as $session)
+                                    @foreach ($classSessions as $classSession)
                                         <tr class="border-b border-zinc-300 text-black dark:border-white/10">
                                             <td class="px-6 py-4 font-medium">
                                                 {{ $loop->index + 1 + ($classSessions->currentPage() - 1) * $classSessions->perPage() }}
                                             </td>
-                                            <td class="px-6 py-4">{{ $session->cluster->name }}</td>
-                                            <td class="px-6 py-4">{{ $session->staff->name }}</td>
-                                            <td class="px-6 py-4">{{ $session->start_date }}</td>
-                                            <td class="px-6 py-4">{{ $session->end_date }}</td>
+                                            <td class="px-6 py-4">{{ $classSession->cluster->title }}</td>
+                                            <td class="px-6 py-4">{{ $classSession->staff->given_name }}</td>
+                                            <td class="px-6 py-4">{{ $classSession->start_date }}</td>
+                                            <td class="px-6 py-4">{{ $classSession->end_date }}</td>
                                             <td class="px-6 py-4">
                                                 <div class="flex gap-4">
-                                                    <a class="bg-zinc-800 px-4 py-2 text-white rounded" href="{{ route('class_sessions.show', $session) }}">
+                                                    <a class="bg-zinc-800 px-4 py-2 text-white rounded" href="{{ route('class_sessions.show', $classSession) }}">
                                                         <i class="fa-solid fa-eye pr-2"></i> Show
                                                     </a>
-                                                    <a class="bg-zinc-800 px-4 py-2 text-white rounded" href="{{ route('class_sessions.edit', $session) }}">
+                                                    <a class="bg-zinc-800 px-4 py-2 text-white rounded" href="{{ route('class_sessions.edit', $classSession) }}">
                                                         <i class="fa-solid fa-edit pr-2"></i> Edit
                                                     </a>
-                                                    <form action="{{ route('class_sessions.destroy', $session) }}" method="POST">
+                                                    <form action="{{ route('class_sessions.destroy', $classSession) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="bg-zinc-200 px-4 py-2 text-black rounded"

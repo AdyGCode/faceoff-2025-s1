@@ -4,9 +4,11 @@ use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClassSessionController;
+use App\Models\Package;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,7 +16,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $packages = Package::all();
+
+    return view('dashboard', compact('packages'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -41,6 +45,16 @@ Route::controller(PackageController::class)->middleware(['auth', 'verified'])->g
     Route::get('/packages/{package}/edit', 'edit')->name('packages.edit');
     Route::match(['put', 'patch'], '/packages/{package}', 'update')->name('packages.update');
     Route::delete('/packages/{package}', 'destroy')->name('packages.destroy');
+});
+
+Route::controller(RoleController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/roles', 'index')->name('roles.index');
+    Route::get('/roles/create', 'create')->name('roles.create');
+    Route::post('/roles', 'store')->name('roles.store');
+    Route::get('/roles/{role}', 'show')->name('roles.show');
+    Route::get('/roles/{role}/edit', 'edit')->name('roles.edit');
+    Route::match(['put', 'patch'], '/roles/{role}', 'update')->name('roles.update');
+    Route::delete('/roles/{role}', 'destroy')->name('roles.destroy');
 });
 
 Route::controller(CourseController::class)->middleware(['auth', 'verified'])->group(function () {
