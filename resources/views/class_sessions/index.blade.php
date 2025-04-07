@@ -45,7 +45,9 @@
                                                 {{ $loop->index + 1 + ($classSessions->currentPage() - 1) * $classSessions->perPage() }}
                                             </td>
                                             <td class="px-6 py-4">{{ $classSession->cluster->title }}</td>
-                                            <td class="px-6 py-4">{{ $classSession->staff->given_name }}</td>
+                                            <!-- The lecturer's full name -->
+                                            <td class="px-6 py-4">{{ $classSession->staff?->given_name ?? '—' }}
+                                                {{ $classSession->staff?->family_name ?? '—' }}</td>
                                             <td class="px-6 py-4">{{ $classSession->start_date }}</td>
                                             <td class="px-6 py-4">{{ $classSession->end_date }}</td>
                                             <td class="px-6 py-4">

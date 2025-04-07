@@ -17,10 +17,16 @@ class ClassSession extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'name',
         'title',
-        'qualification',
-        'qs_code',
+        'cluster_id',
+        'user_id',
+        'start_date',
+        'end_date',
+    ];
+
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
     ];
 
 
@@ -42,7 +48,7 @@ class ClassSession extends Model
      */
     public function staff(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**

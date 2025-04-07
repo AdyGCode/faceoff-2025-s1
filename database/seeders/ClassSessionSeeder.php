@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\ClassSession;
 use App\Models\Cluster;
 use App\Models\User;
+use Carbon\Carbon;
 
 class ClassSessionSeeder extends Seeder
 {
@@ -21,9 +22,14 @@ class ClassSessionSeeder extends Seeder
         })->get();
 
         foreach ($clusters as $cluster) {
+            $start = Carbon::now()->addDays(rand(1, 14))->setTime(rand(8, 15), 0);
+            $end = (clone $start)->addHours(2);
+
             ClassSession::create([
                 'cluster_id' => $cluster->id,
                 'user_id' => $staff->random()->id,
+                'start_date' => $start,
+                'end_date' => $end,
             ]);
         }
     }

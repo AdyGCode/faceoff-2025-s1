@@ -9,25 +9,27 @@ use Illuminate\Http\Request;
 
 class ClassSessionController extends Controller
 {
-//    protected $sessionValidationRules;
-//
-//    /**
-//     * Validation Rules for class session data
-//     */
-//    public function __construct(){
-//        $this->sessionValidationRules = [
-//            'cluster_id' => ['required', 'string','min:2','max:255'],
-//            'user_id' => ['required', 'string', 'max:4'],
-//            'start_date' => ['required', 'string','max:4', 'uppercase'],
-//            'end_date' => ['required', 'string','max:4','uppercase'],
-//        ];
-//    }
+    protected $sessionValidationRules;
+
+    /**
+     * Validation Rules for class session data
+     */
+    public function __construct(){
+        $this->sessionValidationRules = [
+            'cluster_id' => ['required', 'exists:clusters,id'],
+            'user_id' => ['required', 'exists:users,id'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
+            'students' => ['nullable', 'array'],
+            'students.*' => ['exists:users,id'],
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $classSessions = ClassSession::paginate(10);
+        $classSessions = ClassSession::with(['cluster', 'staff'])->paginate(10);
         return view('class_sessions.index', compact('classSessions'));
     }
 
@@ -38,7 +40,8 @@ class ClassSessionController extends Controller
     {
         $clusters = Cluster::all();
         $staff = User::where('role', 'staff')->get();
-        return view('class_sessions.create', compact('clusters', 'staff'));
+        $students = User::where('role', 'student')->get();
+        return view('class_sessions.create', compact('clusters', 'staff', 'students'));
     }
 
     /**
@@ -46,12 +49,13 @@ class ClassSessionController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'cluster_id' => 'required|exists:clusters,id',
-            'user_id' => 'required|exists:users,id',
-        ]);
+        $validated = $request->validate($this->sessionValidationRules);
 
-        ClassSession::create($request->all());
+        $classSession = ClassSession::create($validated);
+
+        if ($classSession) {
+            $classSession->students()->attach($request->students);
+        }
 
         return redirect()->route('class_sessions.index')->with('success', 'Class session created successfully.');
     }
@@ -59,19 +63,25 @@ class ClassSessionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ClassSession $classSession)
+    public function show(string $id)
     {
-        return view('class_sessions.show', compact('classSession'));
+        $classSession = ClassSession::with(['cluster', 'staff'])->find($id);
+
+        if ($classSession) {
+            return view('class_sessions.show', compact('classSession'));
+        } else {
+            return redirect(route('class_sessions.index'))->with('error', 'Class session not found.');
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ClassSession $classSession)
+    public function edit(string $id)
     {
-        $clusters = Cluster::all();
+        $classSession = ClassSession::where('id', '=', $id)->get()->first();
         $staff = User::where('role', 'staff')->get();
-        return view('class_sessions.edit', compact('classSession', 'clusters', 'staff'));
+        return view('class_sessions.update', compact('classSession', 'classSession', 'staff'));
     }
 
     /**
@@ -82,6 +92,8 @@ class ClassSessionController extends Controller
         $request->validate([
             'cluster_id' => 'required|exists:clusters,id',
             'user_id' => 'required|exists:users,id',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
         $classSession->update($request->all());

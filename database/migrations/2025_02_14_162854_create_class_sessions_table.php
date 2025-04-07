@@ -17,6 +17,8 @@ return new class extends Migration {
             // Staff ID
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
         });
     }
 
