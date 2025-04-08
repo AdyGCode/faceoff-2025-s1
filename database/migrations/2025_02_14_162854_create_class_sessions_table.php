@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('class_sessions', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             // Cluster ID that the ClassSession belongs to
             $table->foreignId('cluster_id')->constrained()->onDelete('cascade');
             // Staff ID
