@@ -83,13 +83,13 @@
                                                     <i class="fa-solid fa-edit order-first pr-2"></i>
                                                 </x-primary-button>
                                             </form>
-                                            <form action="users.destroy" method="POST">
+                                            <form action="{{ route('roles.destroy', $role) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <x-secondary-button
                                                     class="bg-zinc-200"
                                                     type="submit"
-                                                    onclick="return confirm('Are you sure you want to delete this user?')"
+                                                    onclick="return confirm('Are you sure you want to delete this role?')"
                                                 >
                                                     <span>Delete</span>
                                                     <i class="fa-solid fa-times order-first pr-2"></i>

@@ -32,14 +32,14 @@
                   {{-- Header --}}
                   <div
                     class="grid grid-cols-6 border-b border-neutral-200 bg-zinc-800 font-medium text-white dark:border-white/10">
-                    <p class="col-span-1 border-b border-zinc-200 px-6 py-4 dark:border-white/10">Item</p>
+                    <p class="col-span-2 lg:col-span-1 border-b border-zinc-200 px-6 py-4 dark:border-white/10">Item</p>
 
                     <p class="col-span-3 border-b border-zinc-200 px-6 py-4 dark:border-white/10">Content</p>
                   </div>
 
                   <div class="grid grid-cols-6 border-b border-neutral-200 bg-white font-medium text-zinc-800 dark:border-white/10">
 
-                    <div class="col-span-1">
+                    <div class="col-span-2 lg:col-span-1">
                       <p class="whitespace-nowrap border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">
                         ID
                       </p>

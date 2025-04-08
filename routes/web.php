@@ -7,7 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
-use App\Models\Package;
+use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,9 +15,12 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $packages = Package::all();
+    $testCourse = Course::find(100);
+    $randomCourses = Course::where('id', '!=', 100)->inRandomOrder()->limit(8)->get();
+    
+    $courses = $testCourse ? $randomCourses->prepend($testCourse) : $randomCourses;
 
-    return view('dashboard', compact('packages'));
+    return view('dashboard', compact('courses'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -26,7 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::controller(UserController::class)->middleware(['auth', 'verified'])->group(function () {
+Route::controller(UserController::class)->middleware(['auth', 'verified', 'role:Super Admin| Admin'])->group(function () {
     Route::get('/users', 'index')->name('users.index');
     Route::get('/users/create', 'create')->name('users.create');
     Route::post('/users', 'store')->name('users.store');
@@ -36,17 +39,7 @@ Route::controller(UserController::class)->middleware(['auth', 'verified'])->grou
     Route::delete('/users/{user}', 'destroy')->name('users.destroy');
 });
 
-Route::controller(PackageController::class)->middleware(['auth', 'verified'])->group(function () {
-    Route::get('/packages', 'index')->name('packages.index');
-    Route::get('/packages/create', 'create')->name('packages.create');
-    Route::post('/packages', 'store')->name('packages.store');
-    Route::get('/packages/{package}', 'show')->name('packages.show');
-    Route::get('/packages/{package}/edit', 'edit')->name('packages.edit');
-    Route::match(['put', 'patch'], '/packages/{package}', 'update')->name('packages.update');
-    Route::delete('/packages/{package}', 'destroy')->name('packages.destroy');
-});
-
-Route::controller(RoleController::class)->middleware(['auth', 'verified'])->group(function () {
+Route::controller(RoleController::class)->middleware(['auth', 'verified', 'role:Super Admin'])->group(function () {
     Route::get('/roles', 'index')->name('roles.index');
     Route::get('/roles/create', 'create')->name('roles.create');
     Route::post('/roles', 'store')->name('roles.store');
@@ -56,7 +49,17 @@ Route::controller(RoleController::class)->middleware(['auth', 'verified'])->grou
     Route::delete('/roles/{role}', 'destroy')->name('roles.destroy');
 });
 
-Route::controller(CourseController::class)->middleware(['auth', 'verified'])->group(function () {
+Route::controller(PackageController::class)->middleware(['auth', 'verified', 'role:Super Admin|Admin|Staff'])->group(function () {
+    Route::get('/packages', 'index')->name('packages.index');
+    Route::get('/packages/create', 'create')->name('packages.create');
+    Route::post('/packages', 'store')->name('packages.store');
+    Route::get('/packages/{package}', 'show')->name('packages.show');
+    Route::get('/packages/{package}/edit', 'edit')->name('packages.edit');
+    Route::match(['put', 'patch'], '/packages/{package}', 'update')->name('packages.update');
+    Route::delete('/packages/{package}', 'destroy')->name('packages.destroy');
+});
+
+Route::controller(CourseController::class)->middleware(['auth', 'verified', 'role:Super Admin|Admin|Staff'])->group(function () {
     Route::get('/courses', 'index')->name('courses.index');
     Route::get('/courses/create', 'create')->name('courses.create');
     Route::post('/courses', 'store')->name('courses.store');
@@ -66,7 +69,7 @@ Route::controller(CourseController::class)->middleware(['auth', 'verified'])->gr
     Route::delete('/courses/{course}', 'destroy')->name('courses.destroy');
 });
 
-Route::controller(ClusterController::class)->middleware(['auth', 'verified'])->group(function () {
+Route::controller(ClusterController::class)->middleware(['auth', 'verified', 'role:Super Admin|Admin|Staff'])->group(function () {
     Route::get('/clusters', 'index')->name('clusters.index');
     Route::get('/clusters/create', 'create')->name('clusters.create');
     Route::post('/clusters', 'store')->name('clusters.store');
@@ -76,7 +79,7 @@ Route::controller(ClusterController::class)->middleware(['auth', 'verified'])->g
     Route::delete('/clusters/{cluster}', 'destroy')->name('clusters.destroy');
 });
 
-Route::controller(UnitController::class)->middleware(['auth', 'verified'])->group(function () {
+Route::controller(UnitController::class)->middleware(['auth', 'verified', 'role:Super Admin|Admin|Staff'])->group(function () {
     Route::get('/units', 'index')->name('units.index');
     Route::get('/units/create', 'create')->name('units.create');
     Route::post('/units', 'store')->name('units.store');

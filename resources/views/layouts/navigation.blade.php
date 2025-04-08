@@ -15,6 +15,10 @@
           <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
             {{ __('Dashboard') }}
           </x-nav-link>
+          
+          <!-- Class Session nav-link here -->
+
+          @role('Super Admin|Admin|Staff')
           <x-nav-link :href="route('packages.index')" :active="request()->routeIs('packages.index')">
             {{ __('Packages') }}
           </x-nav-link>
@@ -27,12 +31,20 @@
           <x-nav-link :href="route('units.index')" :active="request()->routeIs('units.index')">
             {{ __('Units') }}
           </x-nav-link>
+          @endrole
+
+          @role('Super Admin|Admin')
           <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
             {{ __('Users') }}
           </x-nav-link>
-            <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.index')">
-                {{ __('Roles') }}
-            </x-nav-link>
+          @endrole
+
+          @role('Super Admin')
+          <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.index')">
+              {{ __('Roles') }}
+          </x-nav-link>
+          @endrole
+
         </div>
       </div>
 
@@ -120,6 +132,21 @@
     <div class="space-y-1 pb-3 pt-2">
       <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
         {{ __('Dashboard') }}
+      </x-responsive-nav-link>
+      <x-responsive-nav-link :href="route('packages.index')" :active="request()->routeIs('packages.index')">
+        {{ __('Packages') }}
+      </x-responsive-nav-link>
+      <x-responsive-nav-link :href="route('courses.index')" :active="request()->routeIs('courses.index')">
+        {{ __('Courses') }}
+      </x-responsive-nav-link>
+      <x-responsive-nav-link :href="route('clusters.index')" :active="request()->routeIs('clusters.index')">
+        {{ __('Clusters') }}
+      </x-responsive-nav-linkk>
+      <x-responsive-nav-link :href="route('units.index')" :active="request()->routeIs('units.index')">
+        {{ __('Units') }}
+      </x-responsive-nav-link>
+      <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+        {{ __('Users') }}
       </x-responsive-nav-link>
     </div>
 
