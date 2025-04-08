@@ -30,6 +30,7 @@
                                     <thead class="border-b border-neutral-200 bg-zinc-800 font-medium text-white dark:border-white/10">
                                     <tr>
                                         <th class="px-6 py-4" width="10%" scope="col">#</th>
+                                        <th class="px-6 py-4" width="20%" scope="col">Title</th>
                                         <th class="px-6 py-4" width="20%" scope="col">Cluster</th>
                                         <th class="px-6 py-4" width="20%" scope="col">Lecturer</th>
                                         {{-- <th class="px-6 py-4" width="20%" scope="col">Students</th> --}}
@@ -45,6 +46,7 @@
                                             <td class="px-6 py-4 font-medium">
                                                 {{ $loop->index + 1 + ($classSessions->currentPage() - 1) * $classSessions->perPage() }}
                                             </td>
+                                            <td class="px-6 py-4">{{ $classSession->title }}</td>
                                             <td class="px-6 py-4">{{ $classSession->cluster->title }}</td>
                                             <!-- The lecturer's full name -->
                                             <td class="px-6 py-4">{{ $classSession->staff?->given_name ?? '—' }}

@@ -6,7 +6,7 @@
       </h2>
       <a class="inline-flex items-center rounded bg-zinc-200 px-4 py-2 text-zinc-800 hover:bg-zinc-900 hover:text-white"
         href="{{ route('clusters.create') }}">
-        
+
         <i class="fa-solid fa-square-plus"></i>
         <span class="pl-4">Add Cluster</span>
       </a>

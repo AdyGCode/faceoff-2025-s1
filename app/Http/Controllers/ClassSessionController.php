@@ -16,6 +16,7 @@ class ClassSessionController extends Controller
      */
     public function __construct(){
         $this->sessionValidationRules = [
+            'title' => ['required', 'string'],
             'cluster_id' => ['required', 'exists:clusters,id'],
             'user_id' => ['required', 'exists:users,id'],
             'start_date' => ['required', 'date'],
