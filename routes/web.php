@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClassSessionController;
 use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 
@@ -87,6 +88,16 @@ Route::controller(UnitController::class)->middleware(['auth', 'verified', 'role:
     Route::get('/units/{unit}/edit', 'edit')->name('units.edit');
     Route::match(['put', 'patch'], '/units/{unit}', 'update')->name('units.update');
     Route::delete('/units/{unit}', 'destroy')->name('units.destroy');
+});
+
+Route::controller(ClassSessionController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/class-sessions', 'index')->name('class_sessions.index');
+    Route::get('/class-sessions/create', 'create')->name('class_sessions.create');
+    Route::post('/class-sessions', 'store')->name('class_sessions.store');
+    Route::get('/class-sessions/{classSession}', 'show')->name('class_sessions.show');
+    Route::get('/class-sessions/{classSession}/edit', 'edit')->name('class_sessions.edit');
+    Route::match(['put', 'patch'], '/class-sessions/{classSession}', 'update')->name('class_sessions.update');
+    Route::delete('/class-sessions/{classSession}', 'destroy')->name('class_sessions.destroy');
 });
 
 require __DIR__ . '/auth.php';

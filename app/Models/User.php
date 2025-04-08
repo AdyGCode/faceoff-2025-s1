@@ -53,4 +53,18 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    public function staff(){
+        return $this->roles()->where('name', 'Staff');
+    }
+
+    public function students()
+    {
+        return $this->roles()->where('name', 'Student');
+    }
+
+    public function classSessions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(ClassSession::class, 'classsession_student', 'users_id', 'class_sessions_id');
+    }
 }

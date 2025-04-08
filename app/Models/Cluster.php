@@ -37,7 +37,7 @@ class Cluster extends Model
      */
     public function class_sessions(): BelongsTo
     {
-        return $this->belongsTo(ClassSession::class);
+        return $this->hasMany(ClassSession::class);
     }
 
     /**
