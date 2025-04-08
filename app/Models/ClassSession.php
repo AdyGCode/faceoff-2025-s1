@@ -17,6 +17,7 @@ class ClassSession extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'title',
         'cluster_id',
         'user_id',
         'start_date',
