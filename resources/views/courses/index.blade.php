@@ -106,7 +106,7 @@
                     <tr class="bg-zinc-100">
                       <td class="px-6 py-2" colspan="5">
                         @if ($courses->hasPages())
-                            {{ $courses->links() }}
+                            {{ $courses->links('pagination::tailwind') }}
                         @elseif($courses->total() === 0)
                           <p class="py-2 text-sm text-zinc-800">No courses found</p>
                         @else

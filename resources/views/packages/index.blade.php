@@ -95,7 +95,7 @@
                     <tr class="bg-zinc-100">
                       <td class="px-6 py-2" colspan="5">
                         @if ($packages->hasPages())
-                            {{ $packages->links() }}
+                            {{ $packages->links('pagination::tailwind') }}
                         @elseif($packages->total() === 0)
                           <p class="py-2 text-sm text-zinc-800">No packages found</p>
                         @else

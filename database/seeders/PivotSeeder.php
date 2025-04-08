@@ -42,5 +42,10 @@ class PivotSeeder extends Seeder
                 Unit::inRandomOrder()->limit(rand(1, 5))->pluck('id')->toArray()
             );
         }
+        
+        /**
+         * Finds the test Course and finds the test Unit and attaches them together.
+         */
+        //Course::find(100)->units()->attach(Unit::find(100)->pluck('id')->toArray());
     }
 }
