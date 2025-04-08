@@ -100,7 +100,7 @@
                     <tr class="bg-zinc-100">
                       <td class="px-6 py-2" colspan="5">
                         @if ($clusters->hasPages())
-                            {{ $clusters->links() }}
+                            {{ $clusters->links('pagination::tailwind') }}
                         @elseif($clusters->total() === 0)
                           <p class="py-2 text-sm text-zinc-800">No clusters found</p>
                         @else

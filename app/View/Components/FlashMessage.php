@@ -24,28 +24,28 @@ class FlashMessage extends Component
         $types = [
             'error' => [
                 'icon' => 'fa-solid fa-triangle-exclamation',
-                'fgColour' => 'text-white',
+                'fgColour' => 'text-black',
                 'bgColour' => 'bg-red-600',
                 'fgText' => 'text-red-900',
                 'bgText' => 'bg-red-100',
             ],
             'success' => [
                 'icon' => 'fa-solid fa-circle-check',
-                'fgColour' => 'text-white',
+                'fgColour' => 'text-black',
                 'bgColour' => 'bg-green-600',
                 'fgText' => 'text-green-900',
                 'bgText' => 'bg-green-100',
             ],
             'info' => [
                 'icon' => 'fa-solid fa-circle-info',
-                'fgColour' => 'text-white',
+                'fgColour' => 'text-black',
                 'bgColour' => 'bg-sky-600',
                 'fgText' => 'text-sky-900',
                 'bgText' => 'bg-sky-100',
             ],
             'warning' => [
                 'icon' => 'fa-solid fa-circle-exclamation',
-                'fgColour' => 'text-white',
+                'fgColour' => 'text-black',
                 'bgColour' => 'bg-amber-600',
                 'fgText' => 'text-amber-900',
                 'bgText' => 'bg-amber-100',

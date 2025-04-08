@@ -15,48 +15,56 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-
-        /* From Class-Tracker group work  and Adrian Gould's ChatGPT conversation */
-        $roleSuperAdmin = Role::whereName('Super Admin')->get();
-        $roleAdmin = Role::whereName('Admin')->get();
-        $roleStaff = Role::whereName('Staff')->get();
-        $roleStudent = Role::whereName('Student')->get();
-
-        $superAdmin = User::create([
+       $superAdmin = User::create([
             'given_name' => 'Thomas',
             'family_name' => 'Nicholas',
-            'name' => 'Thom',
+            'name' => 'Thomas Nicholas',
             'preferred_pronouns' => 'he/him',
             'email' => 'thomas@example.com',
             'profile_photo' => "avatar.png",
+            'email_verified_at' => now(),
             'password' => Hash::make('Password1'),
             'role' => 'super-admin',
-            'email_verified_at'=>now(),
         ]);
-        $superAdmin->assignRole([$roleSuperAdmin]);
+        $superAdmin->assignRole('Super Admin');
 
-        $user = User::create([
-            'given_name' => 'Test',
-            'family_name' => 'Dummy',
-            'name' => 'Td',
+        $admin = User::create([
+            'given_name' => 'Admin',
+            'family_name' => 'Tafe',
+            'name' => 'Admin Tafe',
             'preferred_pronouns' => 'he/him',
-            'email' => 'testdummy@example.com',
+            'email' => 'admin@example.com',
             'profile_photo' => "avatar.png",
+            'email_verified_at' => now(),
             'password' => Hash::make('Password1'),
             'role' => 'admin',
         ]);
-        $user->assignRole([$roleStudent]);
+        $admin->assignRole('Admin');
 
-        $user = User::create([
+        $staff = User::create([
             'given_name' => 'Staff',
-            'family_name' => 'Member',
-            'name' => 'SM',
+            'family_name' => 'Tafe',
+            'name' => 'Staff Tafe',
             'preferred_pronouns' => 'he/him',
-            'email' => 'staff.member@example.com',
+            'email' => 'staff@example.com',
             'profile_photo' => "avatar.png",
+            'email_verified_at' => now(),
             'password' => Hash::make('Password1'),
             'role' => 'staff',
         ]);
-        $user->assignRole([$roleStaff]);
+        $staff->assignRole('Staff');
+
+        $student = User::create([
+            'given_name' => 'Student',
+            'family_name' => 'Tafe',
+            'name' => 'Student Tafe',
+            'preferred_pronouns' => 'he/him',
+            'email' => 'student@example.com',
+            'profile_photo' => "avatar.png",
+            'email_verified_at' => now(),
+            'password' => Hash::make('Password1'),
+            'role' => 'student',
+        ]);
+        $student->assignRole('Student');
     }
 }
