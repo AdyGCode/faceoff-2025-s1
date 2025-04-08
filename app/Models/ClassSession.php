@@ -17,18 +17,17 @@ class ClassSession extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'title',
         'cluster_id',
         'user_id',
         'start_date',
         'end_date',
+        'students',
     ];
 
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
     ];
-
 
     /**
      * ClassSessions have one Cluster

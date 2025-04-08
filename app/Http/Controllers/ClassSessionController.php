@@ -51,9 +51,11 @@ class ClassSessionController extends Controller
     {
         $validated = $request->validate($this->sessionValidationRules);
 
-        $classSession = ClassSession::create($validated);
+        $sessionData = collect($validated)->except('students')->toArray();
 
-        if ($classSession) {
+        $classSession = ClassSession::create($sessionData);
+
+        if ($classSession && $request->has('students')) {
             $classSession->students()->attach($request->students);
         }
 
@@ -80,8 +82,10 @@ class ClassSessionController extends Controller
     public function edit(string $id)
     {
         $classSession = ClassSession::where('id', '=', $id)->get()->first();
+        $clusters = Cluster::all();
         $staff = User::where('role', 'staff')->get();
-        return view('class_sessions.update', compact('classSession', 'classSession', 'staff'));
+        $students = User::where('role', 'student')->get();
+        return view('class_sessions.update', compact( 'classSession', 'staff', 'clusters', 'students'));
     }
 
     /**
@@ -89,14 +93,13 @@ class ClassSessionController extends Controller
      */
     public function update(Request $request, ClassSession $classSession)
     {
-        $request->validate([
-            'cluster_id' => 'required|exists:clusters,id',
-            'user_id' => 'required|exists:users,id',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-        ]);
+        $validated = $request->validate($this->sessionValidationRules);
 
-        $classSession->update($request->all());
+        $sessionData = collect($validated)->except('students')->toArray();
+
+        $classSession->update($sessionData);
+
+        $classSession->students()->sync($request->students ?? []);
 
         return redirect()->route('class_sessions.index')->with('success', 'Class session updated successfully.');
     }

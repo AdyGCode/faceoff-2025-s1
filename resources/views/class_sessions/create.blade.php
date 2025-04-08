@@ -16,13 +16,6 @@
                     <form method="POST" action="{{ route('class_sessions.store') }}">
                         @csrf
 
-                        <!-- Title -->
-                        <div class="mt-4">
-                            <x-input-label for="title" :value="__('Title')" />
-                            <x-text-input class="mt-1 block w-full" id="title" name="title" type="text" :value="old('title')" required />
-                            <x-input-error class="mt-2" :messages="$errors->get('title')" />
-                        </div>
-
                         <!-- Cluster -->
                         <div class="mt-4">
                             <x-input-label for="cluster_id" :value="__('Cluster')" />
@@ -53,7 +46,7 @@
                                     <label class="flex items-center w-1/2 md:w-1/3 lg:w-1/4">
                                         <input
                                             type="checkbox"
-                                            name="student_id[]"
+                                            name="students[]"
                                             value="{{ $student->id }}"
                                             {{ in_array($student->id, old('student_id', [])) ? 'checked' : '' }}
                                             class="form-checkbox"
