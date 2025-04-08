@@ -18,14 +18,7 @@
 
                         <div class="mt-4">
                             <x-input-label for="title" :value="__('Title')" />
-                            <x-text-input class="mt-1 block w-full"
-                                id="title"
-                                name="title"
-                                type="text"
-                                :value="old('title')"
-                                autofocus
-                                required
-                            />
+                            <x-text-input class="mt-1 block w-full" id="title" name="title" type="text" required/>
                             <x-input-error class="mt-2" :messages="$errors->get('title')" />
                         </div>
 
