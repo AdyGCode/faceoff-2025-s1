@@ -16,6 +16,7 @@ class ClassSessionSeeder extends Seeder
     public function run()
     {
         $clusters = Cluster::limit(10)->get();
+        $students = User::where('role', 'student')->pluck('id');
 
         $staff = User::whereHas('roles', function($query) {
             $query->where('name', 'Staff');
@@ -25,12 +26,14 @@ class ClassSessionSeeder extends Seeder
             $start = Carbon::now()->addDays(rand(1, 14))->setTime(rand(8, 15), 0);
             $end = (clone $start)->addHours(2);
 
-            ClassSession::create([
+            $classSession = ClassSession::create([
                 'cluster_id' => $cluster->id,
                 'user_id' => $staff->random()->id,
                 'start_date' => $start,
                 'end_date' => $end,
             ]);
+
+            $classSession->students()->attach($students->random(rand(5, 10)));
         }
     }
 }

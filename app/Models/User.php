@@ -63,9 +63,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->roles()->where('name', 'Student');
     }
 
-    public function class_sessions()
+    public function classSessions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->hasMany(ClassSession::class);
+        return $this->belongsToMany(ClassSession::class, 'classsession_student', 'users_id', 'class_sessions_id');
     }
-
 }

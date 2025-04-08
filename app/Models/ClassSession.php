@@ -55,6 +55,6 @@ class ClassSession extends Model
      */
     public function students(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'classsession_student', 'class_sessions_id', 'users_id');
     }
 }

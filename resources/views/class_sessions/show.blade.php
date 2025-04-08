@@ -40,6 +40,7 @@
                                             <p class="border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">Start Date</p>
                                             <p class="border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">End Date</p>
                                             <p class="border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">Lecturer</p>
+                                            <p class="border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">Students</p>
                                         </div>
                                         <div class="col-span-3">
                                             <p class="border-b border-zinc-200 px-6 py-4 dark:border-white/10">{{ $classSession->id }}</p>
@@ -48,6 +49,17 @@
                                             <p class="border-b border-zinc-200 px-6 py-4 dark:border-white/10">{{ $classSession->end_date }}</p>
                                             <p class="border-b border-zinc-200 px-6 py-4 dark:border-white/10">{{ $classSession->staff?->given_name ?? '—' }}
                                                 {{ $classSession->staff?->family_name ?? '—' }}</p>
+                                            <div class="border-b border-zinc-200 px-6 py-4 dark:border-white/10">
+                                                @if($classSession->students->count())
+                                                    <ul class="list-disc list-inside">
+                                                        @foreach($classSession->students as $student)
+                                                            <li>{{ $student->given_name }} {{ $student->family_name }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                @else
+                                                    <span class="text-zinc-500 italic">No students</span>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
 
