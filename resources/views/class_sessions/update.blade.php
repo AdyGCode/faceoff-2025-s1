@@ -50,20 +50,20 @@
                         <!-- Students -->
                         <div class="mt-4">
                             <x-input-label for="students" :value="__('Students')"/>
-                            <div class="mt-1 w-full px-2 h-40 flex flex-wrap gap-4 overflow-y-auto">
+                            <div class="mt-1 w-full px-2 h-60 flex flex-wrap gap-4 overflow-y-auto">
                                 @php
                                     $selectedStudentIds = old('student_id', $classSession->students->pluck('id')->toArray());
                                 @endphp
 
                                 @foreach ($students as $student)
-                                    <label class="flex items-center w-1/2 md:w-1/3 lg:w-1/4">
+                                    <label class="flex items-center w-1/3 md:w-1/4 lg:w-1/5">
                                         <input
                                             type="checkbox"
                                             name="students[]"
                                             value="{{ $student->id }}"
                                             {{ in_array($student->id, old('students', $classSession->students->pluck('id')->toArray())) ? 'checked' : '' }}
                                         >
-                                        <span class="ml-2">{{ $student->given_name }} {{ $student->family_name }}</span>
+                                        <span class="ml-2">{{ $student->given_name }} {{ $student->family_name }}, ({{$student->name}})</span>
                                     </label>
                                 @endforeach
 

@@ -51,9 +51,9 @@
                                                 {{ $classSession->staff?->family_name ?? '—' }}</p>
                                             <div class="border-b border-zinc-200 px-6 py-4 dark:border-white/10">
                                                 @if($classSession->students->count())
-                                                    <ul class="list-disc list-inside">
+                                                    <ul class="flex flex-wrap gap-2">
                                                         @foreach($classSession->students as $student)
-                                                            <li>{{ $student->given_name }} {{ $student->family_name }}</li>
+                                                            <li>{{ $student->given_name }} {{ $student->family_name }}, ({{$student->name}})</li>
                                                         @endforeach
                                                     </ul>
                                                 @else
