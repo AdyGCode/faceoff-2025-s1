@@ -29,12 +29,12 @@
                 <table class="text-surface min-w-full text-left text-sm font-light dark:text-white">
                   <thead class="border-b border-neutral-200 bg-zinc-800 font-medium text-white dark:border-white/10">
                     <tr>
-                      <th class="px-6 py-4" width="10%" scope="col">#</th>
-                      <th class="px-6 py-4" width="20%" scope="col">Package</th>
-                      <th class="px-6 py-4" width="20%" scope="col">National Code</th>
-                      <th class="px-6 py-4" width="40%" scope="col">Title</th>
-                      <th class="px-6 py-4" width="20%" scope="col">TGA Status</th>
-                      <th class="px-6 py-4" width="20%" scope="col">Actions</th>
+                      <th class="px-6 py-4">#</th>
+                      <th class="px-6 py-4">Package</th>
+                      <th class="px-6 py-4">National Code</th>
+                      <th class="px-6 py-4">Title</th>
+                      <th class="px-6 py-4">TGA Status</th>
+                      <th class="px-6 py-4">Actions</th>
                     </tr>
                   </thead>
 
@@ -69,7 +69,7 @@
                         </td>
 
                         <td class="px-6 py-4">
-                          <div class="flex gap-4">
+                          <div class="flex gap-4 flex-wrap lg:flex-nowrap">
 
                             <form action="{{ route('courses.show', $course) }}">
                               <x-primary-button class="bg-zinc-800" href="{{ route('courses.show', $course) }}">
@@ -106,7 +106,7 @@
                     <tr class="bg-zinc-100">
                       <td class="px-6 py-2" colspan="5">
                         @if ($courses->hasPages())
-                            {{ $courses->links() }}
+                            {{ $courses->links('pagination::tailwind') }}
                         @elseif($courses->total() === 0)
                           <p class="py-2 text-sm text-zinc-800">No courses found</p>
                         @else

@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             'profile_photo' => "avatar.png",
             'email_verified_at' => now(),
             'password' => Hash::make('Password1'),
-            'role' => 'Student'
+            'role' => 'student'
         ]);
 
         $this->call([

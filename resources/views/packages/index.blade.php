@@ -41,24 +41,24 @@
                     @foreach ($packages as $package)
                       <tr class="border-b border-zinc-300 text-black dark:border-white/10">
 
-                        <td class="whitespace-nowrap px-6 py-4 font-medium">
+                        <td class="px-6 py-4 font-medium">
                           {{ $loop->index + 1 + ($packages->currentPage() - 1) * $packages->perPage() }}
                         </td>
 
-                        <td class="whitespace-nowrap px-6 py-4">
+                        <td class="px-6 py-4">
                           {{ $package->national_code }}
                         </td>
 
-                        <td class="whitespace-nowrap px-6 py-4">
+                        <td class="px-6 py-4">
                           {{ $package->title }}
                         </td>
 
-                        <td class="whitespace-nowrap px-6 py-4">
+                        <td class="px-6 py-4">
                           {{ $package->tga_status }}
                         </td>
 
-                        <td class="whitespace-nowrap px-6 py-4">
-                          <div class="flex gap-4">
+                        <td class="px-6 py-4">
+                          <div class="flex gap-4 flex-wrap lg:flex-nowrap">
 
                             <form action="{{ route('packages.show', $package) }}">
                               <x-primary-button class="bg-zinc-800" href="{{ route('packages.show', $package) }}">
@@ -95,7 +95,7 @@
                     <tr class="bg-zinc-100">
                       <td class="px-6 py-2" colspan="5">
                         @if ($packages->hasPages())
-                            {{ $packages->links() }}
+                            {{ $packages->links('pagination::tailwind') }}
                         @elseif($packages->total() === 0)
                           <p class="py-2 text-sm text-zinc-800">No packages found</p>
                         @else
