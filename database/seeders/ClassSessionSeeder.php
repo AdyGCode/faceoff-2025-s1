@@ -23,10 +23,12 @@ class ClassSessionSeeder extends Seeder
         })->get();
 
         foreach ($clusters as $cluster) {
+            $title = implode(' ', fake()->words(rand(2, 10)));
             $start = Carbon::now()->addDays(rand(1, 14))->setTime(rand(8, 15), 0);
             $end = (clone $start)->addHours(2);
 
             $classSession = ClassSession::create([
+                'title' => $title,
                 'cluster_id' => $cluster->id,
                 'user_id' => $staff->random()->id,
                 'start_date' => $start,

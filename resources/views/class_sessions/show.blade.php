@@ -37,6 +37,7 @@
                                         <div class="col-span-1">
                                             <p class="border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">ID</p>
                                             <p class="border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">Title</p>
+                                            <p class="border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">Cluster</p>
                                             <p class="border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">Start Date</p>
                                             <p class="border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">End Date</p>
                                             <p class="border-b border-zinc-200 bg-zinc-300 px-6 py-4 dark:border-white/10">Lecturer</p>
@@ -44,6 +45,7 @@
                                         </div>
                                         <div class="col-span-3">
                                             <p class="border-b border-zinc-200 px-6 py-4 dark:border-white/10">{{ $classSession->id }}</p>
+                                            <p class="border-b border-zinc-200 px-6 py-4 dark:border-white/10">{{ $classSession->title }}</p>
                                             <p class="border-b border-zinc-200 px-6 py-4 dark:border-white/10">{{ $classSession->cluster->title }}</p>
                                             <p class="border-b border-zinc-200 px-6 py-4 dark:border-white/10">{{ $classSession->start_date }}</p>
                                             <p class="border-b border-zinc-200 px-6 py-4 dark:border-white/10">{{ $classSession->end_date }}</p>
