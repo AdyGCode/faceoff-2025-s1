@@ -32,7 +32,7 @@
                                         <th class="px-6 py-4" width="10%" scope="col">#</th>
                                         <th class="px-6 py-4" width="20%" scope="col">Cluster</th>
                                         <th class="px-6 py-4" width="20%" scope="col">Lecturer</th>
-                                        <th class="px-6 py-4" width="20%" scope="col">Students</th>
+                                        {{-- <th class="px-6 py-4" width="20%" scope="col">Students</th> --}}
                                         <th class="px-6 py-4" width="20%" scope="col">Start Date</th>
                                         <th class="px-6 py-4" width="20%" scope="col">End Date</th>
                                         <th class="px-6 py-4" width="20%" scope="col">Actions</th>
@@ -49,7 +49,7 @@
                                             <!-- The lecturer's full name -->
                                             <td class="px-6 py-4">{{ $classSession->staff?->given_name ?? '—' }}
                                                 {{ $classSession->staff?->family_name ?? '—' }}</td>
-                                            <td class="px-6 py-4">
+                                            {{-- <td class="px-6 py-4">
                                                 @if($classSession->students->count())
                                                     <ul class="list-disc list-inside">
                                                         @foreach($classSession->students as $student)
@@ -59,7 +59,7 @@
                                                 @else
                                                     <span class="text-zinc-500 italic">No students</span>
                                                 @endif
-                                            </td>
+                                            </td> --}}
                                             <td class="px-6 py-4">{{ $classSession->start_date }}</td>
                                             <td class="px-6 py-4">{{ $classSession->end_date }}</td>
                                             <td class="px-6 py-4">
@@ -88,7 +88,7 @@
                                     <tr class="bg-zinc-100">
                                         <td class="px-6 py-2" colspan="6">
                                             @if ($classSessions->hasPages())
-                                                {{ $classSessions->links() }}
+                                                {{ $classSessions->links('pagination::tailwind') }}
                                             @elseif($classSessions->total() === 0)
                                                 <p class="py-2 text-sm text-zinc-800">No class sessions found</p>
                                             @else
