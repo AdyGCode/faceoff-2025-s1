@@ -7,13 +7,20 @@ use App\Models\Package;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\StorePackageRequest;
 use App\Http\Requests\v1\UpdatePackageRequest;
+use Illuminate\Http\JsonResponse;
 
+
+/**
+ * API V1 - PackageController
+ */
 class PackageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of all the Packages.
+     * 
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $packages = Package::all();
 
@@ -24,19 +31,27 @@ class PackageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Package in storage.
+     * 
+     * @param \App\Http\Requests\v1\StorePackageRequest $request
+     * @return JsonResponse
      */
-    public function store(StorePackageRequest $request)
+    public function store(StorePackageRequest $request): JsonResponse
     {
         $package = Package::create($request->all());
-        return ApiResponse::success($package, "Package Created", 201);
+
+        if ($package) {
+            return ApiResponse::success($package, "Package Created", 201);
+        }
+        return ApiResponse::error($package, "Package Not Created", code: 404);
     }  
 
     /**
      * Display the specified Package.
      * 
+     * @return JsonResponse
      */
-    public function show(Package $package)
+    public function show(Package $package): JsonResponse
     {
         $package = Package::findOrFail($package->id);
 
@@ -47,9 +62,12 @@ class PackageController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Package in storage.
+     * 
+     * @param \App\Http\Requests\v1\UpdatePackageRequest $request
+     * @return JsonResponse
      */
-    public function update(UpdatePackageRequest $request, package $package)
+    public function update(UpdatePackageRequest $request, Package $package): JsonResponse
     {
         $package = package::where('id', '=', $package->id)->get()->first();
 
@@ -63,16 +81,18 @@ class PackageController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Package from storage.
+     * 
+     * @return JsonResponse
      */
-    public function destroy(package $package)
+    public function destroy(package $package): JsonResponse
     {
         $package = package::find($package->id);
 
         if ($package) {
             $package->delete();
-            return ApiResponse::success($package,'package Succesfully Deleted');
+            return ApiResponse::success($package,'Package Succesfully Deleted');
         }
-        return ApiResponse::error($package,'package Not Deleted');
+        return ApiResponse::error($package,'Package Not Deleted');
     }
 }
