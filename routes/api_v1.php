@@ -2,6 +2,7 @@
 use App\Http\Controllers\Api\v1\PackageController;
 use App\Http\Controllers\Api\v1\CourseController;
 use App\Http\Controllers\Api\v1\ClusterController;
+use App\Http\Controllers\Api\v1\UnitController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,10 @@ Route::apiResource('courses', CourseController::class);
  *  - Update, Destroy (Auth required)
  */
 Route::apiResource('clusters', ClusterController::class);
+
+/**
+ * Units API Routes
+ *  - Index, Show (no-Auth)
+ *  - Update, Destroy (Auth required)
+ */
+Route::apiResource('units', UnitController::class);
