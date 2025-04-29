@@ -124,9 +124,17 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * Using 200 code instead of 204 due to shows deleted successfully message
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+        if (!$user) {
+            return ApiResponse::sendResponse(null, 'User not found', 404);
+        }
+
+        $user->delete();
+
+        return ApiResponse::sendResponse(null, 'User deleted successfully', 200);
     }
 }
