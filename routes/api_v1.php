@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
  *  - Index, Show (no-Auth)
  *  - Update, Destroy (Auth required)
  */
-Route::apiResource('users', UserController::class)->except("store", "show", "update", "destroy");
+Route::apiResource('users', UserController::class)->except("show", "update", "destroy");
 
 
 /**
