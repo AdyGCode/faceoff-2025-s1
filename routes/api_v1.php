@@ -12,9 +12,8 @@ use Illuminate\Support\Facades\Route;
  */
 
 /**
- * Packages API Routes
- *  - Index, Show (no-Auth)
- *  - Update, Destroy (Auth required)
+ * Users API Routes
+ *  - Index, create, Show, Update, Destroy (Auth required)
  */
 Route::apiResource('users', UserController::class)->middleware('auth:sanctum');
 
