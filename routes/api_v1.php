@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\PackageController;
 use App\Http\Controllers\Api\v1\CourseController;
 use App\Http\Controllers\Api\v1\ClusterController;
@@ -10,6 +12,14 @@ use Illuminate\Support\Facades\Route;
 /**
  * API Version 1 Routes
  */
+
+/**
+ * Users API Routes
+ *  - Index, create, Show, Update, Destroy (Auth required)
+ */
+Route::group(['prefix'=> 'auth'], function () {
+  Route::post('/login', [AuthController::class, 'login']);
+});
 
 /**
  * Users API Routes
