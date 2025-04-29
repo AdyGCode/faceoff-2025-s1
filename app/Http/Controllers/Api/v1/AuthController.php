@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\ApiResponse;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -45,10 +46,11 @@ class AuthController extends Controller
 
         $token = $user->createToken($request->email);
 
-        return [
+
+        return ApiResponse::success([
             'user' => $user,
-            'token' => $token->plainTextToken,
-        ];
+            'token' => $token->plainTextToken
+        ], 'You are registered successfully!', 201);
     }
 
     public function login(Request $request)
@@ -61,26 +63,24 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)){
-            return [
-                'message' => 'The provided credentials are incorrect.'
-            ];
+            return ApiResponse::error(null, 'The provided credentials are incorrect.', 401);
         }
+
 
         $token = $user->createToken($user->email);
 
-        return [
+
+        return ApiResponse::success([
             'user' => $user,
             'role' => $user->roles,
-            'token' => $token->plainTextToken,
-        ];
+            'token' => $token->plainTextToken
+        ], 'You are logged out.', 200);
     }
 
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
         
-        return [
-            'message' => 'You are logged out.'
-        ];
+        return ApiResponse::success(null, 'You are logged out.', 200);
     }
 }
