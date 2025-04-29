@@ -21,10 +21,10 @@ The project does NOT need a timetabling capability. It acts as a cheat sheet for
 ### Team Members
 
 - Adrian Gould [AdyGCode](https://github.com/AdyGCode) (Consulting Senior Dev)
-- Given Name [GITHUB USERNAME](https://github.com/GITHUB_USERNAME) (Developer)
-- Given Name [GITHUB USERNAME](https://github.com/GITHUB_USERNAME) (Developer)
-- Given Name [GITHUB USERNAME](https://github.com/GITHUB_USERNAME) (Developer)
-- Given Name [GITHUB USERNAME](https://github.com/GITHUB_USERNAME) (Developer)
+- Gabriela Morales [Gabriela20103967](https://github.com/Gabriela20103967) (Developer)
+- Luke Downes [LukeyTheFireCube](https://github.com/LukeyTheFireCube) (Developer)
+- Sukhwan Ko [yacmov](https://github.com/yacmov) (Developer)
+- Thomas Nicholas [CampFire-Nick](https://github.com/CampFire-Nick) (Developer)
 
 ## Roles and Permissions
 
