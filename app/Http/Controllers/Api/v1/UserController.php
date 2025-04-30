@@ -12,7 +12,13 @@ use Illuminate\Validation\Rules\Password;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the users.
+     *
+     * Retrieves all users from the database, orders them by ID in descending order,
+     * paginates the results to a maximum of 10 users per page, and returns them
+     * as a success API response with a status code of 200.
+     *
+     * @return ApiResponse
      */
     public function index()
     {
@@ -21,7 +27,13 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in storage.
+     *
+     * Validates incoming data, handles default name generation,
+     * uploads a profile photo if provided, and creates a new user record.
+     *
+     * @param  Request  $request
+     * @return ApiResponse
      */
     public function store(Request $request)
     {
@@ -35,9 +47,7 @@ class UserController extends Controller
             'profile_photo' => ['nullable', 'string', 'min:4', 'max:255'],
         ]);
 
-        /**
-         * Check if name is not provided use given / family name as default
-         */
+        // Generate default name if not provided
         if (empty($request->name)) {
             if ($validated['given_name'] != null) {
                 $validated['name'] = $validated['given_name'];
@@ -46,6 +56,7 @@ class UserController extends Controller
             }
         }
 
+        // Handle profile photo upload
         if ($request->hasFile('profile_photo')) {
             $path = $request->file('profile_photo')->store('profile_photos', 'public');
             $validated['profile_photo'] = $path;
@@ -59,7 +70,13 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified user.
+     *
+     * Retrieves a user record based on the provided ID.
+     * Returns a 404 response if the user is not found.
+     *
+     * @param  string  $id
+     * @return ApiResponse
      */
     public function show(string $id)
     {
@@ -72,7 +89,14 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified user in storage.
+     *
+     * Validates incoming data, handles default name generation,
+     * uploads a profile photo if provided, and updates the user record.
+     *
+     * @param  Request  $request
+     * @param  string  $id
+     * @return ApiResponse
      */
     public function update(Request $request, string $id)
     {
@@ -92,24 +116,23 @@ class UserController extends Controller
             return ApiResponse::sendResponse(null, 'User not found', 404);
         }
 
+        // Hash password if provided
         if (!empty($validated['password'])) {
             $validated['password'] = Hash::make($validated['password']);
         } else {
             unset($validated['password']);
         }
 
-        /**
-         * Check if name is not provided use given / family name as default
-         * If target user has their own name, it keeps previous value
-         */
+        // Generate default name if not provided and existing name is null
         if (empty($request->name) && $user['name'] === null) {
             if ($validated['given_name'] != null) {
                 $validated['name'] = $validated['given_name'];
             } else {
                 $validated['name'] = $validated['family_name'];
             }
-        } 
+        }
 
+        // Handle profile photo upload
         if ($request->hasFile('profile_photo')) {
             $path = $request->file('profile_photo')->store('profile_photos', 'public');
             $validated['profile_photo'] = $path;
@@ -123,8 +146,13 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     * Using 200 code instead of 204 due to shows deleted successfully message
+     * Remove the specified user from storage.
+     *
+     * Deletes the user record based on the provided ID.
+     * Returns a 404 response if the user is not found.
+     *
+     * @param  string  $id
+     * @return ApiResponse
      */
     public function destroy(string $id)
     {

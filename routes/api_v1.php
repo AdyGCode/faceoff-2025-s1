@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 /**
- * Users API Routes
+ * Auth API Routes
  *  - Register, Login (no-Auth)
  *  - Login User detail, Logout (Auth required)
  */

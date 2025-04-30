@@ -12,6 +12,15 @@ use Illuminate\Validation\Rules\Password;
 class AuthController extends Controller
 {
 
+    /**
+     * Register a new user.
+     *
+     * Validates the incoming request data, assigns a default name if not provided,
+     * handles profile photo upload, creates the user, and returns an authentication token.
+     *
+     * @param  Request  $request
+     * @return ApiResponse 
+     */
     public function register(Request $request)
     {
         $validated = $request->validate([
@@ -24,9 +33,7 @@ class AuthController extends Controller
             'profile_photo' => ['nullable', 'string', 'min:4', 'max:255'],
         ]);
 
-        /**
-         * Check if name is not provided use given / family name as default
-         */
+        // Generate default name if not provided
         if (empty($request->name)) {
             if ($validated['given_name'] != null) {
                 $validated['name'] = $validated['given_name'];
@@ -35,6 +42,7 @@ class AuthController extends Controller
             }
         }
 
+        // Handle profile photo upload
         if ($request->hasFile('profile_photo')) {
             $path = $request->file('profile_photo')->store('profile_photos', 'public');
             $validated['profile_photo'] = $path;
@@ -53,6 +61,15 @@ class AuthController extends Controller
         ], 'You are registered successfully!', 201);
     }
 
+    /**
+     * Authenticate a user and issue an access token.
+     *
+     * Validates the provided credentials, checks for user existence, and returns
+     * an authentication token upon successful authentication.
+     *
+     * @param  Request  $request 
+     * @return ApiResponse
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -62,7 +79,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)){
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return ApiResponse::error(null, 'The provided credentials are incorrect.', 401);
         }
 
@@ -77,10 +94,18 @@ class AuthController extends Controller
         ], 'You are logged out.', 200);
     }
 
+    /**
+     * Log out the authenticated user.
+     *
+     * Revokes all tokens associated with the authenticated user, effectively logging them out.
+     *
+     * @param  Request  $request
+     * @return ApiResponse
+     */
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
-        
+
         return ApiResponse::success(null, 'You are logged out.', 200);
     }
 }
