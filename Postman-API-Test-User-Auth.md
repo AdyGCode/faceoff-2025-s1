@@ -165,7 +165,7 @@ All endpoints below require `authentication`. Include the Authorization header w
 - **Request Token**: `Logged User Token`
 - **Results**
 
-![Status](/resources/img/auth/register.png)
+![Status](/resources/img/auth/201.png)
 ```json
 {
   "data": [
@@ -173,9 +173,7 @@ All endpoints below require `authentication`. Include the Authorization header w
       "id": 1,
       "name": "John",
       "email": "john.doe@example.com",
-      // other user fields
     },
-    // more users
   ],
   "links": {
     "first": "http://localhost:8000/api/v1/users?page=1",
