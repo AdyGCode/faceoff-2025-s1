@@ -91,7 +91,7 @@ class AuthController extends Controller
             'user' => $user,
             'role' => $user->roles,
             'token' => $token->plainTextToken
-        ], 'You are logged out.', 200);
+        ], 'You are logged in.', 200);
     }
 
     /**
