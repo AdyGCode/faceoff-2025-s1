@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "update": "composer install && composer update && npm install && npm update && php artisan migrate"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",

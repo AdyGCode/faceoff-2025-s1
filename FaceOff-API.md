@@ -45,3 +45,5 @@
 
 ## Postman Testing
 Postman testing should be conducted as additional testing by the original developer of said feature, with screenshots as evidence.
+
+[User & Auth](/Postman-API-Test-User-Auth.md)
