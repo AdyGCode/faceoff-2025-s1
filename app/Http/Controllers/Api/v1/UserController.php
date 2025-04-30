@@ -47,6 +47,8 @@ class UserController extends Controller
             'profile_photo' => ['nullable', 'string', 'min:4', 'max:255'],
         ]);
 
+        $validated['password'] = Hash::make($validated['password']);
+
         // Generate default name if not provided
         if (empty($request->name)) {
             if ($validated['given_name'] != null) {
@@ -56,13 +58,8 @@ class UserController extends Controller
             }
         }
 
-        // Handle profile photo upload
-        if ($request->hasFile('profile_photo')) {
-            $path = $request->file('profile_photo')->store('profile_photos', 'public');
-            $validated['profile_photo'] = $path;
-        } else {
-            $validated['profile_photo'] = "avatar.png";
-        }
+        // Handle profile photo set default
+        $validated['profile_photo'] = "avatar.png";
 
         $user = User::create($validated);
 
@@ -116,7 +113,7 @@ class UserController extends Controller
             return ApiResponse::sendResponse(null, 'User not found', 404);
         }
 
-        // Hash password if provided
+        // During update
         if (!empty($validated['password'])) {
             $validated['password'] = Hash::make($validated['password']);
         } else {
@@ -133,11 +130,8 @@ class UserController extends Controller
         }
 
         // Handle profile photo upload
-        if ($request->hasFile('profile_photo')) {
-            $path = $request->file('profile_photo')->store('profile_photos', 'public');
-            $validated['profile_photo'] = $path;
-        } else {
-            $validated['profile_photo'] = "avatar.png";
+        if ($request->profile_photo == "") {
+            unset($validated['profile_photo']);
         }
 
         $user->update($validated);

@@ -33,6 +33,9 @@ class AuthController extends Controller
             'profile_photo' => ['nullable', 'string', 'min:4', 'max:255'],
         ]);
 
+        // Hash password if provided
+        $validated['password'] = Hash::make($validated['password']);
+
         // Generate default name if not provided
         if (empty($request->name)) {
             if ($validated['given_name'] != null) {
@@ -42,13 +45,8 @@ class AuthController extends Controller
             }
         }
 
-        // Handle profile photo upload
-        if ($request->hasFile('profile_photo')) {
-            $path = $request->file('profile_photo')->store('profile_photos', 'public');
-            $validated['profile_photo'] = $path;
-        } else {
-            $validated['profile_photo'] = "avatar.png";
-        }
+        // Handle profile photo set default
+        $validated['profile_photo'] = "avatar.png";
 
         $user = User::create($validated);
 
