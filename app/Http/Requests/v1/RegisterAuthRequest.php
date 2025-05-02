@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+class RegisterAuthRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,13 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'given_name' => ['nullable', 'min:2', 'max:255', 'string'],
-            'family_name' => ['nullable', 'min:2', 'max:255', 'string'],
+            'given_name' => ['required_without:family_name', 'min:2', 'max:255', 'string'],
+            'family_name' => ['required_without:given_name', 'min:2', 'max:255', 'string'],
             'name' => ['nullable', 'min:2', 'max:255', 'string'],
-            'preferred_pronouns' => ['nullable', 'min:2', 'max:10', 'string'],
-            'email' => ['nullable', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['nullable', 'confirmed', 'min:4', 'max:255', Password::defaults()],
-            'profile_photo' => ['nullable', 'string', 'min:4', 'max:255'],
+            'preferred_pronouns' => ['required', 'min:2', 'max:10', 'string'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', 'min:4', 'max:255', Password::defaults()],
+            'profile_photo' => ['nullable', 'string', 'min:4', 'max:255']
         ];
     }
 }

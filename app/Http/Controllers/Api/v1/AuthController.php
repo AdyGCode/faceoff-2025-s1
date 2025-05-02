@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api\v1;
 use App\ApiResponse;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginAuthRequest;
+use App\Http\Requests\v1\RegisterAuthRequest;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
@@ -19,30 +21,18 @@ class AuthController extends Controller
      * handles profile photo upload, creates the user, and returns an authentication token.
      *
      * @param  Request  $request
-     * @return ApiResponse 
+     * @return JsonResponse 
      */
-    public function register(Request $request)
+    public function register(RegisterAuthRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'given_name' => ['required_without:family_name', 'min:2', 'max:255', 'string'],
-            'family_name' => ['required_without:given_name', 'min:2', 'max:255', 'string'],
-            'name' => ['nullable', 'min:2', 'max:255', 'string'],
-            'preferred_pronouns' => ['required', 'min:2', 'max:10', 'string'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', 'min:4', 'max:255', Password::defaults()],
-            'profile_photo' => ['nullable', 'string', 'min:4', 'max:255'],
-        ]);
+        $validated = $request->validated();
 
         // Hash password if provided
         $validated['password'] = Hash::make($validated['password']);
 
         // Generate default name if not provided
-        if (empty($request->name)) {
-            if ($validated['given_name'] != null) {
-                $validated['name'] = $validated['given_name'];
-            } else {
-                $validated['name'] = $validated['family_name'];
-            }
+        if (empty($validated['name'])) {
+            $validated['name'] = $validated['given_name'] ?? $validated['family_name'];
         }
 
         // Handle profile photo set default
@@ -66,14 +56,11 @@ class AuthController extends Controller
      * an authentication token upon successful authentication.
      *
      * @param  Request  $request 
-     * @return ApiResponse
+     * @return JsonResponse
      */
-    public function login(Request $request)
+    public function login(LoginAuthRequest $request): JsonResponse
     {
-        $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required', Password::defaults(),]
-        ]);
+        $request->validated();
 
         $user = User::where('email', $request->email)->first();
 
@@ -98,9 +85,9 @@ class AuthController extends Controller
      * Revokes all tokens associated with the authenticated user, effectively logging them out.
      *
      * @param  Request  $request
-     * @return ApiResponse
+     * @return JsonResponse
      */
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
         $request->user()->tokens()->delete();
 
