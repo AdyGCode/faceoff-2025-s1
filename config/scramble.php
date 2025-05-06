@@ -29,7 +29,12 @@ return [
         /*
          * Description rendered on the home page of the API documentation (`/docs/api`).
          */
-        'description' => 'API Documentation for the Face Off API.',
+        'description' => '## Documentation for the Face Off API.
+        API Endpoints:
+            - Packages
+            - Courses
+            - Clusters
+            - Units',
     ],
 
     /*
