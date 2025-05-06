@@ -47,3 +47,27 @@
 Postman testing should be conducted as additional testing by the original developer of said feature, with screenshots as evidence.
 
 - [x] [User & Auth - Cedric](/Postman-API-Test-User-Auth.md)
+<br>
+
+
+# Future Project Versions
+
+## V2
+
+Once Pest testing has been developed and completed use the results / feedback from it to further develop the project.
+
+## V3
+
+As per the assessment "AT2-POR-Pt1" (the blue highlighted bits) we are missing the: 
+
+### Location
+Which involves the Campus, Building & Room which should have their own seperate CRUD or BRED operations.
+
+### User
+Is also missing some parts being:
+- Staff / Student ID
+- Alternative email 
+- Status
+
+### API Core Content
+Pivot table data/ relation within the API responce should be paginated to (depending on the type, min 10). 
