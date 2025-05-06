@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\ClusterController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\PackageController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UnitController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ClassSessionController;
+use App\Http\Controllers\Web\ClusterController;
+use App\Http\Controllers\Web\CourseController;
+use App\Http\Controllers\Web\PackageController;
+use App\Http\Controllers\Web\ProfileController;
+use App\Http\Controllers\Web\RoleController;
+use App\Http\Controllers\Web\UnitController;
+use App\Http\Controllers\Web\UserController;
+use App\Http\Controllers\Web\ClassSessionController;
 use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 

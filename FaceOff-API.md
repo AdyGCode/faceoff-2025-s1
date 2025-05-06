@@ -29,7 +29,7 @@
 
 - [ ] RoleController - Gabriela
 - [x] UserController - Cedric
-- [ ] Cluster, Course, Package, Unit Controllers - Thomas
+- [x] Cluster, Course, Package, Unit Controllers - Thomas
 - [ ] ClassSessionController - Luke
 
 
