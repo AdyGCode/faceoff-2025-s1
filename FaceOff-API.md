@@ -38,7 +38,7 @@
 
 ## Review Code and Write Pest Tests for:
 - [ ] Thomas - Authentication & Authorization
-- [ ] Gabriela - Course Management
+- [ ] Gabriela - Core Content Management
 - [ ] Cedric - Class Session Management
 - [ ] Luke - User Management
 

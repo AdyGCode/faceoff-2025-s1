@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginAuthRequest;
+use App\Http\Requests\v1\LoginAuthRequest;
 use App\Http\Requests\v1\RegisterAuthRequest;
 use Illuminate\Support\Facades\Hash;
 
