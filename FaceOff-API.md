@@ -29,7 +29,7 @@
 
 - [ ] RoleController - Gabriela
 - [x] UserController - Cedric
-- [ ] Cluster, Course, Package, Unit Controllers - Thomas
+- [x] Cluster, Course, Package, Unit Controllers - Thomas
 - [ ] ClassSessionController - Luke
 
 
@@ -38,7 +38,7 @@
 
 ## Review Code and Write Pest Tests for:
 - [ ] Thomas - Authentication & Authorization
-- [ ] Gabriela - Course Management
+- [ ] Gabriela - Core Content Management
 - [ ] Cedric - Class Session Management
 - [ ] Luke - User Management
 

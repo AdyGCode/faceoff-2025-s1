@@ -15,9 +15,7 @@
           <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
             {{ __('Dashboard') }}
           </x-nav-link>
-          
-          <!-- Class Session nav-link here -->
-
+        
           @role('Super Admin|Admin|Staff')
           <x-nav-link :href="route('packages.index')" :active="request()->routeIs('packages.index')">
             {{ __('Packages') }}

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use App\Models\Cluster;
 use App\Models\Course;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ClusterController extends Controller
 {
