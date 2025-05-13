@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use App\ApiResponse;
 
 class PermissionController extends Controller
 {
@@ -25,7 +26,13 @@ class PermissionController extends Controller
             'name' => 'required|unique:permissions,name',
         ]);
 
-        return Permission::create(['name' => $request->name]);
+        $permission = Permission::create(['name' => $request->name]);
+
+        return ApiResponse::success(
+            $permission,
+            'Permission created successfully.',
+            201
+        );
     }
 
     /**
@@ -33,7 +40,10 @@ class PermissionController extends Controller
      */
     public function show(Permission $permission)
     {
-        return $permission;
+        return ApiResponse::success(
+            $permission,
+            'Permission retrieved successfully.',
+        );
     }
 
     /**
@@ -47,7 +57,10 @@ class PermissionController extends Controller
 
         $permission->update(['name' => $request->name]);
 
-        return $permission;
+        return ApiResponse::success(
+            $permission,
+            'Permission updated successfully.',
+        );
     }
 
     /**
@@ -56,6 +69,11 @@ class PermissionController extends Controller
     public function destroy(Permission $permission)
     {
         $permission->delete();
-        return response()->noContent();
+
+        return ApiResponse::success(
+            [],
+            'Permission deleted successfully.',
+            204
+        );
     }
 }

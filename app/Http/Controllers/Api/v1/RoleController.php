@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\ApiResponse;
 
 class RoleController extends Controller
 {
@@ -33,7 +34,11 @@ class RoleController extends Controller
             $role->syncPermissions($request->permissions);
         }
 
-        return response()->json($role->load('permissions'), 201);
+        return ApiResponse::success(
+            $role->load('permissions'),
+            'Role created successfully',
+            201
+        );
     }
 
     /**
@@ -41,7 +46,10 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        return $role->load('permissions');
+        return ApiResponse::success(
+            $role->load('permissions'),
+            'Role retrieved successfully',
+        );
     }
 
     /**
@@ -60,7 +68,10 @@ class RoleController extends Controller
             $role->syncPermissions($request->permissions);
         }
 
-        return $role->load('permissions');
+        return ApiResponse::success(
+            $role->load('permissions'),
+            'Role updated successfully',
+        );
     }
 
     /**
@@ -69,6 +80,6 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $role->delete();
-        return response()->noContent();
+        return ApiResponse::success([], 'Role deleted successfully.', 204);
     }
 }
