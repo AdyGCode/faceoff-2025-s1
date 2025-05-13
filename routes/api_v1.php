@@ -75,3 +75,7 @@ Route::apiResource('roles', RoleController::class)->middleware('auth:sanctum');
  *  - Index, Create, Show, Update, Destroy (Auth required)
  */
 Route::apiResource('permissions', PermissionController::class)->middleware('auth:sanctum');
+
+Route::name("api.")->group(function(){
+    Route::apiResource('units', UnitController::class);
+});
