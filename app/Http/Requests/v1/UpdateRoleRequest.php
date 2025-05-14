@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Spatie\Permission\Models\Role;
@@ -12,7 +12,7 @@ class UpdateRoleRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,13 +22,11 @@ class UpdateRoleRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
-        $roleId = $this->route('role')->id;
-
         return [
-            'name' => 'sometimes|unique:roles,name,' . $roleId,
-            'permissions' => 'array'
+            'name' => 'sometimes|unique:roles,name,',
+            'permissions' => 'nullable|array'
         ];
     }
 }

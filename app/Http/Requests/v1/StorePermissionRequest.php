@@ -3,6 +3,7 @@
 namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Spatie\Permission\Models\Permission;
 
 class StorePermissionRequest extends FormRequest
 {
@@ -22,7 +23,7 @@ class StorePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:permissions,name',
+            'name' => 'required|string|unique:permissions,name',
         ];
     }
 }

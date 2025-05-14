@@ -3,6 +3,7 @@
 namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Spatie\Permission\Models\Permission;
 
 class UpdatePermissionRequest extends FormRequest
 {
@@ -21,10 +22,8 @@ class UpdatePermissionRequest extends FormRequest
      */
     public function rules(): array
     {
-        $permissionId = $this->route('permission')->id;
-
         return [
-            'name' => 'required|unique:permission,name,' . $permissionId,
+            'name' => 'required|string|unique:permission,name,',
         ];
     }
 }

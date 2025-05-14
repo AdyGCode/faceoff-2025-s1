@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\StorePermissionRequest;
+use App\Http\Requests\v1\UpdatePermissionRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use App\ApiResponse;
@@ -12,23 +15,24 @@ class PermissionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        return Permission::all();
+        return APIResponse::success(
+            Permission::all(),
+            'Permissions retrieved successfully.'
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePermissionRequest $request): JsonResponse
     {
-        $request->validate([
-            'name' => 'required|unique:permissions,name',
+        $permission = Permission::create([
+            'name' => $request->name,
         ]);
 
-        $permission = Permission::create(['name' => $request->name]);
-
-        return ApiResponse::success(
+        return APIResponse::success(
             $permission,
             'Permission created successfully.',
             201
@@ -38,7 +42,7 @@ class PermissionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Permission $permission)
+    public function show(Permission $permission): JsonResponse
     {
         return ApiResponse::success(
             $permission,
@@ -49,15 +53,13 @@ class PermissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Permission $permission)
+    public function update(UpdatePermissionRequest $request, Permission $permission): JsonResponse
     {
-        $request->validate([
-            'name' => 'required|unique:permissions,name,' . $permission->id,
+        $request->update([
+            'name' => $request->name,
         ]);
 
-        $permission->update(['name' => $request->name]);
-
-        return ApiResponse::success(
+        return APIResponse::success(
             $permission,
             'Permission updated successfully.',
         );
@@ -66,7 +68,7 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Permission $permission)
+    public function destroy(Permission $permission): JsonResponse
     {
         $permission->delete();
 
