@@ -15,7 +15,9 @@
           <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
             {{ __('Dashboard') }}
           </x-nav-link>
-        
+
+          <!-- Class Session nav-link here -->
+
           @role('Super Admin|Admin|Staff')
           <x-nav-link :href="route('packages.index')" :active="request()->routeIs('packages.index')">
             {{ __('Packages') }}
@@ -142,7 +144,7 @@
       </x-responsive-nav-link>
       <x-responsive-nav-link :href="route('clusters.index')" :active="request()->routeIs('clusters.index')">
         {{ __('Clusters') }}
-      </x-responsive-nav-linkk>
+      </x-responsive-nav-link>
       <x-responsive-nav-link :href="route('units.index')" :active="request()->routeIs('units.index')">
         {{ __('Units') }}
       </x-responsive-nav-link>
