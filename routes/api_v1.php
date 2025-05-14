@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 
 /**
  * API Version 1 Routes
+ * 
+ * 'api.' added to prefix the nameing of API rotues, 
+ * as to not interfere with the Web routes.
  */
 
 /**
@@ -33,35 +36,44 @@ Route::post('/login', [AuthController::class, 'login']);
  * Users API Routes
  *  - Index, create, Show, Update, Destroy (Auth required)
  */
-Route::apiResource('users', UserController::class)->middleware('auth:sanctum');
-
+Route::name("api.")->group(function(){
+  Route::apiResource('users', UserController::class)->middleware('auth:sanctum');
+});
 
 /**
  * Packages API Routes
  *  - Index, Show (no-Auth)
  *  - Update, Destroy (Auth required)
  */
-Route::apiResource('packages', PackageController::class);
+Route::name("api.")->group(function(){
+  Route::apiResource('packages', PackageController::class);
+});
+ 
 
 /**
  * Courses API Routes
  *  - Index, Show (no-Auth)
  *  - Update, Destroy (Auth required)
  */
-Route::apiResource('courses', CourseController::class);
+Route::name("api.")->group(function(){
+  Route::apiResource('courses', CourseController::class);
+});
 
 /**
  * Clusters API Routes
  *  - Index, Show (no-Auth)
  *  - Update, Destroy (Auth required)
  */
-Route::apiResource('clusters', ClusterController::class);
+Route::name("api.")->group(function(){
+  Route::apiResource('clusters', ClusterController::class);
+});
 
 /**
  * Units API Routes
  *  - Index, Show (no-Auth)
  *  - Update, Destroy (Auth required)
  */
+
 Route::apiResource('units', UnitController::class);
 
 /**
@@ -79,3 +91,8 @@ Route::apiResource('permissions', PermissionController::class)->middleware('auth
 Route::name("api.")->group(function(){
     Route::apiResource('units', UnitController::class);
 });
+
+Route::name("api.")->group(function(){
+  Route::apiResource('units', UnitController::class);
+});
+
