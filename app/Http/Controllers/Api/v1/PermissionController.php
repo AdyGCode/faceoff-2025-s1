@@ -13,7 +13,7 @@ use App\ApiResponse;
 class PermissionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the permissions.
      */
     public function index(): JsonResponse
     {
@@ -24,7 +24,7 @@ class PermissionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created permission in storage.
      */
     public function store(StorePermissionRequest $request): JsonResponse
     {
@@ -40,7 +40,7 @@ class PermissionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified permission.
      */
     public function show(Permission $permission): JsonResponse
     {
@@ -51,7 +51,7 @@ class PermissionController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified permission in storage.
      */
     public function update(UpdatePermissionRequest $request, Permission $permission): JsonResponse
     {
@@ -66,7 +66,7 @@ class PermissionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified permission from storage.
      */
     public function destroy(Permission $permission): JsonResponse
     {

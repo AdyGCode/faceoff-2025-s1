@@ -29,7 +29,7 @@ class RoleController extends Controller
      * Store a newly created role in storage.
      *
      * Validates incoming data using StoreRoleRequest, creates the role,
-     * and attaches the specified permissions if provided.
+     * and attaches the specified permissions if is provided.
      *
      * @param StoreRoleRequest $request
      * @return JsonResponse

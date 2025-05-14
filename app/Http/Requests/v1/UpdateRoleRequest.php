@@ -8,7 +8,7 @@ use Spatie\Permission\Models\Role;
 class UpdateRoleRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Determine if the role is authorized to make this request.
      *
      * @return bool
      */
