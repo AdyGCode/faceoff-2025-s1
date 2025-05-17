@@ -28,8 +28,7 @@ beforeEach(function () {
     $this->session = ClassSession::factory()->count(21)->create();
     $this->cluster = Cluster::factory()->create();
     $this->staff = User::factory()->create(['role' => 'staff']);
-    $this->user = User::factory()->create();
-    $this->actingAs($this->user);
+    $this->actingAs($this->staff);
 });
 
 /**
@@ -45,8 +44,10 @@ test('displays the class session index page', function () {
  * Test that class sessions are paginated properly on the index view.
  */
 test('paginates class sessions correctly', function () {
-    $this->get(route('class_sessions.index'))
-        ->assertViewHas('classSessions');
+    $response = $this->get(route('class_sessions.index'));
+    $pages = $response->viewData('classSessions');
+
+    $this->assertEquals(3, $pages->lastPage());
 });
 
 /**
@@ -68,7 +69,7 @@ test('stores a class session successfully', function () {
         'user_id' => $this->staff->id,
         'start_date' => '2025-06-01',
         'end_date' => '2025-06-10',
-        ])->assertRedirect(route('class_sessions.index'));
+    ])->assertRedirect(route('class_sessions.index'));
     expect(ClassSession::count())->toBe(22);
 });
 
@@ -154,5 +155,8 @@ test('deletes a class session', function () {
  */
 test('handles delete gracefully if session already deleted', function () {
     $this->delete(route('class_sessions.destroy', $this->session[0]->id))
-        ->assertRedirect(route('class_sessions.index'));
+         ->assertRedirect(route('class_sessions.index'));
+
+    $this->delete(route('class_sessions.destroy', $this->session[0]->id))
+         ->assertStatus(404);
 });
