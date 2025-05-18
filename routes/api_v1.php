@@ -6,13 +6,14 @@ use App\Http\Controllers\Api\v1\CourseController;
 use App\Http\Controllers\Api\v1\ClusterController;
 use App\Http\Controllers\Api\v1\UnitController;
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\Api\v1\ClassSessionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /**
  * API Version 1 Routes
- * 
- * 'api.' added to prefix the nameing of API rotues, 
+ *
+ * 'api.' added to prefix the nameing of API rotues,
  * as to not interfere with the Web routes.
  */
 
@@ -46,7 +47,7 @@ Route::name("api.")->group(function(){
 Route::name("api.")->group(function(){
   Route::apiResource('packages', PackageController::class);
 });
- 
+
 
 /**
  * Courses API Routes
@@ -73,4 +74,13 @@ Route::name("api.")->group(function(){
  */
 Route::name("api.")->group(function(){
   Route::apiResource('units', UnitController::class);
+});
+
+/**
+ * Class Sessions API Routes
+ *  - Index, Show (no-Auth)
+ *  - Update, Destroy (Auth required)
+ */
+Route::name("api.")->group(function(){
+    Route::apiResource('class-sessions', ClassSessionController::class);
 });
