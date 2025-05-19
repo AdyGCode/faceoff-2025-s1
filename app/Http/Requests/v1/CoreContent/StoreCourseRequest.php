@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1;
+namespace App\Http\Requests\v1\CoreContent;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateClusterRequest extends FormRequest
+class StoreCourseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,13 @@ class UpdateClusterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string','max:10', 'uppercase'],
+            'package_id' => ['required', 'exists:packages,id'],
+            'national_code' => ['required', 'string','max:8', 'uppercase'],
+            'aqf_level' => ['required', 'string','min:10', 'max:25'],
             'title' => ['required', 'string','min:2', 'max:255'],
-            'qualification'=> ['required', 'string','max:8','uppercase'],
-            'qs_code'=> ['required', 'string','max:4','uppercase'],
-            'course_id' => ['required', 'exists:courses,id'],
-            'unit_id' => ['required', 'exists:units,id'],
+            'tga_status' => ['required', 'string','min:2', 'max:10'],
+            'status_code' => ['required', 'string', 'max:4', 'uppercase'],
+            'nominal_hours'=> ['required', 'integer', 'min:1', 'max:1000'],
         ];
     }
 }

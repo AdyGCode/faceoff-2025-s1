@@ -6,8 +6,8 @@ use App\ApiResponse;
 use App\Models\Unit;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\v1\StoreUnitRequest;
-use App\Http\Requests\v1\UpdateUnitRequest;
+use App\Http\Requests\v1\CoreContent\StoreUnitRequest;
+use App\Http\Requests\v1\CoreContent\UpdateUnitRequest;
 use Illuminate\Http\JsonResponse;
 
 /**

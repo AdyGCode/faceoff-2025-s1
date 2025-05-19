@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\v1;
 use App\ApiResponse;
 use App\Models\Cluster;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\StoreClusterRequest;
-use App\Http\Requests\v1\UpdateClusterRequest;
+use App\Http\Requests\v1\CoreContent\StoreClusterRequest;
+use App\Http\Requests\v1\CoreContent\UpdateClusterRequest;
 use Illuminate\Http\JsonResponse;
 
 /**

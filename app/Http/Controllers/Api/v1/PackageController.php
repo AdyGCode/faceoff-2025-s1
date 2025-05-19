@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\v1;
 use App\ApiResponse;
 use App\Models\Package;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\StorePackageRequest;
-use App\Http\Requests\v1\UpdatePackageRequest;
+use App\Http\Requests\v1\CoreContent\StorePackageRequest;
+use App\Http\Requests\v1\CoreContent\UpdatePackageRequest;
 use Illuminate\Http\JsonResponse;
 
 
