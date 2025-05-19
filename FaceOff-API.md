@@ -46,7 +46,8 @@
 ## Postman Testing
 Postman testing should be conducted as additional testing by the original developer of said feature.
 
-- [x] [User & Auth - Cedric](/Postman-API-Test-User-Auth.md)
+- [x] [User & Auth - Cedric](PostmanTesting/API-Test-User-Auth.md)
+- [x] [Roles & Permissions - Gabriela](PostmanTesting/API-Test-RolesAndPermissions-Auth.md)
 <br>
 
 

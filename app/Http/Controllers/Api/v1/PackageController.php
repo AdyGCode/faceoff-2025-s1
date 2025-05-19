@@ -33,7 +33,7 @@ class PackageController extends Controller
     /**
      * Store a newly created Package in storage.
      * 
-     * @param \App\Http\Requests\v1\StorePackageRequest $request
+     * @param \App\Http\Requests\v1\CoreContent\StorePackageRequest $request
      * @return JsonResponse
      */
     public function store(StorePackageRequest $request): JsonResponse
@@ -64,7 +64,7 @@ class PackageController extends Controller
     /**
      * Update the specified Package in storage.
      * 
-     * @param \App\Http\Requests\v1\UpdatePackageRequest $request
+     * @param \App\Http\Requests\v1\CoreContent\UpdatePackageRequest $request
      * @return JsonResponse
      */
     public function update(UpdatePackageRequest $request, Package $package): JsonResponse

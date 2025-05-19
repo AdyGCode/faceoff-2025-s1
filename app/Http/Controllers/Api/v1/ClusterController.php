@@ -32,7 +32,7 @@ class ClusterController extends Controller
     /**
      * Store a newly created Cluster in storage.
      * 
-     * @param \App\Http\Requests\v1\StoreClusterRequest $request
+     * @param \App\Http\Requests\v1\CoreContent\StoreClusterRequest $request
      * @return JsonResponse
      */
     public function store(StoreClusterRequest $request): JsonResponse
@@ -63,7 +63,7 @@ class ClusterController extends Controller
     /**
      * Update the specified Cluster in storage.
      * 
-     * @param \App\Http\Requests\v1\UpdateClusterRequest $request
+     * @param \App\Http\Requests\v1\CoreContent\UpdateClusterRequest $request
      * @return JsonResponse
      */
     public function update(UpdateClusterRequest $request, Cluster $cluster): JsonResponse
