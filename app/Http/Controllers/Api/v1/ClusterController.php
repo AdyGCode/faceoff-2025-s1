@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\v1;
 use App\ApiResponse;
 use App\Models\Cluster;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\StoreClusterRequest;
-use App\Http\Requests\v1\UpdateClusterRequest;
+use App\Http\Requests\v1\CoreContent\StoreClusterRequest;
+use App\Http\Requests\v1\CoreContent\UpdateClusterRequest;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -32,7 +32,7 @@ class ClusterController extends Controller
     /**
      * Store a newly created Cluster in storage.
      * 
-     * @param \App\Http\Requests\v1\StoreClusterRequest $request
+     * @param \App\Http\Requests\v1\CoreContent\StoreClusterRequest $request
      * @return JsonResponse
      */
     public function store(StoreClusterRequest $request): JsonResponse
@@ -63,7 +63,7 @@ class ClusterController extends Controller
     /**
      * Update the specified Cluster in storage.
      * 
-     * @param \App\Http\Requests\v1\UpdateClusterRequest $request
+     * @param \App\Http\Requests\v1\CoreContent\UpdateClusterRequest $request
      * @return JsonResponse
      */
     public function update(UpdateClusterRequest $request, Cluster $cluster): JsonResponse

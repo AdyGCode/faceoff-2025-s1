@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\v1;
 use App\ApiResponse;
 use App\Models\Course;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\StoreCourseRequest;
-use App\Http\Requests\v1\UpdateCourseRequest;
+use App\Http\Requests\v1\CoreContent\StoreCourseRequest;
+use App\Http\Requests\v1\CoreContent\UpdateCourseRequest;
 use Illuminate\Http\JsonResponse;
 
 /**

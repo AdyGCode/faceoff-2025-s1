@@ -37,16 +37,17 @@
 
 
 ## Review Code and Write Pest Tests for:
-- [ ] Thomas - Authentication & Authorization
+- [ ] Thomas - Authorization Management (RoleController, route access)
 - [ ] Gabriela - Core Content Management
 - [ ] Cedric - Class Session Management
 - [ ] Luke - User Management
 
 
 ## Postman Testing
-Postman testing should be conducted as additional testing by the original developer of said feature, with screenshots as evidence.
+Postman testing should be conducted as additional testing by the original developer of said feature.
 
-- [x] [User & Auth - Cedric](/Postman-API-Test-User-Auth.md)
+- [x] [User & Auth - Cedric](PostmanTesting/API-Test-User-Auth.md)
+- [x] [Roles & Permissions - Gabriela](PostmanTesting/API-Test-RolesAndPermissions-Auth.md)
 <br>
 
 
@@ -55,6 +56,9 @@ Postman testing should be conducted as additional testing by the original develo
 ## V2
 
 Once Pest testing has been developed and completed use the results / feedback from it to further develop the project.
+
+Refactor the: 
+- API Pest tests into a 'api/v1' folder, so 'tests/api/v1'
 
 ## V3
 
