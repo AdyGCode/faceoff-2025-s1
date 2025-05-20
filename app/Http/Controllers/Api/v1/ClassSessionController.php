@@ -15,21 +15,28 @@ use Illuminate\Http\JsonResponse;
 class ClassSessionController extends Controller
 {
     /**
+     * GET /api/v1/class-sessions
      * Display a listing of all class sessions.
+     *
+     * @return JsonResponse
      */
     public function index(): JsonResponse
     {
         $sessions = ClassSession::with(['cluster', 'staff', 'students'])->get();
 
         if ($sessions->isNotEmpty()) {
-            return ApiResponse::success($sessions, 'Found all Class Sessions');
+            return ApiResponse::success($sessions, 'Class sessions retrieved successfully', 200);
         }
 
-        return ApiResponse::error([], 'No Class Sessions found');
+        return ApiResponse::error([], 'No class sessions found', 404);
     }
 
     /**
+     * POST /api/v1/class-sessions
      * Store a newly created class session.
+     *
+     * @param StoreClassSessionRequest $request
+     * @return JsonResponse
      */
     public function store(StoreClassSessionRequest $request): JsonResponse
     {
@@ -43,27 +50,36 @@ class ClassSessionController extends Controller
 
         return ApiResponse::success(
             $classSession->load(['cluster', 'staff', 'students']),
-            'Class session created',
+            'Class session created successfully',
             201
         );
     }
 
     /**
+     * GET /api/v1/class-sessions/{id}
      * Display the specified class session.
+     *
+     * @param int $id
+     * @return JsonResponse
      */
     public function show($id): JsonResponse
     {
         $classSession = ClassSession::with(['cluster', 'staff', 'students'])->find($id);
 
         if ($classSession) {
-            return ApiResponse::success($classSession, 'Class session found');
+            return ApiResponse::success($classSession, 'Class session found', 200);
         }
 
         return ApiResponse::error([], 'Class session not found', 404);
     }
 
     /**
+     * PUT/PATCH /api/v1/class-sessions/{id}
      * Update the specified class session.
+     *
+     * @param UpdateClassSessionRequest $request
+     * @param int $id
+     * @return JsonResponse
      */
     public function update(UpdateClassSessionRequest $request, $id): JsonResponse
     {
@@ -83,12 +99,17 @@ class ClassSessionController extends Controller
 
         return ApiResponse::success(
             $classSession->load(['cluster', 'staff', 'students']),
-            'Class session updated'
+            'Class session updated successfully',
+            200
         );
     }
 
     /**
+     * DELETE /api/v1/class-sessions/{id}
      * Remove the specified class session.
+     *
+     * @param int $id
+     * @return JsonResponse
      */
     public function destroy($id): JsonResponse
     {
@@ -100,7 +121,7 @@ class ClassSessionController extends Controller
 
         $classSession->delete();
 
-        return ApiResponse::success(null, 'Class session deleted');
+        return ApiResponse::success(null, 'Class session deleted successfully', 200);
     }
 }
 

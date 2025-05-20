@@ -79,8 +79,16 @@ Route::name("api.")->group(function(){
 /**
  * Class Sessions API Routes
  *  - Index, Show (no-Auth)
- *  - Update, Destroy (Auth required)
+ *  - Store, Update, Destroy (Auth required)
  */
-Route::name("api.")->group(function(){
-    Route::apiResource('class-sessions', ClassSessionController::class);
+Route::name("api.")->group(function () {
+    Route::get('class-sessions', [ClassSessionController::class, 'index']);
+    Route::get('class-sessions/{classSession}', [ClassSessionController::class, 'show']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('class-sessions', [ClassSessionController::class, 'store']);
+        Route::put('class-sessions/{classSession}', [ClassSessionController::class, 'update']);
+        Route::patch('class-sessions/{classSession}', [ClassSessionController::class, 'update']);
+        Route::delete('class-sessions/{classSession}', [ClassSessionController::class, 'destroy']);
+    });
 });
