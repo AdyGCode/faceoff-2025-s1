@@ -8,13 +8,14 @@ use App\Http\Controllers\Api\v1\UnitController;
 use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\RoleController;
 use App\Http\Controllers\Api\v1\PermissionController;
+use App\Http\Controllers\Api\v1\ClassSessionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /**
  * API Version 1 Routes
- * 
- * 'api.' added to prefix the nameing of API rotues, 
+ *
+ * 'api.' added to prefix the nameing of API rotues,
  * as to not interfere with the Web routes.
  */
 
@@ -51,7 +52,7 @@ Route::name("api.")->group(function(){
 Route::name("api.")->group(function(){
   Route::apiResource('packages', PackageController::class);
 });
- 
+
 /**
  * Courses API Routes
  *  - Index, Show (no-Auth)
@@ -94,4 +95,22 @@ Route::name("api.")->group(function(){
  */
 Route::name("api.")->group(function(){
   Route::apiResource('permissions', PermissionController::class); //->middleware('auth:sanctum')
+});
+
+
+/**
+ * Class Sessions API Routes
+ *  - Index, Show (no-Auth)
+ *  - Store, Update, Destroy (Auth required)
+ */
+Route::name("api.")->group(function () {
+    Route::get('class-sessions', [ClassSessionController::class, 'index']);
+    Route::get('class-sessions/{classSession}', [ClassSessionController::class, 'show']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('class-sessions', [ClassSessionController::class, 'store']);
+        Route::put('class-sessions/{classSession}', [ClassSessionController::class, 'update']);
+        Route::patch('class-sessions/{classSession}', [ClassSessionController::class, 'update']);
+        Route::delete('class-sessions/{classSession}', [ClassSessionController::class, 'destroy']);
+    });
 });
