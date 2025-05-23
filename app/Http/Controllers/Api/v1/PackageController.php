@@ -25,9 +25,9 @@ class PackageController extends Controller
         $packages = Package::all();
 
         if ($packages) {
-            return ApiResponse::success($packages, 'Found all packages');
+            return ApiResponse::success($packages, 'Found all packages', 200);
         }
-        return ApiResponse::error($packages, 'No packages Found');
+        return ApiResponse::error($packages, 'No packages Found', 404);
     }
 
     /**
@@ -56,7 +56,7 @@ class PackageController extends Controller
         $package = Package::findOrFail($package->id);
 
         if ($package) {
-            return ApiResponse::success($package, 'Package Found');
+            return ApiResponse::success($package, 'Package Found', 200);
         }
         return ApiResponse::error($package, 'Package Not Found', 404);
     }
@@ -91,8 +91,8 @@ class PackageController extends Controller
 
         if ($package) {
             $package->delete();
-            return ApiResponse::success($package,'Package Succesfully Deleted');
+            return ApiResponse::success($package,'Package Succesfully Deleted' ,200);
         }
-        return ApiResponse::error($package,'Package Not Deleted');
+        return ApiResponse::error($package,'Package Not Deleted', 500);
     }
 }

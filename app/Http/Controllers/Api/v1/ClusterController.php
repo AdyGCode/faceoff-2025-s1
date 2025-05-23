@@ -24,9 +24,9 @@ class ClusterController extends Controller
         $clusters = Cluster::all();
 
         if ($clusters) {
-            return ApiResponse::success($clusters, 'All Clusters Found');
+            return ApiResponse::success($clusters, 'All Clusters Found', 200);
         }
-        return ApiResponse::error($clusters, 'No Clusters Found');
+        return ApiResponse::error($clusters, 'No Clusters Found', 404);
     }
 
     /**
@@ -55,7 +55,7 @@ class ClusterController extends Controller
         $cluster = Cluster::findOrFail($cluster->id);
 
         if ($cluster) {
-            return ApiResponse::success($cluster, 'Cluster Found');
+            return ApiResponse::success($cluster, 'Cluster Found', 200);
         }
         return ApiResponse::error($cluster, 'Cluster Not Found', 404);
     }
@@ -87,8 +87,8 @@ class ClusterController extends Controller
 
         if ($cluster) {
             $cluster->delete();
-            return ApiResponse::success($cluster,'Cluster Succesfully Deleted');
+            return ApiResponse::success($cluster,'Cluster Succesfully Deleted', 200);
         }
-        return ApiResponse::error($cluster,'Cluster Not Deleted');
+        return ApiResponse::error($cluster,'Cluster Not Deleted', 404);
     }
 }
