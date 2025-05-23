@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
  * as to not interfere with the Web routes.
  */
 
+
 /**
  * Auth API Routes
  *  - Register, Login (no-Auth)
@@ -32,6 +33,7 @@ Route::group(['prefix'=> 'auth'], function () {
 });
 Route::post('/login', [AuthController::class, 'login']);
 
+
 /**
  * Users API Routes
  *  - Index, create, Show, Update, Destroy (Auth required)
@@ -39,6 +41,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::name("api.")->group(function(){
   Route::apiResource('users', UserController::class)->middleware('auth:sanctum');
 });
+
 
 /**
  * Packages API Routes
@@ -49,7 +52,6 @@ Route::name("api.")->group(function(){
   Route::apiResource('packages', PackageController::class);
 });
  
-
 /**
  * Courses API Routes
  *  - Index, Show (no-Auth)
@@ -73,26 +75,23 @@ Route::name("api.")->group(function(){
  *  - Index, Show (no-Auth)
  *  - Update, Destroy (Auth required)
  */
+Route::name("api.")->group(function(){
+  Route::apiResource('units', UnitController::class);
+});
 
-Route::apiResource('units', UnitController::class);
 
 /**
  * Roles API Routes
  *  - Index, Create, Show, Update, Destroy (Auth required)
  */
-Route::apiResource('roles', RoleController::class)->middleware('auth:sanctum');
+Route::name("api.")->group(function(){
+  Route::apiResource('roles', RoleController::class)->middleware('auth:sanctum');
+});
 
 /**
  * Permissions API Routes
  *  - Index, Create, Show, Update, Destroy (Auth required)
  */
-Route::apiResource('permissions', PermissionController::class)->middleware('auth:sanctum');
-
 Route::name("api.")->group(function(){
-    Route::apiResource('units', UnitController::class);
+  Route::apiResource('permissions', PermissionController::class); //->middleware('auth:sanctum')
 });
-
-Route::name("api.")->group(function(){
-  Route::apiResource('units', UnitController::class);
-});
-

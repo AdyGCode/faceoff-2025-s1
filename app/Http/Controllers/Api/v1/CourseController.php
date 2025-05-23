@@ -24,15 +24,15 @@ class CourseController extends Controller
         $courses = Course::all();
 
         if ($courses) {
-            return ApiResponse::success($courses, 'Found all Courses');
+            return ApiResponse::success($courses, 'Found all Courses', 200);
         }
-        return ApiResponse::error($courses, 'No Courses Found');
+        return ApiResponse::error($courses, 'No Courses Found', 404);
     }
 
     /**
      * Store a newly created Course in storage.
      * 
-     * @param \App\Http\Requests\v1\StoreCourseRequest $request
+     * @param \App\Http\Requests\v1\CoreContent\StoreCourseRequest $request
      * @return JsonResponse
      */
     public function store(StoreCourseRequest $request): JsonResponse
@@ -55,7 +55,7 @@ class CourseController extends Controller
         $course = Course::findOrFail($course->id);
 
         if ($course) {
-            return ApiResponse::success($course, 'Course Found');
+            return ApiResponse::success($course, 'Course Found', 200);
         }
         return ApiResponse::error($course, 'Course Not Found', 404);
     }
@@ -63,7 +63,7 @@ class CourseController extends Controller
     /**
      * Update the specified Course in storage.
      * 
-     * @param \App\Http\Requests\v1\UpdateCourseRequest $request
+     * @param \App\Http\Requests\v1\CoreContent\UpdateCourseRequest $request
      * @return JsonResponse
      */
     public function update(UpdateCourseRequest $request, Course $course)
@@ -87,8 +87,8 @@ class CourseController extends Controller
 
         if ($course) {
             $course->delete();
-            return ApiResponse::success($course,'Course Succesfully Deleted');
+            return ApiResponse::success($course,'Course Succesfully Deleted', 200);
         }
-        return ApiResponse::error($course,'Course Not Deleted');
+        return ApiResponse::error($course,'Course Not Deleted', 500);
     }
 }

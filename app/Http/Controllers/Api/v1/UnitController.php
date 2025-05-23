@@ -25,9 +25,9 @@ class UnitController extends Controller
         $units = Unit::all();
 
         if ($units) {
-            return ApiResponse::success($units, 'All Units Found');
+            return ApiResponse::success($units, 'All Units Found', 200);
         }
-        return ApiResponse::error($units, 'No Units Found');
+        return ApiResponse::error($units, 'No Units Found', 404);
     }
 
     /**
@@ -56,7 +56,7 @@ class UnitController extends Controller
         $unit = Unit::findOrFail($unit->id);
 
         if ($unit) {
-            return ApiResponse::success($unit, 'Unit Found');
+            return ApiResponse::success($unit, 'Unit Found', 200);
         }
         return ApiResponse::error($unit, 'Unit Not Found', 404);
     }
@@ -88,8 +88,8 @@ class UnitController extends Controller
 
         if ($unit) {
             $unit->delete();
-            return ApiResponse::success($unit,'Unit Succesfully Deleted');
+            return ApiResponse::success($unit,'Unit Succesfully Deleted', 200);
         }
-        return ApiResponse::error($unit,'Unit Not Deleted');
+        return ApiResponse::error($unit,'Unit Not Deleted', 500);
     }
 }
