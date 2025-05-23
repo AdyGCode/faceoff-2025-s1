@@ -3,15 +3,16 @@
 namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Spatie\Permission\Models\Permission;
 
-class StorePackageRequest extends FormRequest
+class StorePermissionRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Determine if the permission is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,9 +23,7 @@ class StorePackageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'national_code' => ['required', 'string','max:3', 'uppercase'],
-            'title' => ['required', 'string','min:2', 'max:255'],
-            'tga_status' => ['required', 'string','min:2', 'max:10']
+            'name' => 'required|string|unique:permissions,name',
         ];
     }
 }

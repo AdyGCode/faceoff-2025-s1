@@ -6,8 +6,8 @@ use App\ApiResponse;
 use App\Models\Unit;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\v1\StoreUnitRequest;
-use App\Http\Requests\v1\UpdateUnitRequest;
+use App\Http\Requests\v1\CoreContent\StoreUnitRequest;
+use App\Http\Requests\v1\CoreContent\UpdateUnitRequest;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -33,7 +33,7 @@ class UnitController extends Controller
     /**
      * Store a newly created Unit in storage.
      * 
-     * @param \App\Http\Requests\v1\StoreUnitRequest $request
+     * @param \App\Http\Requests\v1\CoreContent\StoreUnitRequest $request
      * @return JsonResponse
      */
     public function store(StoreUnitRequest $request): JsonResponse
@@ -64,7 +64,7 @@ class UnitController extends Controller
     /**
      * Update the specified Unit in storage.
      * 
-     * @param \App\Http\Requests\v1\UpdateUnitRequest $request
+     * @param \App\Http\Requests\v1\CoreContent\UpdateUnitRequest $request
      * @return JsonResponse
      */
     public function update(UpdateUnitRequest $request, Unit $unit): JsonResponse

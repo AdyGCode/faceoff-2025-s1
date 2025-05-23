@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\v1\CourseController;
 use App\Http\Controllers\Api\v1\ClusterController;
 use App\Http\Controllers\Api\v1\UnitController;
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\Api\v1\RoleController;
+use App\Http\Controllers\Api\v1\PermissionController;
 use App\Http\Controllers\Api\v1\ClassSessionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,9 +29,9 @@ Route::group(['prefix'=> 'auth'], function () {
     return $request->user();
   })->middleware('auth:sanctum');
   Route::post('/register', [AuthController::class, 'register']);
-  Route::post('/login', [AuthController::class, 'login']);
-  Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 });
+Route::post('/login', [AuthController::class, 'login']);
 
 /**
  * Users API Routes
@@ -72,9 +74,19 @@ Route::name("api.")->group(function(){
  *  - Index, Show (no-Auth)
  *  - Update, Destroy (Auth required)
  */
-Route::name("api.")->group(function(){
-  Route::apiResource('units', UnitController::class);
-});
+Route::apiResource('units', UnitController::class);
+
+/**
+ * Roles API Routes
+ *  - Index, Create, Show, Update, Destroy (Auth required)
+ */
+Route::apiResource('roles', RoleController::class)->middleware('auth:sanctum');
+
+/**
+ * Permissions API Routes
+ *  - Index, Create, Show, Update, Destroy (Auth required)
+ */
+Route::apiResource('permissions', PermissionController::class)->middleware('auth:sanctum');
 
 /**
  * Class Sessions API Routes
