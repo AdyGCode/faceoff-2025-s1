@@ -162,6 +162,9 @@ test('api deletes a class session successfully', function () {
     $this->deleteJson($this->basePath . '/' . $this->classSession[0]->id,)
         ->assertOk()
         ->assertJson(['message' => 'Class session deleted successfully']);
+    
+        $this->assertDatabaseMissing('class_sessions', [
+    'id' => $this->classSession[0]->id,]);
 });
 
 
