@@ -26,6 +26,7 @@ uses(RefreshDatabase::class);
  * https://laravel.com/docs/12.x/http-tests#session-authentication
  */
 beforeEach(function () {
+    $this->basePath = '/api/v1/class-sessions';
     $this->staff = User::factory()->create(['role' => 'staff']);
     $this->targetStudents = 5;
     $this->students = User::factory()->count($this->targetStudents)->create(['role' => 'student']);
@@ -42,7 +43,7 @@ beforeEach(function () {
  * GET /api/v1/class-sessions
  */
 test('api returns all class sessions', function () {
-    $response = $this->getJson('/api/v1/class-sessions')
+    $response = $this->getJson($this->basePath)
         ->assertOk()
         ->assertJsonStructure(['success', 'data', 'message']);
 
@@ -56,7 +57,7 @@ test('api returns all class sessions', function () {
  * POST /api/v1/class-sessions
  */
 test('api stores a new class session with students', function () {
-    $response = $this->postJson('/api/v1/class-sessions', [
+    $response = $this->postJson($this->basePath, [
         'title' => 'API Session',
         'cluster_id' => $this->cluster->id,
         'user_id' => $this->staff->id,
@@ -92,7 +93,7 @@ test('api stores a new class session with students', function () {
  * POST /api/v1/class-sessions
  */
 test('api fails to store with invalid input', function () {
-    $this->postJson('/api/v1/class-sessions', [])
+    $this->postJson($this->basePath, [])
         ->assertStatus(422)
         ->assertJsonValidationErrors(['title', 'cluster_id', 'user_id', 'start_date', 'end_date']);
 });
@@ -104,7 +105,7 @@ test('api fails to store with invalid input', function () {
  * GET /api/v1/class-sessions/{id}
  */
 test('api shows a specific class session', function () {
-    $this->getJson("/api/v1/class-sessions/{$this->classSession[0]->id}")
+    $this->getJson($this->basePath . '/' . $this->classSession[0]->id)
         ->assertOk()
         ->assertJsonFragment(['id' => $this->classSession[0]->id]);
 });
@@ -116,7 +117,7 @@ test('api shows a specific class session', function () {
  * GET /api/v1/class-sessions/{id}
  */
 test('api returns 404 when class session is not found', function () {
-    $this->getJson('/api/v1/class-sessions/-1')
+    $this->getJson($this->basePath . '/-1')
         ->assertStatus(404);
 });
 
@@ -127,7 +128,7 @@ test('api returns 404 when class session is not found', function () {
  * PUT /api/v1/class-sessions/{id}
  */
 test('api updates a class session successfully', function () {
-    $this->putJson("/api/v1/class-sessions/{$this->classSession[0]->id}", [
+    $this->putJson($this->basePath . '/' . $this->classSession[0]->id, [
         'title' => 'Updated API Title',
         'cluster_id' => $this->cluster->id,
         'user_id' => $this->staff->id,
@@ -146,7 +147,7 @@ test('api updates a class session successfully', function () {
  * PUT /api/v1/class-sessions/{id}
  */
 test('api fails to update with invalid data', function () {
-    $this->putJson("/api/v1/class-sessions/{$this->classSession[0]->id}", [])
+    $this->putJson($this->basePath . '/' . $this->classSession[0]->id, [])
         ->assertStatus(422)
         ->assertJsonValidationErrors(['title', 'cluster_id', 'user_id', 'start_date', 'end_date']);
 });
@@ -158,7 +159,7 @@ test('api fails to update with invalid data', function () {
  * DELETE /api/v1/class-sessions/{id}
  */
 test('api deletes a class session successfully', function () {
-    $this->deleteJson("/api/v1/class-sessions/{$this->classSession[0]->id}")
+    $this->deleteJson($this->basePath . '/' . $this->classSession[0]->id,)
         ->assertOk()
         ->assertJson(['message' => 'Class session deleted successfully']);
 });
@@ -170,6 +171,6 @@ test('api deletes a class session successfully', function () {
  * DELETE /api/v1/class-sessions/{id}
  */
 test('api returns 404 if trying to delete non-existent session', function () {
-    $this->deleteJson('/api/v1/class-sessions/999')
+    $this->deleteJson($this->basePath . '/-1')
         ->assertStatus(404);
 });
