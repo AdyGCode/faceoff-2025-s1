@@ -161,6 +161,24 @@ test('api updates a class session successfully', function () {
         ->assertJsonFragment(['title' => 'Updated API Title']);
 });
 
+/**
+ * Test that a 404 response is returned if trying to update a non-existent class session.
+ * 
+ * * PUT /api/v1/class-sessions/{id}
+ */
+test('api returns 404 when class session is not found for update', function () {
+    $nonExistentId = -1; // Or any ID that definitely won't exist
+    $this->putJson($this->basePath . '/' . $nonExistentId, [
+        // Provide some valid-looking data, even though it won't be used
+        'title' => 'Attempted Update',
+        'cluster_id' => $this->cluster->id,
+        'user_id' => $this->staff->id,
+        'start_date' => '2025-08-01',
+        'end_date' => '2025-08-10',
+    ])
+    ->assertStatus(404)
+    ->assertJson(['message' => 'Class session not found']); // Assert the specific error message
+});
 
 /**
  * Test that a class session is updated successfully with valid input via API.
