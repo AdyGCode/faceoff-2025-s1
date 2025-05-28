@@ -33,7 +33,24 @@ beforeEach(function () {
     $this->cluster = Cluster::factory()->create();
     $this->actingAs($this->staff, 'sanctum');
     $this->targetCounts = 21;
-    $this->classSession = ClassSession::factory()->count($this->targetCounts)->create();
+});
+
+// Helper function to create class sessions for tests that need them
+function createClassSessions($count = 1) {
+    $sessions = ClassSession::factory()->count($count)->create();
+    return $count === 1 ? $sessions->first() : $sessions;
+}
+
+/**
+ * Test that the API returns a 404 response when no class sessions are found.
+ *
+ * GET /api/v1/class-sessions
+ */
+test('api returns 404 when no class sessions are found', function () {
+    // No class sessions created here, so the database should be empty for sessions
+    $this->getJson($this->basePath)
+        ->assertStatus(404)
+        ->assertJson(['message' => 'No class sessions found']);
 });
 
 
@@ -43,12 +60,14 @@ beforeEach(function () {
  * GET /api/v1/class-sessions
  */
 test('api returns all class sessions', function () {
+    createClassSessions($this->targetCounts);
     $response = $this->getJson($this->basePath)
         ->assertOk()
         ->assertJsonStructure(['success', 'data', 'message']);
 
     expect(count($response->json('data')))->toBe($this->targetCounts);
 });
+
 
 
 /**
@@ -105,9 +124,10 @@ test('api fails to store with invalid input', function () {
  * GET /api/v1/class-sessions/{id}
  */
 test('api shows a specific class session', function () {
-    $this->getJson($this->basePath . '/' . $this->classSession[0]->id)
+    $classSession = createClassSessions();
+    $this->getJson($this->basePath . '/' . $classSession->id)
         ->assertOk()
-        ->assertJsonFragment(['id' => $this->classSession[0]->id]);
+        ->assertJsonFragment(['id' => $classSession->id]);
 });
 
 
@@ -128,7 +148,8 @@ test('api returns 404 when class session is not found', function () {
  * PUT /api/v1/class-sessions/{id}
  */
 test('api updates a class session successfully', function () {
-    $this->putJson($this->basePath . '/' . $this->classSession[0]->id, [
+    $classSession = createClassSessions();
+    $this->putJson($this->basePath . '/' . $classSession->id, [
         'title' => 'Updated API Title',
         'cluster_id' => $this->cluster->id,
         'user_id' => $this->staff->id,
@@ -147,7 +168,8 @@ test('api updates a class session successfully', function () {
  * PUT /api/v1/class-sessions/{id}
  */
 test('api fails to update with invalid data', function () {
-    $this->putJson($this->basePath . '/' . $this->classSession[0]->id, [])
+    $classSession = createClassSessions();
+    $this->putJson($this->basePath . '/' . $classSession->id, [])
         ->assertStatus(422)
         ->assertJsonValidationErrors(['title', 'cluster_id', 'user_id', 'start_date', 'end_date']);
 });
@@ -159,12 +181,13 @@ test('api fails to update with invalid data', function () {
  * DELETE /api/v1/class-sessions/{id}
  */
 test('api deletes a class session successfully', function () {
-    $this->deleteJson($this->basePath . '/' . $this->classSession[0]->id,)
+    $classSession = createClassSessions();
+    $this->deleteJson($this->basePath . '/' . $classSession->id,)
         ->assertOk()
         ->assertJson(['message' => 'Class session deleted successfully']);
     
         $this->assertDatabaseMissing('class_sessions', [
-    'id' => $this->classSession[0]->id,]);
+    'id' => $classSession->id,]);
 });
 
 
