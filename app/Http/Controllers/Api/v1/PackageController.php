@@ -43,7 +43,7 @@ class PackageController extends Controller
         if ($package) {
             return ApiResponse::success($package, "Package Created", 201);
         }
-        return ApiResponse::error($package, "Package Not Created", code: 404);
+        return ApiResponse::error($package, "Package Not Created", 404);
     }  
 
     /**
