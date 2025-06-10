@@ -121,3 +121,20 @@ test('Can updated an existing Role', function() {
         ])
         ->assertOk();
 });
+
+/**
+ * Tests that a single Role can be Deleted,
+ * using the correct structure and Api response.
+ */
+test('Deletes a single Role', function() {
+    createRoles();
+
+    $role = Role::inRandomOrder()->first();
+
+    deleteJson("/api/v1/roles/{$role->id}")
+        ->assertOk()   
+        ->assertJsonFragment([
+            'success' => true,
+            'message' => 'Role deleted successfully.',
+        ]);
+});
