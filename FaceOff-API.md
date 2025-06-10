@@ -39,7 +39,7 @@
 ## Review Code and Write Pest Tests for:
 - [ ] Thomas - Authorization Management (RoleController, route access)
 - [ ] Gabriela - Core Content Management
-- [ ] Cedric - Class Session Management
+- [x] Cedric - Class Session Management
 - [ ] Luke - User Management
 
 
