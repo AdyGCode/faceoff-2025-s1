@@ -94,7 +94,7 @@ Route::name("api.")->group(function(){
  *  - Index, Create, Show, Update, Destroy (Auth required)
  */
 Route::name("api.")->group(function(){
-  Route::apiResource('permissions', PermissionController::class); //->middleware('auth:sanctum')
+  Route::apiResource('permissions', PermissionController::class)->middleware('auth:sanctum');
 });
 
 

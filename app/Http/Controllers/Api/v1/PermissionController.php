@@ -55,7 +55,7 @@ class PermissionController extends Controller
      */
     public function update(UpdatePermissionRequest $request, Permission $permission): JsonResponse
     {
-        $request->update([
+        $permission->update([
             'name' => $request->name,
         ]);
 
@@ -75,7 +75,7 @@ class PermissionController extends Controller
         return ApiResponse::success(
             [],
             'Permission deleted successfully.',
-            204
+            200
         );
     }
 }

@@ -3,7 +3,7 @@
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use function Pest\Laravel\{actingAs, postJson, getJson, putJson, deleteJson};
+use function Pest\Laravel\{postJson, getJson, putJson, deleteJson, patchJson};
 
 /**
  * This will reset this database after each of those tests so that data from a previous test does
@@ -47,10 +47,16 @@ uses(RefreshDatabase::class);
  */
 
 beforeEach(function () {
-    $this->user = User::factory()->create(['role' => 'super-admin']);
+    $this->user = User::factory()->create();
     $this->actingAs($this->user);
+});
 
-    // Checks that all permission are created
+/**
+ * Function to create the Permission to be used in the testing,
+ * allows for testing of test were Permission aren't needed. (i.e error handling)
+ */
+function createPermission() {
+    // Creats the following permissions
     $permissions = [
         'System-Configuration',
         'Manage-Roles',
@@ -66,12 +72,18 @@ beforeEach(function () {
         'Request-Changes'
     ];
 
-    foreach($permissions as $permission) {
+    foreach ($permissions as $permission) {
         Permission::firstOrCreate(['name' => $permission]);
     }
-});
+}
 
-test('Displays all Permissions', function() {
+
+/**
+ * Tests that all Permission are displayed,
+ * with the correct structure and Api response.
+ */
+test('Displays all Permissions', function () {
+    createPermission();
     getJson('/api/v1/permissions')
         ->assertOk()
         ->assertJsonFragment([
@@ -81,4 +93,89 @@ test('Displays all Permissions', function() {
         ->assertJsonStructure([
             'data' => [['id', 'name', 'guard_name', 'created_at', 'updated_at']],
         ]);
+});
+
+/**
+ * Tests the error handling and output if no Permission are found,
+ * checks for correct structure and Api response.
+ */
+test('Tests when no are Permission found.', function() {
+    getJson('/api/v1/permissions')
+        ->assertJsonFragment([
+            'message' => 'No Permissions found.',
+        ])
+        ->assertStatus(404);
+});
+
+/**
+ * Tests that a newly created Permission is stored,
+ * using the correct structure and Api response.
+ */
+test('Stores a newly created Permission.', function() {
+    postJson('/api/v1/permissions', ['id' => '13', 'name' => 'Test Permission'])
+        ->assertCreated()
+        ->assertJsonFragment([
+                'success' => true,
+                'message' => 'Permission created successfully.',
+        ])
+        ->assertStatus(201);
+});
+
+/**
+ * Tests that a single Permission can be retrieved,
+ * using the correct structure and Api response.
+ */
+test('Displays a single Permission', function() {
+    createPermission();
+
+    $permission = Permission::inRandomOrder()->first();
+
+    getJson("/api/v1/permissions/{$permission->id}")
+        ->assertOk()
+        ->assertJsonFragment([
+            'success' => true,
+            'message' => 'Permission retrieved successfully.',
+            'id' => $permission->id,
+            'name' => $permission->name
+        ])
+        ->assertJsonStructure([
+            'data' => ['id', 'name', 'guard_name', 'created_at', 'updated_at'],
+        ]);
+});
+
+/**
+ * Tests that an existing Permsiions can be Updated,
+ * using the correct structure and Api response.
+ */
+test('Can updated an existing Permission', function() {
+   $permission = Permission::create(['name' => 'Old Permission']);
+
+    putJson("/api/v1/permissions/{$permission->id}", ['name' => 'New Permission'])
+        ->assertJsonFragment([
+            'success' => true,
+            'message' => 'Permission updated successfully.',
+            'name' => 'New Permission'
+        ])
+        ->assertJsonStructure([
+            'data' => ['id', 'name', 'guard_name', 'created_at', 'updated_at'],
+        ])
+        ->assertOk();
+});
+
+/**
+ * Tests that a single Permission can be Deleted,
+ * using the correct structure and Api response.
+ */
+test('Deletes a single Permission', function() {
+    createPermission();
+
+    $permission = Permission::inRandomOrder()->first();
+
+    deleteJson("/api/v1/permissions/{$permission->id}")
+        ->assertJsonFragment([
+            'success' => true,
+            'message' => 'Permission deleted successfully.',
+            'data' => []
+        ])
+        ->assertOk();
 });

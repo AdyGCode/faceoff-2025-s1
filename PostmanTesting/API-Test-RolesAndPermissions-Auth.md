@@ -27,7 +27,7 @@
 
 ## Authentication 
 Some of the endpoints require the authentication to work properly, so for this you need:
-- Follow the guide in [User Auth Guide](Postman-API-Test-User-Auth.md)
+- Follow the guide in [User Auth Guide](API-Test-User-Auth.md)
 - Register and login to obtain the user token.
 - Use this token in the Authorization header.
 
@@ -491,7 +491,7 @@ In this endpoint I get the permissions with the information:
 ```
 
 ## Resources
-- [User Auth Guide](Postman-API-Test-User-Auth.md)
+- [User Auth Guide](API-Test-User-Auth.md)
 
 
 
