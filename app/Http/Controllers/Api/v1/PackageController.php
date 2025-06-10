@@ -76,7 +76,7 @@ class PackageController extends Controller
         if ($package) {
             return ApiResponse::success($package, 'Package Upadated', 200);
         }
-        return ApiResponse::error($package, 'Package Not Updated', 500);
+        return ApiResponse::error($package, 'Package Not Updated', code: 500);
 
     }
 

@@ -3,7 +3,7 @@
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use function Pest\Laravel\{postJson, getJson, putJson, deleteJson};
+use function Pest\Laravel\{postJson, getJson, putJson, deleteJson, patchJson};
 
 /**
  * This will reset this database after each of those tests so that data from a previous test does
@@ -109,7 +109,7 @@ test('Stores a newly created Permission.', function() {
 test('Displays a single Permission', function() {
     $permission = Permission::inRandomOrder()->first();
 
-    getJson('/api/v1/permissions'. '/'. $permission->id)
+    getJson("/api/v1/permissions/{$permission->id}")
         ->assertOk()
         ->assertJsonFragment([
             'success' => true,
@@ -120,4 +120,39 @@ test('Displays a single Permission', function() {
         ->assertJsonStructure([
             'data' => ['id', 'name', 'guard_name', 'created_at', 'updated_at'],
         ]);
+});
+
+/**
+ * Tests that an existing Permsiions can be Updated,
+ * using the correct structure and Api response.
+ */
+test('Can updated an existing Permission', function() {
+   $permission = Permission::create(['name' => 'Old Permission']);
+
+    putJson("/api/v1/permissions/{$permission->id}", ['name' => 'New Permission'])
+        ->assertJsonFragment([
+            'success' => true,
+            'message' => 'Permission updated successfully.',
+            'name' => 'New Permission'
+        ])
+        ->assertJsonStructure([
+            'data' => ['id', 'name', 'guard_name', 'created_at', 'updated_at'],
+        ])
+        ->assertOk();
+});
+
+/**
+ * Tests that a single Permission can be Deleted,
+ * using the correct structure and Api response.
+ */
+test('Deletes a single Permission', function() {
+    $permission = Permission::inRandomOrder()->first();
+
+    deleteJson("/api/v1/permissions/{$permission->id}")
+        ->assertJsonFragment([
+            'success' => true,
+            'message' => 'Permission deleted successfully.',
+            'data' => []
+        ])
+        ->assertOk();
 });
