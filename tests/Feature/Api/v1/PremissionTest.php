@@ -49,7 +49,13 @@ uses(RefreshDatabase::class);
 beforeEach(function () {
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
+});
 
+/**
+ * Function to create the Permission to be used in the testing,
+ * allows for testing of test were Permission aren't needed. (i.e error handling)
+ */
+function createPermission() {
     // Creats the following permissions
     $permissions = [
         'System-Configuration',
@@ -69,7 +75,7 @@ beforeEach(function () {
     foreach ($permissions as $permission) {
         Permission::firstOrCreate(['name' => $permission]);
     }
-});
+}
 
 
 /**
@@ -77,6 +83,7 @@ beforeEach(function () {
  * with the correct structure and Api response.
  */
 test('Displays all Permissions', function () {
+    createPermission();
     getJson('/api/v1/permissions')
         ->assertOk()
         ->assertJsonFragment([
@@ -85,6 +92,18 @@ test('Displays all Permissions', function () {
         ])
         ->assertJsonStructure([
             'data' => [['id', 'name', 'guard_name', 'created_at', 'updated_at']],
+        ]);
+});
+
+/**
+ * Tests the error handling and output if no Permission are found,
+ * checks for correct structure and Api response.
+ */
+test('Tests the handling and response if no Permission are found.', function() {
+    getJson('/api/v1/permissions')
+        ->assertStatus(404)
+        ->assertJsonFragment([
+            'message' => 'No Permissions found.',
         ]);
 });
 
@@ -107,6 +126,8 @@ test('Stores a newly created Permission.', function() {
  * using the correct structure and Api response.
  */
 test('Displays a single Permission', function() {
+    createPermission();
+
     $permission = Permission::inRandomOrder()->first();
 
     getJson("/api/v1/permissions/{$permission->id}")
@@ -146,6 +167,8 @@ test('Can updated an existing Permission', function() {
  * using the correct structure and Api response.
  */
 test('Deletes a single Permission', function() {
+    createPermission();
+
     $permission = Permission::inRandomOrder()->first();
 
     deleteJson("/api/v1/permissions/{$permission->id}")
