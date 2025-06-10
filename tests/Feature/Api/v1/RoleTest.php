@@ -42,6 +42,8 @@ function createRoles() {
  * with the correct structure and Api response.
  */
 test('Displays all Roles', function () {
+    createRoles();
+
     getJson('/api/v1/roles')
         ->assertOk()
         ->assertJsonFragment([
@@ -55,6 +57,34 @@ test('Displays all Roles', function () {
                         '*' => ['id', 'name', 'guard_name', 'created_at', 'updated_at',
                             'pivot' => [ 'role_id', 'permission_id'],
                         ],
+                    ],
+                ],
+            ],
+        ]);
+});
+
+/**
+ * Tests that a single Role can be retrieved,
+ * using the correct structure and Api response.
+ */
+test('Displays a single Role', function() {
+    createRoles();
+
+    $role = Role::inRandomOrder()->first();
+
+    getJson("/api/v1/roles/{$role->id}")
+        ->assertOk()
+        ->assertJsonFragment([
+            'success' => true,
+            'message' => 'Role retrieved successfully.',
+            'id' => $role->id,
+            'name' => $role->name
+        ])
+        ->assertJsonStructure([
+            'data' => ['id', 'name', 'guard_name', 'created_at', 'updated_at',
+                'permissions' => [
+                    '*' => ['id', 'name', 'guard_name', 'created_at', 'updated_at',
+                        'pivot' => [ 'role_id', 'permission_id'],
                     ],
                 ],
             ],
