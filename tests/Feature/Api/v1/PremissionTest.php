@@ -99,12 +99,12 @@ test('Displays all Permissions', function () {
  * Tests the error handling and output if no Permission are found,
  * checks for correct structure and Api response.
  */
-test('Tests the handling and response if no Permission are found.', function() {
+test('Tests when no are Permission found.', function() {
     getJson('/api/v1/permissions')
-        ->assertStatus(404)
         ->assertJsonFragment([
             'message' => 'No Permissions found.',
-        ]);
+        ])
+        ->assertStatus(404);
 });
 
 /**
