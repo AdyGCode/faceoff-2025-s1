@@ -105,3 +105,19 @@ test('Displays a single Role', function() {
             ],
         ]);
 });
+
+/**
+ * Tests that an existing Role can be Updated,
+ * using the correct structure and Api response.
+ */
+test('Can updated an existing Role', function() {
+   $role = Role::create(['name' => 'Old Role']);
+
+    putJson("/api/v1/roles/{$role->id}", ['name' => 'New Role'])
+        ->assertJsonFragment([
+            'success' => true,
+            'message' => 'Role updated successfully.',
+            'name' => 'New Role'
+        ])
+        ->assertOk();
+});
