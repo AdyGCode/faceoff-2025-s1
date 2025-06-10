@@ -64,6 +64,21 @@ test('Displays all Roles', function () {
 });
 
 /**
+ * Tests that a newly created Role is stored,
+ * using the correct structure and Api response.
+ */
+test('Stores a newly created Role.', function() {
+    postJson('/api/v1/roles', ['id' => '5', 'name' => 'Test Role'])
+        ->assertCreated()
+        ->assertJsonFragment([
+                'success' => true,
+                'message' => 'Role created successfully.',
+                'name' => 'Test Role'
+        ])
+        ->assertStatus(201);
+});
+
+/**
  * Tests that a single Role can be retrieved,
  * using the correct structure and Api response.
  */
