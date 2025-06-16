@@ -132,7 +132,7 @@ test('Deletes a single Role', function() {
     $role = Role::inRandomOrder()->first();
 
     deleteJson("/api/v1/roles/{$role->id}")
-        ->assertOk()   
+        ->assertStatus(204)   
         ->assertJsonFragment([
             'success' => true,
             'message' => 'Role deleted successfully.',
