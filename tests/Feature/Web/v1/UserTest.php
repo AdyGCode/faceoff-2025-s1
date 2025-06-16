@@ -1,74 +1,166 @@
 <?php
 
 use App\Models\User;
-use Spatie\Permission\Models\Role;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use function Pest\Laravel\{get, post, put, delete, actingAs};
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->user = User::factory()->create(['role' => 'admin']);
-    $this->students = User::factory()->count(10)->create(['role' => 'student']);
-    actingAs($this->user);
+    $this->admin = User::factory()->create(['role' => 'admin']);
+    $this->actingAs($this->admin);
+
+    $this->role = Role::create(['name' => 'staff']);
 });
 
-it('displays user index page', function () {
-    $this->get('/users')
+/**
+ * Displays the user index page with paginated users.
+ */
+test('displays the user index page', function () {
+    User::factory()->count(7)->create();
+
+    $this->get(route('users.index'))
         ->assertOk()
-        ->assertViewIs('users.index');
+        ->assertViewIs('users.index')
+        ->assertViewHas('users');
 });
 
-it('displays create user form', function () {
-    $this->get('/users/create')
+/**
+ * Displays the create user form.
+ */
+test('displays the create user form', function () {
+    $this->get(route('users.create'))
         ->assertOk()
-        ->assertViewIs('users.create');
+        ->assertViewIs('users.create')
+        ->assertViewHas('roles');
 });
 
-it('stores a new user with valid data', function () {
-    $data = [
-        'given_name' => 'Jane',
+/**
+ * Stores a user with valid data.
+ */
+test('stores a new user successfully', function () {
+    Storage::fake('public');
+    $photo = UploadedFile::fake()->image('photo.jpg');
+
+    $response = $this->post(route('users.store'), [
+        'given_name' => 'John',
         'family_name' => 'Doe',
-        'preferred_pronouns' => 'she/her',
-        'email' => 'jane@example.com',
+        'preferred_pronouns' => 'he/him',
+        'email' => 'john@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
-        'profile_photo' => UploadedFile::fake()->image('avatar.jpg'),
-        'role' => 'student',
-    ];
+        'profile_photo' => $photo,
+        'role' => $this->role->id,
+    ]);
 
-    $response = post(route('users.store'), $data);
     $response->assertRedirect(route('users.index'));
-    expect(User::count())->toBe(11);
+    $this->assertDatabaseHas('users', ['email' => 'john@example.com']);
 });
 
-it('shows a specific user', function () {
-    $this->get(route('users.show', $this->students[0]->id))
+/**
+ * Fails to store user with invalid data.
+ */
+test('fails to store user with invalid data', function () {
+    $this->post(route('users.store'), [])
+        ->assertSessionHasErrors([
+            'preferred_pronouns', 'email', 'password', 'role'
+        ]);
+});
+
+/**
+ * Shows the user detail page.
+ */
+test('shows the user detail page', function () {
+    $user = User::factory()->create();
+
+    $this->get(route('users.show', $user->id))
         ->assertOk()
-        ->assertViewIs('users.show');
+        ->assertViewIs('users.show')
+        ->assertViewHas('user');
 });
 
-it('displays edit form for a user', function () {
-    $this->get(route('users.update', $this->students[0]->id))
+/**
+ * Redirects when showing a non-existent user.
+ */
+test('redirects when user not found on show', function () {
+    $this->get(route('users.show', 999))
+        ->assertRedirect(route('users.index'))
+        ->assertSessionHas('warning');
+});
+
+/**
+ * Shows the user edit form.
+ */
+test('shows the user edit form', function () {
+    $user = User::factory()->create();
+
+    $this->get(route('users.edit', $user->id))
         ->assertOk()
-        ->assertViewIs('users.update');
+        ->assertViewIs('users.update')
+        ->assertViewHasAll(['user', 'roles']);
 });
 
-it('updates a user with valid data', function () {
-    $this->put(route('users.update', $this->students[0]), [
-        'given_name' => 'Updated',
-        'family_name' => 'User',
+/**
+ * Fails to show edit form if user not found.
+ */
+test('redirects when editing non-existent user', function () {
+    $this->get(route('users.edit', 999))
+        ->assertRedirect(route('users.index'))
+        ->assertSessionHas('error');
+});
+
+/**
+ * Updates a user with valid data.
+ */
+test('updates a user successfully', function () {
+    $user = User::factory()->create([
+        'given_name' => 'Old',
+        'email' => 'old@example.com',
+        'preferred_pronouns' => 'he/him',
+    ]);
+
+    $response = $this->put(route('users.update', $user->id), [
+        'given_name' => 'New',
+        'family_name' => 'Name',
         'preferred_pronouns' => 'they/them',
-        'email' => 'updated@example.com',
-        'role' => 'student',
-    ])->assertRedirect(route('users.index'));
+        'email' => 'new@example.com',
+        'role' => $this->role->id,
+        'password' => '',
+    ]);
 
-    $this->students[0]->refresh();
-    expect($this->students[0]->given_name)->toBe('Updated');
+    $response->assertRedirect(route('users.show', $user->id));
+    $this->assertDatabaseHas('users', ['email' => 'new@example.com', 'given_name' => 'New']);
 });
 
-it('deletes a user', function () {
-    $this->delete(route('users.destroy', $this->students[0]))
+/**
+ * Fails to update user with missing required fields.
+ */
+test('fails to update user with invalid data', function () {
+    $user = User::factory()->create();
+
+    $this->put(route('users.update', $user->id), [])
+        ->assertSessionHasErrors(['preferred_pronouns', 'email', 'role']);
+});
+
+/**
+ * Deletes a user successfully.
+ */
+test('deletes a user successfully', function () {
+    $user = User::factory()->create();
+
+    $this->delete(route('users.destroy', $user->id))
         ->assertRedirect(route('users.index'));
 
-    expect(User::count())->toBe(9);
+    $this->assertDatabaseMissing('users', ['id' => $user->id]);
+});
+
+/**
+ * Handles deletion of a non-existent user.
+ */
+test('gracefully handles deleting a non-existent user', function () {
+    $this->delete(route('users.destroy', 999))
+        ->assertRedirect()
+        ->assertSessionHas('error');
 });

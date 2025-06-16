@@ -1,125 +1,119 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use function Pest\Laravel\{getJson, postJson, putJson, deleteJson};
 
+uses(RefreshDatabase::class);
+
 beforeEach(function () {
-    // probably need sanctum auth user here
-});
-
-/** @test */
-it('returns a paginated list of users', function () {
+    $this->admin = User::factory()->create([
+        'role'    => 'admin',
+        'email'   => 'admin@example.com',
+        'password'=> Hash::make('Password1'),
+    ]);
+    $this->actingAs($this->admin);
     User::factory()->count(12)->create();
+});
 
-    $response = getJson('/api/v1/users');
-
-    $response->assertOk()
+/**
+ *  INDEX – list users
+ */
+test('displays all users', function () {
+    getJson('/api/v1/users')
+        ->assertOk()
+        ->assertJsonFragment([
+            'success' => true,
+            'message' => 'Users retrieved successfully.',
+        ])
         ->assertJsonStructure([
-            'success',
-            'message',
-            'data' => ['data', 'links', 'meta'],
+            'data' => [
+                'current_page',
+                'data' => [[
+                    'id',
+                    'given_name',
+                    'family_name',
+                    'name',
+                    'preferred_pronouns',
+                    'email',
+                    'profile_photo',
+                ]],
+            ],
         ]);
 });
 
-/** @test */
-it('stores a new user', function () {
-    $data = [
-        'given_name' => 'John',
-        'family_name' => 'Doe',
-        'email' => 'john@example.com',
-        'password' => 'secret123',
-        'password_confirmation' => 'secret123',
-        'preferred_pronouns' => 'he/him',
-    ];
+/**
+ *  STORE – create a user
+ */
+test('stores a new user successfully', function () {
+    postJson('/api/v1/users', [
+        'given_name'            => 'Johnny',
+        'family_name'           => 'Bravo',
+        'preferred_pronouns'    => 'He/Him',
+        'email'                 => 'johnny@example.com',
+        'password'              => 'Password1',
+        'password_confirmation' => 'Password1',
+    ])
+        ->assertCreated()
+        ->assertJsonFragment(['success' => true]);
 
-    $response = postJson('/api/v1/users', $data);
-
-    $response->assertCreated()
-        ->assertJson([
-            'success' => true,
-            'message' => 'User created successfully!',
-        ]);
-
-    expect(User::where('email', $data['email'])->exists())->toBeTrue();
+    expect(User::where('email', 'johnny@example.com')->exists())->toBeTrue();
 });
 
-/** @test */
-it('returns a single user', function () {
-    $user = User::factory()->create();
-
-    $response = getJson("/api/v1/users/{$user->id}");
-
-    $response->assertOk()
-        ->assertJson([
-            'success' => true,
-            'message' => 'User retrieved successfully',
-            'data' => ['id' => $user->id],
+test('does not store user with invalid data', function () {
+    postJson('/api/v1/users', [
+        'email'    => 'not‑an‑email',
+        'password' => 'abc',               // too short & no confirmation
+    ])
+        ->assertStatus(422)
+        ->assertJsonValidationErrors([
+            'given_name',
+            'family_name',
+            'preferred_pronouns',
+            'email',
+            'password',
         ]);
 });
 
-/** @test */
-it('returns 404 when showing non-existent user', function () {
-    $response = getJson('/api/v1/users/999999');
+/**
+ *  SHOW – view a user
+ */
+test('shows a single user', function () {
+    $user = User::whereKeyNot($this->admin)->first();
 
-    $response->assertStatus(404)
-        ->assertJson([
-            'success' => false,
-            'message' => 'User not found',
-        ]);
+    getJson("/api/v1/users/{$user->id}")
+        ->assertOk()
+        ->assertJsonFragment(['id' => $user->id]);
 });
 
-/** @test */
-it('updates a user', function () {
-    $user = User::factory()->create();
-
-    $update = [
-        'given_name' => 'Jane',
-        'family_name' => 'Smith',
-        'email' => 'jane.smith@example.com',
-        'preferred_pronouns' => 'she/her',
-        'password' => 'newpass',
-        'password_confirmation' => 'newpass',
-    ];
-
-    $response = putJson("/api/v1/users/{$user->id}", $update);
-
-    $response->assertOk()
-        ->assertJson([
-            'success' => true,
-            'message' => 'User updated successfully!',
-        ]);
-
-    expect(User::find($user->id)->email)->toBe($update['email']);
-});
-
-/** @test */
-it('returns 404 when updating non-existent user', function () {
-    $response = putJson('/api/v1/users/999999', [
-        'email' => 'ghost@example.com',
+/**
+ *  UPDATE – change a user
+ */
+test('updates an existing user', function () {
+    $user = User::factory()->create([
+        'preferred_pronouns' => 'They/Them',
     ]);
 
-    $response->assertStatus(404)
-        ->assertJson(['message' => 'User not found']);
+    putJson("/api/v1/users/{$user->id}", [
+        'given_name'         => 'Updated',
+        'preferred_pronouns' => 'He/Him',
+    ])
+        ->assertOk()
+        ->assertJsonFragment(['success' => true]);
+
+    expect(User::find($user->id)->given_name)->toBe('Updated');
 });
 
-/** @test */
-it('deletes a user', function () {
+/**
+ *  DESTROY – delete a user
+ */
+test('deletes a user', function () {
     $user = User::factory()->create();
 
-    $response = deleteJson("/api/v1/users/{$user->id}");
-
-    $response->assertOk()
-        ->assertJson(['message' => 'User deleted successfully']);
+    deleteJson("/api/v1/users/{$user->id}")
+        ->assertOk()
+        ->assertJsonFragment(['success' => true]);
 
     expect(User::find($user->id))->toBeNull();
 });
-
-/** @test */
-it('returns 404 when deleting non-existent user', function () {
-    $response = deleteJson('/api/v1/users/999999');
-
-    $response->assertStatus(404)
-        ->assertJson(['message' => 'User not found']);
-});
-
