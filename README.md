@@ -5,6 +5,10 @@ Web-based system for managing student class rosters with photos and personal det
 
 The project does NOT need a timetabling capability. It acts as a cheat sheet for lecturers.
 
+## Server Setup
+[cPanel Server Settings](server-configuration.md)
+
+
 ## Technical Stack
 - Laravel 11
 - PHP 8.3
