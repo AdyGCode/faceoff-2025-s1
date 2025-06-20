@@ -11,6 +11,7 @@ The project does NOT need a timetabling capability. It acts as a cheat sheet for
 - SQL Database (Primary)
 - Optional: Livewire, MongoDB
 - GitHub for version control
+- Automation with Git Repository into web hosting
 
 ## Team Structure and Timeline
 - 4 team members
