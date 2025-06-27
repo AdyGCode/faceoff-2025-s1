@@ -13,11 +13,6 @@ use App\Http\Requests\v1\UpdateUserRequest;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(User::class, 'user');
-    }
-
     /**
      * Display a listing of the users.
      *
@@ -29,6 +24,12 @@ class UserController extends Controller
      */
     public function index(): JsonResponse
     {
+        $authUser = Auth::user();
+
+        if (!in_array($authUser->role, ['admin', 'super-admin'])) {
+            return ApiResponse::error(false, 'You are not authorized to perform this action.', 403);
+        }
+
         $users = User::orderBy('id', 'desc')->paginate(10);
         return ApiResponse::success($users, 'Users retrieved successfully.', 200);
     }
@@ -44,6 +45,12 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): JsonResponse
     {
+        $authUser = Auth::user();
+
+        if (!in_array($authUser->role, ['admin', 'super-admin'])) {
+            return ApiResponse::error(false, 'You are not authorized to perform this action.', 403);
+        }
+
         $validated = $request->validated();
 
         $validated['password'] = Hash::make($validated['password']);
@@ -72,10 +79,15 @@ class UserController extends Controller
      */
     public function show(string $id): JsonResponse
     {
+        $authUser = Auth::user();
+
+        if (!in_array($authUser->role, ['admin', 'super-admin'])) {
+            return ApiResponse::error(false, 'You are not authorized to perform this action.', 403);
+        }
 
         $user = User::find($id);
         if (!$user) {
-            return ApiResponse::sendResponse(null, 'User not found', 404);
+            return ApiResponse::error(null, 'User not found', 404);
         }
 
         return ApiResponse::success($user, 'User retrieved successfully', 200);
@@ -93,14 +105,18 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, string $id): JsonResponse
     {
-
-        $validated = $request->validated();
-
+        $authUser = Auth::user();
         $user = User::find($id);
 
         if (!$user) {
-            return ApiResponse::sendResponse(null, 'User not found', 404);
+            return ApiResponse::error(null, 'User not found', 404);
         }
+
+        if (!in_array($authUser->role, ['admin', 'super-admin']) && $authUser->id !== $user->id) {
+            return ApiResponse::error(false, 'You are not authorized to perform this action.', 403);
+        }
+
+        $validated = $request->validated();
 
         // Hash password if provided
         if (!empty($validated['password'])) {
@@ -135,11 +151,19 @@ class UserController extends Controller
      */
     public function destroy(string $id): JsonResponse
     {
-
+        $authUser = Auth::user();
         $user = User::find($id);
+
         if (!$user) {
-            return ApiResponse::sendResponse(null, 'User not found', 404);
+            return ApiResponse::error(null, 'User not found', 404);
         }
+        
+        if (!in_array($authUser->role, ['admin', 'super-admin']) && $authUser->id !== $user->id) {
+            return ApiResponse::error(false, 'You are not authorized to perform this action.', 403);
+        }
+        
+
+
 
         $user->delete();
 
