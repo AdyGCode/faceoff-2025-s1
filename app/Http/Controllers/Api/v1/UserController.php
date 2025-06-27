@@ -4,14 +4,20 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\ApiResponse;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\v1\StoreUserRequest;
 use App\Http\Requests\v1\UpdateUserRequest;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
+
     /**
      * Display a listing of the users.
      *
@@ -66,6 +72,7 @@ class UserController extends Controller
      */
     public function show(string $id): JsonResponse
     {
+
         $user = User::find($id);
         if (!$user) {
             return ApiResponse::sendResponse(null, 'User not found', 404);
@@ -86,6 +93,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, string $id): JsonResponse
     {
+
         $validated = $request->validated();
 
         $user = User::find($id);
@@ -127,6 +135,7 @@ class UserController extends Controller
      */
     public function destroy(string $id): JsonResponse
     {
+
         $user = User::find($id);
         if (!$user) {
             return ApiResponse::sendResponse(null, 'User not found', 404);

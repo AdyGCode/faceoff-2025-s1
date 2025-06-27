@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests\v1;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRoleRequest extends FormRequest
 {

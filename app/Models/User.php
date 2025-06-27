@@ -68,4 +68,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(ClassSession::class, 'classsession_student', 'users_id', 'class_sessions_id');
     }
+
+    public function isSuperuserOrAdmin(): bool
+    {
+        return $this->isSuperuser() || $this->isAdmin();
+    }
 }
