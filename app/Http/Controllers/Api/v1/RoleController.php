@@ -61,7 +61,7 @@ class RoleController extends Controller
     {
         return ApiResponse::success(
             $role->load('permissions'),
-            'Role retrieved successfully',
+            'Role retrieved successfully.',
             200
         );
     }
